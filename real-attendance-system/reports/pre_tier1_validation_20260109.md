@@ -2,8 +2,8 @@
 
 **System:** RAE Attendance / Leave / Report System  
 **Domain:** https://raeservice.mju.ac.th  
-**Date:** 2026-01-09 08:19:30 (Asia/Bangkok)  
-**Report ID:** 20260109_081925
+**Date:** 2026-01-09 08:32:57 (Asia/Bangkok)  
+**Report ID:** 20260109_083253
 
 ---
 
@@ -42,14 +42,14 @@
 | A1 | Nginx process running | ✅ PASS | Processes: 9... |
 | A2 | TLS Certificate Valid | ✅ PASS | Subject: CN = *.mju.ac.th, Expires: Jun 25 23:59:59 2026 GMT... |
 | A3 | TLS Chain Verification | ⚠️ WARN | Verify return code: 21 (unable to verify the first certifica... |
-| A4 | External /health endpoint | ✅ PASS | Status: 200, Time: 0.010732s, Body: OK... |
+| A4 | External /health endpoint | ✅ PASS | Status: 200, Time: 0.009876s, Body: OK... |
 | A5 | Internal Backend /api/health | ✅ PASS | Response: {\"success\":true,\"data\":{\"status\":\"healthy\"... |
-| A6 | Backend readiness /api/health/ready | ✅ PASS | Response: {\"timestamp\":\"2026-01-09T08:19:25.643Z\",\"stat... |
+| A6 | Backend readiness /api/health/ready | ✅ PASS | Response: {\"timestamp\":\"2026-01-09T08:32:53.217Z\",\"stat... |
 | A7 | Database Connection | ✅ PASS | SELECT 1 returned: 1... |
 | A8 | n8n Health | ✅ PASS | Response: {\"status\":\"ok\"}... |
 | A9 | Canva Service Health | ✅ PASS | Response: {\"status\":\"ok\",\"service\":\"canva-service\",\... |
-| A10 | PM2 rae-main-app online | ✅ PASS | Status: rae-main-app: online (85MB)rae-main-app: online (86M... |
-| A11 | Docker Containers Running | ✅ PASS | Containers: canva-service: Up 40 minutes (healthy),phpmyadmi... |
+| A10 | PM2 rae-main-app online | ✅ PASS | Status: rae-main-app: online (86MB)rae-main-app: online (88M... |
+| A11 | Docker Containers Running | ✅ PASS | Containers: canva-service: Up 54 minutes (healthy),phpmyadmi... |
 | A12 | Key Public Endpoints Accessible | ✅ PASS | All 4 endpoints OK... |
 | A13 | Internal Services Not Public (Security) | ✅ PASS | n8n: 404, phpmyadmin: 404 (expected 404)... |
 | B1 | n8n Leave Sync Workflow Active | ✅ PASS | MJU Leave System Daily Sync: ACTIVE... |
@@ -57,7 +57,7 @@
 | B3 | Webhook Auth Rejects Invalid Key | ✅ PASS | Status: 401 (expected 401)... |
 | B4 | Webhook Accepts Valid Request | ✅ PASS | Response: {\"success\":true,\"data\":{\"processed\":0,\"skip... |
 | B5 | staging_leave Table Structure | ✅ PASS | Columns: 16... |
-| B6 | system_logs Has Recent Entries | ✅ PASS | Last 7 days: 15 entries... |
+| B6 | system_logs Has Recent Entries | ✅ PASS | Last 7 days: 18 entries... |
 | B7 | Canva Service Operational | ✅ PASS | Response: {\"service\":\"canva-service\",\"status\":\"ok\",\... |
 | C1 | Reports Overview Endpoint | ✅ PASS | Total Employees: 3... |
 | C2 | Attendance Timeseries Endpoint | ✅ PASS | Series length: 0... |
@@ -71,11 +71,11 @@
 | D4 | Daily Attendance Data Present | ✅ PASS | Stats: 622025-11-032025-11-04... |
 | D5 | Recent Leave Sync Data | ✅ PASS | Stats: 0NULL... |
 | D6 | Webhook Idempotency (No Duplicates) | ⚠️ WARN | Records created: 0 (expected 1)... |
-| E1 | Backend Memory Usage | ✅ PASS | rae-main-app: 85MBrae-main-app: 86MB... |
-| E2 | Docker Container Resources | ✅ PASS | canva-service: 211.1MiB / 1GiB,n8n: 101.9MiB / 768MiB,mariad... |
+| E1 | Backend Memory Usage | ✅ PASS | rae-main-app: 87MBrae-main-app: 87MB... |
+| E2 | Docker Container Resources | ✅ PASS | canva-service: 211.8MiB / 1GiB,n8n: 101.9MiB / 768MiB,mariad... |
 | E3 | Database Connections | ✅ PASS | Threads connected: 6... |
 | E4 | PM2 Logs Size | ✅ PASS | Log directory size: 30M... |
-| E5 | Recent System Logs (24h) | ✅ PASS | error12,... |
+| E5 | Recent System Logs (24h) | ✅ PASS | error15,... |
 | E6 | Service Uptime | ✅ PASS | rae-main-app: 29465674minrae-main-app: 29465674min... |
 
 ---
@@ -95,7 +95,7 @@
 ## 📁 Evidence Artifacts
 
 All evidence has been saved to:
-- Log file: `/home/rae_admin/real-attendance-system/reports/artifacts/validation_20260109_081925.log`
+- Log file: `/home/rae_admin/real-attendance-system/reports/artifacts/validation_20260109_083253.log`
 - Artifacts directory: `/home/rae_admin/real-attendance-system/reports/artifacts`
 
 ---
@@ -114,7 +114,7 @@ All evidence has been saved to:
 
 ---
 
-**Report Generated:** 2026-01-09 08:19:30  
+**Report Generated:** 2026-01-09 08:32:57  
 **Validation Script Version:** 1.0.0  
 **Next Scheduled Validation:** Manual
 

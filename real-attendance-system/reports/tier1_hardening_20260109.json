@@ -144,10 +144,25 @@
   ],
   "requiredActions": [
     {
-      "priority": "HIGH",
+      "priority": "CRITICAL",
       "action": "Apply TLS chain fix",
-      "command": "sudo bash scripts/apply-tier1-hardening.sh",
-      "reason": "OpenSSL verification code 21"
+      "commands": [
+        "sudo bash deploy/tls-fix/quick-tls-fix.sh",
+        "sudo bash scripts/apply-tier1-hardening.sh"
+      ],
+      "reason": "OpenSSL verification code 21 - intermediate certificate missing",
+      "rootCause": {
+        "issue": "Fullchain contains ROOT instead of INTERMEDIATE certificate",
+        "current": "Leaf + DigiCert Global Root G2 (self-signed)",
+        "expected": "Leaf + RapidSSL TLS RSA CA G1 (intermediate)",
+        "additionalIssues": ["CRLF line endings", "Missing newline between certs"]
+      },
+      "fixFiles": {
+        "location": "deploy/tls-fix/",
+        "fixedFullchain": "deploy/tls-fix/fixed_fullchain.crt",
+        "quickScript": "deploy/tls-fix/quick-tls-fix.sh"
+      },
+      "lastUpdated": "2026-01-09T08:35:00Z"
     }
   ],
   "recommendedActions": [

@@ -229,9 +229,21 @@ UNIQUE KEY `leave_id` (`leave_id`)
 
 ### Immediate (Before Production Release)
 
-1. **Apply TLS Chain Fix**
+1. **Apply TLS Chain Fix** (CRITICAL - Run ONE of these)
+
+   **Option A: Quick Fix Script (Recommended)**
+   ```bash
+   sudo bash deploy/tls-fix/quick-tls-fix.sh
+   ```
+
+   **Option B: Original Hardening Script**
    ```bash
    sudo bash scripts/apply-tier1-hardening.sh
+   ```
+
+   **Option C: Single-Line Manual Fix**
+   ```bash
+   sudo bash -c 'cp deploy/tls-fix/fixed_fullchain.crt /etc/ssl/mju/mju_ac_th.fullchain.crt && chmod 644 /etc/ssl/mju/mju_ac_th.fullchain.crt && nginx -t && systemctl reload nginx'
    ```
 
 2. **Verify TLS After Fix**
@@ -240,6 +252,30 @@ UNIQUE KEY `leave_id` (`leave_id`)
        -servername raeservice.mju.ac.th 2>&1 | grep "Verify return code"
    # Expected: Verify return code: 0 (ok)
    ```
+
+3. **Run Validation Checks**
+   ```bash
+   ./scripts/run-tier1-hardening-checks.sh
+   ./scripts/run-pre-tier1.sh
+   ```
+
+### Root Cause Analysis (2026-01-09 Investigation)
+
+**Problem:** Certificate chain verification failing (OpenSSL code 21)
+
+**Cause:** The fullchain certificate (`/etc/ssl/mju/mju_ac_th.fullchain.crt`) contained:
+- ✅ Leaf certificate (`CN = *.mju.ac.th`)
+- ❌ ROOT certificate (`DigiCert Global Root G2`) - WRONG!
+- ❌ Missing INTERMEDIATE certificate (`RapidSSL TLS RSA CA G1`)
+
+**Additional Issues:**
+- CRLF line endings in certificate files (Windows-style)
+- Missing newline between certificate blocks
+
+**Fix Applied:** Created properly formatted fullchain with correct order:
+1. Leaf cert → 2. Intermediate cert
+
+**Fix Files Location:** `deploy/tls-fix/`
 
 ### Recommended (Post-Release)
 
@@ -297,14 +333,26 @@ UNIQUE KEY `leave_id` (`leave_id`)
 
 ## ✅ Sign-off
 
-- [ ] TLS chain fix applied (`sudo bash scripts/apply-tier1-hardening.sh`)
+- [ ] TLS chain fix applied (`sudo bash deploy/tls-fix/quick-tls-fix.sh`)
 - [ ] TLS verification passes (code 0)
-- [ ] All hardening checks pass
+- [ ] All hardening checks pass (T2 should change from FAIL to PASS)
 - [ ] Production smoke test successful
+- [ ] Pre-tier1 validation passes (no regressions)
 
 **Prepared by:** DevSecOps Engineer (Automated)  
 **Date:** 2026-01-09  
-**Version:** 1.0.0
+**Last Update:** 2026-01-09 08:35 UTC  
+**Version:** 1.1.0
+
+### Rollback Procedure
+
+If the fix causes issues:
+```bash
+# Files are backed up in /tmp/tls_backup_* directory
+sudo cp /tmp/tls_backup_*/mju_ac_th.fullchain.crt /etc/ssl/mju/
+sudo cp /tmp/tls_backup_*/raeservice.mju.ac.th.conf /etc/nginx/sites-available/
+sudo nginx -t && sudo systemctl reload nginx
+```
 
 ---
 
