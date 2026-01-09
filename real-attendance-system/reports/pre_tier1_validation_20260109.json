@@ -1,15 +1,15 @@
 {
-  "reportId": "20260109_083253",
-  "generatedAt": "2026-01-09T08:32:57+00:00",
+  "reportId": "20260109_084023",
+  "generatedAt": "2026-01-09T08:40:27+00:00",
   "system": "RAE Attendance System",
   "domain": "raeservice.mju.ac.th",
   "summary": {
     "total": 38,
-    "passed": 34,
+    "passed": 35,
     "failed": 0,
-    "warnings": 4,
-    "successRate": 89,
-    "verdict": "READY_WITH_WARNINGS"
+    "warnings": 3,
+    "successRate": 92,
+    "verdict": "READY"
   },
   "services": {
     "nginx": "running",
@@ -21,15 +21,15 @@
   "tests": [
     {"id":"A1","name":"Nginx process running","status":"PASS","evidence":"Processes: 9","notes":""},
     {"id":"A2","name":"TLS Certificate Valid","status":"PASS","evidence":"Subject: CN = *.mju.ac.th, Expires: Jun 25 23:59:59 2026 GMT (167 days)","notes":""},
-    {"id":"A3","name":"TLS Chain Verification","status":"WARN","evidence":"Verify return code: 21 (unable to verify the first certificate)","notes":"Intermediate certificate may be missing"},
-    {"id":"A4","name":"External /health endpoint","status":"PASS","evidence":"Status: 200, Time: 0.009876s, Body: OK","notes":""},
+    {"id":"A3","name":"TLS Chain Verification","status":"PASS","evidence":"Verify return code: 0 (ok)    Verify return code: 0 (ok)    Verify return code: 0 (ok)","notes":""},
+    {"id":"A4","name":"External /health endpoint","status":"PASS","evidence":"Status: 200, Time: 0.010137s, Body: OK","notes":""},
     {"id":"A5","name":"Internal Backend /api/health","status":"PASS","evidence":"Response: {\\\"success\\\":true,\\\"data\\\":{\\\"status\\\":\\\"healthy\\\",\\\"timestamp\\\":\\\"2","notes":""},
-    {"id":"A6","name":"Backend readiness /api/health/ready","status":"PASS","evidence":"Response: {\\\"timestamp\\\":\\\"2026-01-09T08:32:53.217Z\\\",\\\"status\\\":\\\"error\\\",\\\"check","notes":""},
+    {"id":"A6","name":"Backend readiness /api/health/ready","status":"PASS","evidence":"Response: {\\\"timestamp\\\":\\\"2026-01-09T08:40:23.324Z\\\",\\\"status\\\":\\\"ok\\\",\\\"checks\\","notes":""},
     {"id":"A7","name":"Database Connection","status":"PASS","evidence":"SELECT 1 returned: 1","notes":""},
     {"id":"A8","name":"n8n Health","status":"PASS","evidence":"Response: {\\\"status\\\":\\\"ok\\\"}","notes":""},
     {"id":"A9","name":"Canva Service Health","status":"PASS","evidence":"Response: {\\\"status\\\":\\\"ok\\\",\\\"service\\\":\\\"canva-service\\\",\\\"timestamp\\\":\\\"202","notes":""},
-    {"id":"A10","name":"PM2 rae-main-app online","status":"PASS","evidence":"Status: rae-main-app: online (86MB)rae-main-app: online (88MB)","notes":""},
-    {"id":"A11","name":"Docker Containers Running","status":"PASS","evidence":"Containers: canva-service: Up 54 minutes (healthy),phpmyadmin: Up 3 weeks,n8n: Up 2 weeks,mariadb: U","notes":""},
+    {"id":"A10","name":"PM2 rae-main-app online","status":"PASS","evidence":"Status: rae-main-app: online (87MB)rae-main-app: online (88MB)","notes":""},
+    {"id":"A11","name":"Docker Containers Running","status":"PASS","evidence":"Containers: canva-service: Up About an hour (healthy),phpmyadmin: Up 3 weeks,n8n: Up 2 weeks,mariadb","notes":""},
     {"id":"A12","name":"Key Public Endpoints Accessible","status":"PASS","evidence":"All 4 endpoints OK","notes":""},
     {"id":"A13","name":"Internal Services Not Public (Security)","status":"PASS","evidence":"n8n: 404, phpmyadmin: 404 (expected 404)","notes":""},
     {"id":"B1","name":"n8n Leave Sync Workflow Active","status":"PASS","evidence":"MJU Leave System Daily Sync: ACTIVE","notes":""},
@@ -37,7 +37,7 @@
     {"id":"B3","name":"Webhook Auth Rejects Invalid Key","status":"PASS","evidence":"Status: 401 (expected 401)","notes":""},
     {"id":"B4","name":"Webhook Accepts Valid Request","status":"PASS","evidence":"Response: {\\\"success\\\":true,\\\"data\\\":{\\\"processed\\\":0,\\\"skipped\\\":1,\\\"errors\\\":[","notes":""},
     {"id":"B5","name":"staging_leave Table Structure","status":"PASS","evidence":"Columns: 16","notes":""},
-    {"id":"B6","name":"system_logs Has Recent Entries","status":"PASS","evidence":"Last 7 days: 18 entries","notes":""},
+    {"id":"B6","name":"system_logs Has Recent Entries","status":"PASS","evidence":"Last 7 days: 21 entries","notes":""},
     {"id":"B7","name":"Canva Service Operational","status":"PASS","evidence":"Response: {\\\"service\\\":\\\"canva-service\\\",\\\"status\\\":\\\"ok\\\",\\\"health\\\":\\\"/api/h","notes":""},
     {"id":"C1","name":"Reports Overview Endpoint","status":"PASS","evidence":"Total Employees: 3","notes":""},
     {"id":"C2","name":"Attendance Timeseries Endpoint","status":"PASS","evidence":"Series length: 0","notes":""},
@@ -51,15 +51,15 @@
     {"id":"D4","name":"Daily Attendance Data Present","status":"PASS","evidence":"Stats: 622025-11-032025-11-04","notes":""},
     {"id":"D5","name":"Recent Leave Sync Data","status":"PASS","evidence":"Stats: 0NULL","notes":""},
     {"id":"D6","name":"Webhook Idempotency (No Duplicates)","status":"WARN","evidence":"Records created: 0 (expected 1)","notes":"Review upsert logic"},
-    {"id":"E1","name":"Backend Memory Usage","status":"PASS","evidence":"rae-main-app: 87MBrae-main-app: 87MB","notes":""},
-    {"id":"E2","name":"Docker Container Resources","status":"PASS","evidence":"canva-service: 211.8MiB / 1GiB,n8n: 101.9MiB / 768MiB,mariadb: 32.11MiB / 1.5GiB,","notes":""},
+    {"id":"E1","name":"Backend Memory Usage","status":"PASS","evidence":"rae-main-app: 87MBrae-main-app: 88MB","notes":""},
+    {"id":"E2","name":"Docker Container Resources","status":"PASS","evidence":"canva-service: 212.8MiB / 1GiB,n8n: 102MiB / 768MiB,mariadb: 34.89MiB / 1.5GiB,","notes":""},
     {"id":"E3","name":"Database Connections","status":"PASS","evidence":"Threads connected: 6","notes":""},
     {"id":"E4","name":"PM2 Logs Size","status":"PASS","evidence":"Log directory size: 30M","notes":""},
-    {"id":"E5","name":"Recent System Logs (24h)","status":"PASS","evidence":"error15,","notes":""},
+    {"id":"E5","name":"Recent System Logs (24h)","status":"PASS","evidence":"error18,","notes":""},
     {"id":"E6","name":"Service Uptime","status":"PASS","evidence":"rae-main-app: 29465674minrae-main-app: 29465674min","notes":""}
   ],
   "artifacts": {
-    "logFile": "/home/rae_admin/real-attendance-system/reports/artifacts/validation_20260109_083253.log",
+    "logFile": "/home/rae_admin/real-attendance-system/reports/artifacts/validation_20260109_084023.log",
     "markdownReport": "/home/rae_admin/real-attendance-system/reports/pre_tier1_validation_20260109.md"
   }
 }

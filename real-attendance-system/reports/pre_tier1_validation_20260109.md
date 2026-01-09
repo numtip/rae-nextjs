@@ -2,8 +2,8 @@
 
 **System:** RAE Attendance / Leave / Report System  
 **Domain:** https://raeservice.mju.ac.th  
-**Date:** 2026-01-09 08:32:57 (Asia/Bangkok)  
-**Report ID:** 20260109_083253
+**Date:** 2026-01-09 08:40:27 (Asia/Bangkok)  
+**Report ID:** 20260109_084023
 
 ---
 
@@ -12,12 +12,12 @@
 | Metric | Value |
 |--------|-------|
 | **Total Tests** | 38 |
-| **Passed** | ✅ 34 |
+| **Passed** | ✅ 35 |
 | **Failed** | ❌ 0 |
-| **Warnings** | ⚠️ 4 |
-| **Success Rate** | 89% |
+| **Warnings** | ⚠️ 3 |
+| **Success Rate** | 92% |
 
-### Tier-1 Readiness Verdict: 🟡 **READY_WITH_WARNINGS**
+### Tier-1 Readiness Verdict: 🟢 **READY**
 
 ---
 
@@ -41,15 +41,15 @@
 |---------|-----------|--------|----------|
 | A1 | Nginx process running | ✅ PASS | Processes: 9... |
 | A2 | TLS Certificate Valid | ✅ PASS | Subject: CN = *.mju.ac.th, Expires: Jun 25 23:59:59 2026 GMT... |
-| A3 | TLS Chain Verification | ⚠️ WARN | Verify return code: 21 (unable to verify the first certifica... |
-| A4 | External /health endpoint | ✅ PASS | Status: 200, Time: 0.009876s, Body: OK... |
+| A3 | TLS Chain Verification | ✅ PASS | Verify return code: 0 (ok)    Verify return code: 0 (ok)    ... |
+| A4 | External /health endpoint | ✅ PASS | Status: 200, Time: 0.010137s, Body: OK... |
 | A5 | Internal Backend /api/health | ✅ PASS | Response: {\"success\":true,\"data\":{\"status\":\"healthy\"... |
-| A6 | Backend readiness /api/health/ready | ✅ PASS | Response: {\"timestamp\":\"2026-01-09T08:32:53.217Z\",\"stat... |
+| A6 | Backend readiness /api/health/ready | ✅ PASS | Response: {\"timestamp\":\"2026-01-09T08:40:23.324Z\",\"stat... |
 | A7 | Database Connection | ✅ PASS | SELECT 1 returned: 1... |
 | A8 | n8n Health | ✅ PASS | Response: {\"status\":\"ok\"}... |
 | A9 | Canva Service Health | ✅ PASS | Response: {\"status\":\"ok\",\"service\":\"canva-service\",\... |
-| A10 | PM2 rae-main-app online | ✅ PASS | Status: rae-main-app: online (86MB)rae-main-app: online (88M... |
-| A11 | Docker Containers Running | ✅ PASS | Containers: canva-service: Up 54 minutes (healthy),phpmyadmi... |
+| A10 | PM2 rae-main-app online | ✅ PASS | Status: rae-main-app: online (87MB)rae-main-app: online (88M... |
+| A11 | Docker Containers Running | ✅ PASS | Containers: canva-service: Up About an hour (healthy),phpmya... |
 | A12 | Key Public Endpoints Accessible | ✅ PASS | All 4 endpoints OK... |
 | A13 | Internal Services Not Public (Security) | ✅ PASS | n8n: 404, phpmyadmin: 404 (expected 404)... |
 | B1 | n8n Leave Sync Workflow Active | ✅ PASS | MJU Leave System Daily Sync: ACTIVE... |
@@ -57,7 +57,7 @@
 | B3 | Webhook Auth Rejects Invalid Key | ✅ PASS | Status: 401 (expected 401)... |
 | B4 | Webhook Accepts Valid Request | ✅ PASS | Response: {\"success\":true,\"data\":{\"processed\":0,\"skip... |
 | B5 | staging_leave Table Structure | ✅ PASS | Columns: 16... |
-| B6 | system_logs Has Recent Entries | ✅ PASS | Last 7 days: 18 entries... |
+| B6 | system_logs Has Recent Entries | ✅ PASS | Last 7 days: 21 entries... |
 | B7 | Canva Service Operational | ✅ PASS | Response: {\"service\":\"canva-service\",\"status\":\"ok\",\... |
 | C1 | Reports Overview Endpoint | ✅ PASS | Total Employees: 3... |
 | C2 | Attendance Timeseries Endpoint | ✅ PASS | Series length: 0... |
@@ -71,11 +71,11 @@
 | D4 | Daily Attendance Data Present | ✅ PASS | Stats: 622025-11-032025-11-04... |
 | D5 | Recent Leave Sync Data | ✅ PASS | Stats: 0NULL... |
 | D6 | Webhook Idempotency (No Duplicates) | ⚠️ WARN | Records created: 0 (expected 1)... |
-| E1 | Backend Memory Usage | ✅ PASS | rae-main-app: 87MBrae-main-app: 87MB... |
-| E2 | Docker Container Resources | ✅ PASS | canva-service: 211.8MiB / 1GiB,n8n: 101.9MiB / 768MiB,mariad... |
+| E1 | Backend Memory Usage | ✅ PASS | rae-main-app: 87MBrae-main-app: 88MB... |
+| E2 | Docker Container Resources | ✅ PASS | canva-service: 212.8MiB / 1GiB,n8n: 102MiB / 768MiB,mariadb:... |
 | E3 | Database Connections | ✅ PASS | Threads connected: 6... |
 | E4 | PM2 Logs Size | ✅ PASS | Log directory size: 30M... |
-| E5 | Recent System Logs (24h) | ✅ PASS | error15,... |
+| E5 | Recent System Logs (24h) | ✅ PASS | error18,... |
 | E6 | Service Uptime | ✅ PASS | rae-main-app: 29465674minrae-main-app: 29465674min... |
 
 ---
@@ -85,7 +85,6 @@
 ✅ No critical issues found.
 
 ### Warnings
-- **TLS Chain Verification:** Intermediate certificate may be missing
 - **Protected Endpoints Return 401/403:** May need auth verification
 - **Employee Identifier Mapping:** 
 - **Webhook Idempotency (No Duplicates):** Review upsert logic
@@ -95,7 +94,7 @@
 ## 📁 Evidence Artifacts
 
 All evidence has been saved to:
-- Log file: `/home/rae_admin/real-attendance-system/reports/artifacts/validation_20260109_083253.log`
+- Log file: `/home/rae_admin/real-attendance-system/reports/artifacts/validation_20260109_084023.log`
 - Artifacts directory: `/home/rae_admin/real-attendance-system/reports/artifacts`
 
 ---
@@ -114,7 +113,7 @@ All evidence has been saved to:
 
 ---
 
-**Report Generated:** 2026-01-09 08:32:57  
+**Report Generated:** 2026-01-09 08:40:27  
 **Validation Script Version:** 1.0.0  
 **Next Scheduled Validation:** Manual
 

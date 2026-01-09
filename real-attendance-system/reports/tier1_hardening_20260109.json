@@ -5,36 +5,40 @@
   "domain": "raeservice.mju.ac.th",
   "version": "1.0.0",
   "summary": {
-    "status": "HARDENING_COMPLETE_WITH_MANUAL_STEPS",
+    "status": "TIER1_HARDENING_COMPLETE",
     "phasesTotal": 9,
-    "phasesCompleted": 8,
-    "manualStepsPending": 1,
-    "securityScore": 85,
+    "phasesCompleted": 9,
+    "manualStepsPending": 0,
+    "securityScore": 90,
     "hardeningChecks": {
       "total": 20,
-      "passed": 17,
-      "failed": 1,
+      "passed": 18,
+      "failed": 0,
       "warnings": 2
     },
     "preTier1Checks": {
       "total": 38,
-      "passed": 34,
+      "passed": 35,
       "failed": 0,
-      "warnings": 4
-    }
+      "warnings": 3
+    },
+    "tlsFixApplied": "2026-01-09T08:39:51Z",
+    "verifyReturnCode": 0
   },
   "phases": [
     {
       "id": "phase1",
       "name": "TLS Chain Verification",
-      "status": "PENDING_MANUAL",
-      "description": "Fix full certificate chain presentation",
+      "status": "COMPLETED",
+      "completedAt": "2026-01-09T08:39:51Z",
+      "description": "Fixed full certificate chain presentation",
       "findings": [
         {
           "issue": "OpenSSL verify code 21 - unable to verify first certificate",
-          "cause": "Intermediate certificate (RapidSSL TLS RSA CA G1) missing from fullchain",
-          "fix": "Rebuild fullchain: server cert + intermediate",
-          "fixScript": "scripts/apply-tier1-hardening.sh"
+          "cause": "Intermediate certificate (RapidSSL TLS RSA CA G1) missing from fullchain; CRLF line endings",
+          "fix": "Rebuilt fullchain: server cert + intermediate; added ssl_trusted_certificate directive",
+          "result": "Verify return code: 0 (ok)",
+          "backupLocation": "/tmp/tls_backup_20260109_083951/"
         }
       ]
     },
@@ -188,10 +192,17 @@
     "validTo": "Jun 25 23:59:59 2026 GMT",
     "daysRemaining": 167,
     "chainVerification": {
-      "currentCode": 21,
-      "currentStatus": "unable to verify the first certificate",
-      "expectedCode": 0,
-      "expectedStatus": "ok"
+      "beforeCode": 21,
+      "beforeStatus": "unable to verify the first certificate",
+      "afterCode": 0,
+      "afterStatus": "ok",
+      "fixApplied": "2026-01-09T08:39:51Z",
+      "chainDepth": 3,
+      "certificates": [
+        "CN = *.mju.ac.th (leaf)",
+        "CN = RapidSSL TLS RSA CA G1 (intermediate)",
+        "CN = DigiCert Global Root G2 (root)"
+      ]
     }
   },
   "securityHeaders": {
