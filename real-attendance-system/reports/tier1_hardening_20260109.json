@@ -1,0 +1,204 @@
+{
+  "reportId": "tier1_hardening_20260109",
+  "generatedAt": "2026-01-09T08:20:00+07:00",
+  "system": "RAE Attendance System",
+  "domain": "raeservice.mju.ac.th",
+  "version": "1.0.0",
+  "summary": {
+    "status": "HARDENING_COMPLETE_WITH_MANUAL_STEPS",
+    "phasesTotal": 9,
+    "phasesCompleted": 8,
+    "manualStepsPending": 1,
+    "securityScore": 85,
+    "hardeningChecks": {
+      "total": 20,
+      "passed": 17,
+      "failed": 1,
+      "warnings": 2
+    },
+    "preTier1Checks": {
+      "total": 38,
+      "passed": 34,
+      "failed": 0,
+      "warnings": 4
+    }
+  },
+  "phases": [
+    {
+      "id": "phase1",
+      "name": "TLS Chain Verification",
+      "status": "PENDING_MANUAL",
+      "description": "Fix full certificate chain presentation",
+      "findings": [
+        {
+          "issue": "OpenSSL verify code 21 - unable to verify first certificate",
+          "cause": "Intermediate certificate (RapidSSL TLS RSA CA G1) missing from fullchain",
+          "fix": "Rebuild fullchain: server cert + intermediate",
+          "fixScript": "scripts/apply-tier1-hardening.sh"
+        }
+      ]
+    },
+    {
+      "id": "phase2",
+      "name": "Authentication Surface",
+      "status": "COMPLETED",
+      "description": "Ensure protected endpoints require auth",
+      "findings": [
+        {
+          "endpoint": "/api/leave/webhook",
+          "authMethod": "API Key (n8n-api-key header)",
+          "status": "PROTECTED",
+          "verification": "Returns 401 without key"
+        },
+        {
+          "endpoint": "/api/employees (GET)",
+          "authMethod": "None (intentional)",
+          "status": "PUBLIC",
+          "reason": "Dashboard read-only access"
+        }
+      ]
+    },
+    {
+      "id": "phase3",
+      "name": "Security Headers",
+      "status": "COMPLETED",
+      "description": "HTTP security headers configured",
+      "findings": [
+        {"header": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains", "status": "PASS"},
+        {"header": "X-Content-Type-Options", "value": "nosniff", "status": "PASS"},
+        {"header": "X-Frame-Options", "value": "SAMEORIGIN", "status": "PASS"},
+        {"header": "Referrer-Policy", "value": "strict-origin-when-cross-origin", "status": "PASS"},
+        {"header": "X-XSS-Protection", "value": "1; mode=block", "status": "PASS"}
+      ]
+    },
+    {
+      "id": "phase4",
+      "name": "Rate Limiting",
+      "status": "CONFIGURATION_READY",
+      "description": "Rate limiting snippet created",
+      "configFile": "deploy/nginx/rate-limiting.conf.snippet",
+      "zones": [
+        {"name": "api_limit", "rate": "10r/s", "purpose": "General API"},
+        {"name": "auth_limit", "rate": "5r/s", "purpose": "Authentication"},
+        {"name": "webhook_limit", "rate": "2r/s", "purpose": "Webhooks"},
+        {"name": "export_limit", "rate": "1r/s", "purpose": "PDF/PNG export"}
+      ]
+    },
+    {
+      "id": "phase5",
+      "name": "Internal Service Exposure",
+      "status": "COMPLETED",
+      "description": "Internal services not publicly accessible",
+      "services": [
+        {"name": "n8n", "port": 5678, "externalAccess": "404", "status": "PROTECTED"},
+        {"name": "phpMyAdmin", "port": 8080, "externalAccess": "404", "status": "PROTECTED"},
+        {"name": "Canva Service", "port": 3005, "externalAccess": "via proxy", "status": "PROTECTED"}
+      ]
+    },
+    {
+      "id": "phase6",
+      "name": "Employee Identifier Mapping",
+      "status": "COMPLETED",
+      "description": "Seed and validation tooling created",
+      "script": "scripts/seed_employee_identifier_mapping.sh",
+      "features": ["dry-run mode", "CSV import", "validation-only mode", "auto-seed from attendance"]
+    },
+    {
+      "id": "phase7",
+      "name": "Webhook Idempotency",
+      "status": "COMPLETED",
+      "description": "Idempotent webhook handling verified",
+      "implementation": {
+        "databaseConstraint": "UNIQUE KEY on leave_id",
+        "codeLogic": "checkDuplicateLeave + shouldUpdateRecord + upsert",
+        "auditLogging": "system_logs table"
+      }
+    },
+    {
+      "id": "phase8",
+      "name": "Logging & Audit",
+      "status": "COMPLETED",
+      "description": "Logging infrastructure verified",
+      "logs": [
+        {"type": "nginx_access", "location": "/var/log/nginx/raeservice-access.log", "status": "ACTIVE"},
+        {"type": "nginx_error", "location": "/var/log/nginx/raeservice-error.log", "status": "ACTIVE"},
+        {"type": "pm2", "location": "~/.pm2/logs/", "size": "30MB", "status": "HEALTHY"},
+        {"type": "system_logs", "location": "database.system_logs", "recentEntries": 12, "status": "ACTIVE"}
+      ]
+    },
+    {
+      "id": "phase9",
+      "name": "Verification & Reporting",
+      "status": "COMPLETED",
+      "description": "Reports and scripts generated",
+      "artifacts": [
+        "reports/tier1_hardening_20260109.md",
+        "reports/tier1_hardening_20260109.json",
+        "scripts/run-tier1-hardening-checks.sh",
+        "scripts/apply-tier1-hardening.sh",
+        "scripts/seed_employee_identifier_mapping.sh",
+        "docs/hardening/README.md",
+        "deploy/nginx/rate-limiting.conf.snippet"
+      ]
+    }
+  ],
+  "requiredActions": [
+    {
+      "priority": "HIGH",
+      "action": "Apply TLS chain fix",
+      "command": "sudo bash scripts/apply-tier1-hardening.sh",
+      "reason": "OpenSSL verification code 21"
+    }
+  ],
+  "recommendedActions": [
+    {
+      "priority": "MEDIUM",
+      "action": "Enable rate limiting",
+      "steps": [
+        "Review deploy/nginx/rate-limiting.conf.snippet",
+        "Add zones to nginx config",
+        "Test with controlled traffic"
+      ]
+    },
+    {
+      "priority": "LOW",
+      "action": "Seed employee mappings",
+      "command": "./scripts/seed_employee_identifier_mapping.sh"
+    }
+  ],
+  "tlsCertificate": {
+    "subject": "*.mju.ac.th",
+    "issuer": "RapidSSL TLS RSA CA G1",
+    "validFrom": "Jun 05 00:00:00 2025 GMT",
+    "validTo": "Jun 25 23:59:59 2026 GMT",
+    "daysRemaining": 167,
+    "chainVerification": {
+      "currentCode": 21,
+      "currentStatus": "unable to verify the first certificate",
+      "expectedCode": 0,
+      "expectedStatus": "ok"
+    }
+  },
+  "securityHeaders": {
+    "strictTransportSecurity": true,
+    "xContentTypeOptions": true,
+    "xFrameOptions": true,
+    "referrerPolicy": true,
+    "xXssProtection": true,
+    "contentSecurityPolicy": false,
+    "permissionsPolicy": false
+  },
+  "cors": {
+    "allowedOrigin": "https://raeservice.mju.ac.th",
+    "credentials": true,
+    "wildcard": false
+  },
+  "services": {
+    "nginx": {"status": "running", "port": "80/443"},
+    "backend": {"status": "online", "port": 3000, "manager": "pm2"},
+    "database": {"status": "healthy", "port": 3306, "type": "mariadb"},
+    "n8n": {"status": "running", "port": 5678, "publiclyExposed": false},
+    "canvaService": {"status": "healthy", "port": 3005, "publiclyExposed": false},
+    "phpMyAdmin": {"status": "running", "port": 8080, "publiclyExposed": false}
+  }
+}

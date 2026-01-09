@@ -1,0 +1,87 @@
+# ============================================================================
+# RAE Attendance System - Rate Limiting Configuration Snippet
+# Version: 1.0.0
+# Generated: 2026-01-09
+#
+# Add this to /etc/nginx/nginx.conf in the http {} block:
+#   include /etc/nginx/conf.d/rate-limiting.conf;
+#
+# Or add the limit_req_zone directives directly to your http {} block.
+# ============================================================================
+
+# Rate Limiting Zones
+# Format: limit_req_zone key zone=name:size rate=rate;
+# - key: typically $binary_remote_addr (client IP)
+# - size: shared memory zone size (10m = ~160,000 unique IPs)
+# - rate: requests per second (r/s) or minute (r/m)
+
+# General API rate limit (10 requests/second per IP)
+limit_req_zone $binary_remote_addr zone=api_limit:10m rate=10r/s;
+
+# Authentication rate limit (stricter - 5 requests/second per IP)
+limit_req_zone $binary_remote_addr zone=auth_limit:10m rate=5r/s;
+
+# Webhook rate limit (service-to-service, moderate - 2 requests/second)
+limit_req_zone $binary_remote_addr zone=webhook_limit:10m rate=2r/s;
+
+# Export rate limit (PDF/PNG generation - expensive, 1 request/second)
+limit_req_zone $binary_remote_addr zone=export_limit:10m rate=1r/s;
+
+# Report endpoints (moderate - 5 requests/second)
+limit_req_zone $binary_remote_addr zone=report_limit:10m rate=5r/s;
+
+# ============================================================================
+# Usage in server {} block locations:
+# ============================================================================
+# 
+# location ^~ /api/ {
+#     limit_req zone=api_limit burst=20 nodelay;
+#     limit_req_status 429;
+#     # ... rest of config
+# }
+#
+# location /attendance/api/auth/ {
+#     limit_req zone=auth_limit burst=10 nodelay;
+#     limit_req_status 429;
+#     # ... rest of config
+# }
+#
+# location /attendance/api/leave/webhook {
+#     limit_req zone=webhook_limit burst=5 nodelay;
+#     limit_req_status 429;
+#     # ... rest of config
+# }
+#
+# location /attendance/api/reports/export/ {
+#     limit_req zone=export_limit burst=3 nodelay;
+#     limit_req_status 429;
+#     # ... rest of config
+# }
+#
+# ============================================================================
+# Testing Rate Limits:
+# ============================================================================
+#
+# # Quick burst test (should see 429 after limit exceeded)
+# for i in {1..30}; do
+#   curl -sk -o /dev/null -w "%{http_code}\n" "https://raeservice.mju.ac.th/attendance/api/health"
+# done
+#
+# ============================================================================
+# Internal bypass (optional - if internal services need higher limits):
+# ============================================================================
+#
+# geo $rate_limit_bypass {
+#     default         0;
+#     127.0.0.1       1;
+#     10.0.0.0/8      1;
+#     172.16.0.0/12   1;
+#     192.168.0.0/16  1;
+# }
+#
+# map $rate_limit_bypass $limit_key {
+#     0   $binary_remote_addr;
+#     1   "";  # Empty key = no rate limiting
+# }
+#
+# Then use $limit_key instead of $binary_remote_addr in zones.
