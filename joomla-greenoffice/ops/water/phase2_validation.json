@@ -1,0 +1,25 @@
+{
+  "phase": "2",
+  "status": "PASSED",
+  "discrepancies": [],
+  "yearly_totals": {
+    "2567": {
+      "excel_total_cubic_meter": 5666.4,
+      "db_total_cubic_meter": 5666.4,
+      "excel_total_cost": 45331.2,
+      "db_total_cost": 45331.2,
+      "excel_total_people": 1140,
+      "db_total_people": 1140.0
+    },
+    "2568": {
+      "excel_total_cubic_meter": 8337.5,
+      "db_total_cubic_meter": 8337.5,
+      "excel_total_cost": 66700.0,
+      "db_total_cost": 66700.0,
+      "excel_total_people": 1140,
+      "db_total_people": 1140.0
+    }
+  },
+  "db_row_count": 24,
+  "excel_count": 2
+}

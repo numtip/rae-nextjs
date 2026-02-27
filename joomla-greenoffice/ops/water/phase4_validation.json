@@ -1,0 +1,98 @@
+{
+  "phase": "4",
+  "status": "PASSED",
+  "message": "Dashboard calculations validated against CSV data",
+  "validation_tests": {
+    "monthly_calculations": "PASSED",
+    "quarterly_calculations": "PASSED",
+    "ytd_calculations": "PASSED",
+    "weighted_average_formula": "PASSED"
+  },
+  "detailed_results": {
+    "monthly_metadata": {
+      "2567": {
+        "total_cubic_meter": 5666.4,
+        "total_cost_baht": 45331.2,
+        "total_people": 1140,
+        "avg_m3_per_person": 4.9705,
+        "row_count": 12
+      },
+      "2568": {
+        "total_cubic_meter": 8337.5,
+        "total_cost_baht": 66700.0,
+        "total_people": 1140,
+        "avg_m3_per_person": 7.3136,
+        "row_count": 12
+      }
+    },
+    "quarterly_metadata": {
+      "2567": {
+        "Q1": {"total_cubic_meter": 1265.9, "total_cost_baht": 10127.2, "total_people": 285.0, "avg_m3_per_person": 4.4418},
+        "Q2": {"total_cubic_meter": 1230.0, "total_cost_baht": 9840.0, "total_people": 285.0, "avg_m3_per_person": 4.3158},
+        "Q3": {"total_cubic_meter": 1166.2, "total_cost_baht": 9329.6, "total_people": 285.0, "avg_m3_per_person": 4.0919},
+        "Q4": {"total_cubic_meter": 2004.3, "total_cost_baht": 16034.4, "total_people": 285.0, "avg_m3_per_person": 7.0326}
+      },
+      "2568": {
+        "Q1": {"total_cubic_meter": 1941.5, "total_cost_baht": 15532.0, "total_people": 285.0, "avg_m3_per_person": 6.8123},
+        "Q2": {"total_cubic_meter": 1954.6, "total_cost_baht": 15636.8, "total_people": 285.0, "avg_m3_per_person": 6.8582},
+        "Q3": {"total_cubic_meter": 2073.3, "total_cost_baht": 16586.4, "total_people": 285.0, "avg_m3_per_person": 7.2747},
+        "Q4": {"total_cubic_meter": 2368.1, "total_cost_baht": 18944.8, "total_people": 285.0, "avg_m3_per_person": 8.3091}
+      }
+    },
+    "ytd_metadata": {
+      "2567": {
+        "total_cubic_meter": 5666.4,
+        "total_cost_baht": 45331.2,
+        "total_people": 1140,
+        "avg_m3_per_person": 4.9705,
+        "included_months": 12,
+        "cutoff_month": 12
+      },
+      "2568": {
+        "total_cubic_meter": 8337.5,
+        "total_cost_baht": 66700.0,
+        "total_people": 1140,
+        "avg_m3_per_person": 7.3136,
+        "included_months": 12,
+        "cutoff_month": 12
+      }
+    }
+  },
+  "formula_validation": {
+    "weighted_average_m3_per_person_uses_correct_formula": true,
+    "quarterly_computations_use_summing_method": true,
+    "ytd_computations_include_all_months_to_date": true,
+    "no_scaling_errors_found": true,
+    "no_misleading_abbreviations_used": true
+  },
+  "test_cases_validated": {
+    "sample_data_1_2_3": {
+      "test_input": [
+        {"cubic_meter": 291.0, "people": 95},
+        {"cubic_meter": 467.3, "people": 95},
+        {"cubic_meter": 507.6, "people": 95}
+      ],
+      "expected_result": {"total_m3": 1265.9, "total_people": 285, "avg_m3_per_person": 4.4418},
+      "actual_result": {"total_m3": 1265.9, "total_people": 285, "avg_m3_per_person": 4.4418},
+      "validation_status": "PASSED"
+    }
+  },
+  "csv_data_confirmed": {
+    "source_csv": "/home/rae_admin/joomla-greenoffice/joomla_data/images/data/water/water_2567-2568_v1.csv",
+    "total_rows": 24,
+    "years_available": [2567, 2568],
+    "fields_used_from_csv": ["year", "month_th", "month_idx", "people", "cubic_meter", "cost_baht", "m3_per_person"]
+  },
+  "final_verification": {
+    "dashboard_formula_sum_m3_sum_people": "CONFIRMED",
+    "quarterly_period_groupings": "12MONTHS_3_EACH",
+    "ytd_computation_logic": "JAN_LATEST_MONTH",
+    "csv_to_dashboard_Data_mapping": "ACCURATE"
+  },
+  "audit_completion": {
+    "monthly_view_validation": "COMPLETE",
+    "quarterly_view_validation": "COMPLETE", 
+    "ytd_view_validation": "COMPLETE",
+    "comparison_with_energy_dashboard_patterns": "IDENTICAL_LOGIC"
+  }
+}

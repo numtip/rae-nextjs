@@ -1,0 +1,4 @@
+2026-02-27 07:31:09,209 - INFO - Starting water DB to CSV export
+2026-02-27 07:31:09,209 - INFO - Starting export to /home/rae_admin/joomla-greenoffice/joomla_data/images/data/water/water_2567-2568_v1.csv
+2026-02-27 07:31:09,214 - ERROR - File write error: [Errno 13] Permission denied: '/home/rae_admin/joomla-greenoffice/joomla_data/images/data/water/water_2567-2568_v1.csv'
+2026-02-27 07:31:09,214 - ERROR - Export failed: [Errno 13] Permission denied: '/home/rae_admin/joomla-greenoffice/joomla_data/images/data/water/water_2567-2568_v1.csv'

@@ -1,0 +1,32 @@
+{
+  "phase": "3",
+  "status": "PASSED",
+  "discrepancies": [],
+  "yearly_totals": {
+    "2567": {
+      "generated": {
+        "cubic_meter": 5666.4,
+        "cost_baht": 45331.2,
+        "people": 1140.0
+      },
+      "existing": {
+        "cubic_meter": 5666.4,
+        "cost_baht": 45331.2,
+        "people": 1140.0
+      }
+    },
+    "2568": {
+      "generated": {
+        "cubic_meter": 8337.5,
+        "cost_baht": 66700.0,
+        "people": 1140.0
+      },
+      "existing": {
+        "cubic_meter": 8337.5,
+        "cost_baht": 66700.0,
+        "people": 1140.0
+      }
+    }
+  },
+  "total_rows": 24
+}

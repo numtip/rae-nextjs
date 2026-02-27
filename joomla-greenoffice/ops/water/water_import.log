@@ -1,0 +1,13 @@
+2026-02-27 07:22:51,349 - INFO - Starting water Excel import
+2026-02-27 07:22:54,658 - ERROR - Database connection error: 1045 (28000): Access denied for user 'joomla_user'@'172.19.0.1' (using password: YES)
+2026-02-27 07:23:54,486 - INFO - Starting water Excel import
+2026-02-27 07:24:04,720 - ERROR - Database connection error: 2005 (HY000): Unknown MySQL server host 'rgreenoff-db' (-3)
+2026-02-27 07:25:20,262 - INFO - Starting water Excel import
+2026-02-27 07:25:20,507 - ERROR - Database connection error: 1045 (28000): Access denied for user 'joomla_user'@'172.19.0.1' (using password: YES)
+2026-02-27 07:27:46,869 - INFO - Starting water Excel import
+2026-02-27 07:27:47,258 - ERROR - Database error: 1146 (42S02): Table 'joomla_greenoffice.j6_go_water_monthly' doesn't exist
+2026-02-27 07:29:34,500 - INFO - Starting water Excel import
+2026-02-27 07:29:34,753 - ERROR - Database error: 1264 (22003): Out of range value for column 'year' at row 1
+2026-02-27 07:30:59,905 - INFO - Starting water Excel import
+2026-02-27 07:31:00,165 - INFO - Database operation completed. Inserted: 24, Updated: 0
+2026-02-27 07:31:00,166 - INFO - Import completed successfully

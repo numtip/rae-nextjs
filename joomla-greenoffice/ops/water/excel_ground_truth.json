@@ -1,0 +1,262 @@
+{
+  "2567": {
+    "year": 2567,
+    "months": [
+      {
+        "year": 2567,
+        "month_idx": 1,
+        "month_th": "ม.ค.",
+        "people": 95,
+        "cubic_meter": 291.0,
+        "cost_baht": 2328.0,
+        "m3_per_person_excel": 3.0631578947368423,
+        "m3_per_person_final": 3.0631578947368423
+      },
+      {
+        "year": 2567,
+        "month_idx": 2,
+        "month_th": "ก.พ.",
+        "people": 95,
+        "cubic_meter": 467.29999999998836,
+        "cost_baht": 3738.399999999907,
+        "m3_per_person_excel": 4.91894736842093,
+        "m3_per_person_final": 4.91894736842093
+      },
+      {
+        "year": 2567,
+        "month_idx": 3,
+        "month_th": "มี.ค.",
+        "people": 95,
+        "cubic_meter": 507.5999999999767,
+        "cost_baht": 4060.7999999998137,
+        "m3_per_person_excel": 5.343157894736597,
+        "m3_per_person_final": 5.343157894736597
+      },
+      {
+        "year": 2567,
+        "month_idx": 4,
+        "month_th": "เม.ย.",
+        "people": 95,
+        "cubic_meter": 452.29999999998836,
+        "cost_baht": 3618.399999999907,
+        "m3_per_person_excel": 4.761052631578825,
+        "m3_per_person_final": 4.761052631578825
+      },
+      {
+        "year": 2567,
+        "month_idx": 5,
+        "month_th": "พ.ค.",
+        "people": 95,
+        "cubic_meter": 408.70000000001164,
+        "cost_baht": 3269.600000000093,
+        "m3_per_person_excel": 4.302105263158017,
+        "m3_per_person_final": 4.302105263158017
+      },
+      {
+        "year": 2567,
+        "month_idx": 6,
+        "month_th": "มิ.ย.",
+        "people": 95,
+        "cubic_meter": 369.0,
+        "cost_baht": 2952.0,
+        "m3_per_person_excel": 3.8842105263157896,
+        "m3_per_person_final": 3.8842105263157896
+      },
+      {
+        "year": 2567,
+        "month_idx": 7,
+        "month_th": "ก.ค.",
+        "people": 95,
+        "cubic_meter": 462.1000000000349,
+        "cost_baht": 3696.8000000002794,
+        "m3_per_person_excel": 4.864210526316157,
+        "m3_per_person_final": 4.864210526316157
+      },
+      {
+        "year": 2567,
+        "month_idx": 8,
+        "month_th": "ส.ค.",
+        "people": 95,
+        "cubic_meter": 348.5999999999767,
+        "cost_baht": 2788.7999999998137,
+        "m3_per_person_excel": 3.6694736842102813,
+        "m3_per_person_final": 3.6694736842102813
+      },
+      {
+        "year": 2567,
+        "month_idx": 9,
+        "month_th": "ก.ย.",
+        "people": 95,
+        "cubic_meter": 355.5,
+        "cost_baht": 2844.0,
+        "m3_per_person_excel": 3.7421052631578946,
+        "m3_per_person_final": 3.7421052631578946
+      },
+      {
+        "year": 2567,
+        "month_idx": 10,
+        "month_th": "ต.ค.",
+        "people": 95,
+        "cubic_meter": 463.5999999999767,
+        "cost_baht": 3708.7999999998137,
+        "m3_per_person_excel": 4.879999999999755,
+        "m3_per_person_final": 4.879999999999755
+      },
+      {
+        "year": 2567,
+        "month_idx": 11,
+        "month_th": "พ.ย.",
+        "people": 95,
+        "cubic_meter": 508.1000000000349,
+        "cost_baht": 4064.8000000002794,
+        "m3_per_person_excel": 5.348421052631947,
+        "m3_per_person_final": 5.348421052631947
+      },
+      {
+        "year": 2567,
+        "month_idx": 12,
+        "month_th": "ธ.ค.",
+        "people": 95,
+        "cubic_meter": 1032.5999999999767,
+        "cost_baht": 8260.799999999814,
+        "m3_per_person_excel": 10.86947368421028,
+        "m3_per_person_final": 10.86947368421028
+      }
+    ],
+    "total_cubic_meter": 5666.4,
+    "total_cost_baht": 45331.2,
+    "weighted_avg_m3_per_person": 4.9705,
+    "total_people_months": 1140,
+    "data_integrity_errors": 0
+  },
+  "2568": {
+    "year": 2568,
+    "months": [
+      {
+        "year": 2568,
+        "month_idx": 1,
+        "month_th": "ม.ค.",
+        "people": 95,
+        "cubic_meter": 939.0,
+        "cost_baht": 7512.0,
+        "m3_per_person_excel": 9.884210526315789,
+        "m3_per_person_final": 9.884210526315789
+      },
+      {
+        "year": 2568,
+        "month_idx": 2,
+        "month_th": "ก.พ.",
+        "people": 95,
+        "cubic_meter": 447.5,
+        "cost_baht": 3580.0,
+        "m3_per_person_excel": 4.7105263157894735,
+        "m3_per_person_final": 4.7105263157894735
+      },
+      {
+        "year": 2568,
+        "month_idx": 3,
+        "month_th": "มี.ค.",
+        "people": 95,
+        "cubic_meter": 555.0,
+        "cost_baht": 4440.0,
+        "m3_per_person_excel": 5.842105263157895,
+        "m3_per_person_final": 5.842105263157895
+      },
+      {
+        "year": 2568,
+        "month_idx": 4,
+        "month_th": "เม.ย.",
+        "people": 95,
+        "cubic_meter": 594.6000000000349,
+        "cost_baht": 4756.800000000279,
+        "m3_per_person_excel": 6.2589473684214205,
+        "m3_per_person_final": 6.2589473684214205
+      },
+      {
+        "year": 2568,
+        "month_idx": 5,
+        "month_th": "พ.ค.",
+        "people": 95,
+        "cubic_meter": 697.2999999999884,
+        "cost_baht": 5578.399999999907,
+        "m3_per_person_excel": 7.339999999999877,
+        "m3_per_person_final": 7.339999999999877
+      },
+      {
+        "year": 2568,
+        "month_idx": 6,
+        "month_th": "มิ.ย.",
+        "people": 95,
+        "cubic_meter": 662.7000000000116,
+        "cost_baht": 5301.600000000093,
+        "m3_per_person_excel": 6.975789473684333,
+        "m3_per_person_final": 6.975789473684333
+      },
+      {
+        "year": 2568,
+        "month_idx": 7,
+        "month_th": "ก.ค.",
+        "people": 95,
+        "cubic_meter": 642.6999999999534,
+        "cost_baht": 5141.5999999996275,
+        "m3_per_person_excel": 6.765263157894247,
+        "m3_per_person_final": 6.765263157894247
+      },
+      {
+        "year": 2568,
+        "month_idx": 8,
+        "month_th": "ส.ค.",
+        "people": 95,
+        "cubic_meter": 696.5,
+        "cost_baht": 5572.0,
+        "m3_per_person_excel": 7.331578947368421,
+        "m3_per_person_final": 7.331578947368421
+      },
+      {
+        "year": 2568,
+        "month_idx": 9,
+        "month_th": "ก.ย.",
+        "people": 95,
+        "cubic_meter": 734.1000000000349,
+        "cost_baht": 5872.800000000279,
+        "m3_per_person_excel": 7.727368421052999,
+        "m3_per_person_final": 7.727368421052999
+      },
+      {
+        "year": 2568,
+        "month_idx": 10,
+        "month_th": "ต.ค.",
+        "people": 95,
+        "cubic_meter": 599.3999999999651,
+        "cost_baht": 4795.199999999721,
+        "m3_per_person_excel": 6.309473684210158,
+        "m3_per_person_final": 6.309473684210158
+      },
+      {
+        "year": 2568,
+        "month_idx": 11,
+        "month_th": "พ.ย.",
+        "people": 95,
+        "cubic_meter": 840.6000000000349,
+        "cost_baht": 6724.800000000279,
+        "m3_per_person_excel": 8.848421052631947,
+        "m3_per_person_final": 8.848421052631947
+      },
+      {
+        "year": 2568,
+        "month_idx": 12,
+        "month_th": "ธ.ค.",
+        "people": 95,
+        "cubic_meter": 928.0999999999767,
+        "cost_baht": 7424.799999999814,
+        "m3_per_person_excel": 9.769473684210281,
+        "m3_per_person_final": 9.769473684210281
+      }
+    ],
+    "total_cubic_meter": 8337.5,
+    "total_cost_baht": 66700.0,
+    "weighted_avg_m3_per_person": 7.3136,
+    "total_people_months": 1140,
+    "data_integrity_errors": 0
+  }
+}
