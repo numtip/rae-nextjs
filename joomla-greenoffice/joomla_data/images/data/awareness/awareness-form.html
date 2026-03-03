@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>แบบสอบถาม — Awareness Green Office</title>
+  <style>
+    :root {
+      --bg: #f0f7f4;
+      --card: #fff;
+      --ink: #1a2e1a;
+      --muted: #4a6b4a;
+      --accent: #0d9488;
+      --green-dark: #0f766e;
+      --pre-color: #0284c7;
+      --post-color: #7c3aed;
+      --shadow: 0 2px 12px rgba(5,150,105,0.10);
+      --phase-color: var(--pre-color);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Sarabun', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    body.phase-post { --phase-color: var(--post-color); }
+
+    /* ─── Hero ─── */
+    .hero {
+      background: linear-gradient(135deg, var(--phase-color, #0284c7) 0%, #0c5a87 100%);
+      color: #fff;
+      padding: 1.5rem 1.25rem 1.25rem;
+      text-align: center;
+    }
+    body.phase-post .hero {
+      background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 20px;
+      padding: 0.25rem 0.85rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.03em;
+    }
+    .hero-title { margin: 0; font-size: 1.35rem; font-weight: 700; line-height: 1.3; }
+    .hero-session {
+      margin: 0.4rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    /* ─── Progress ─── */
+    .progress-wrap {
+      background: var(--card);
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid #e2f5ef;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .progress-bar-bg {
+      height: 6px;
+      background: #e2f5ef;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--green-dark));
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .progress-text {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    /* ─── Wrap ─── */
+    .wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    /* ─── Error ─── */
+    .error-banner {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      color: #991b1b;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .error-banner.visible { display: block; }
+
+    /* ─── Loading ─── */
+    .loading-block {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .spinner {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      border: 3px solid #d1fae5;
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 0.75rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Questions ─── */
+    .questions-block { margin-bottom: 1.5rem; }
+
+    /* fieldset from awareness-form.js */
+    .awareness-mcq-q {
+      background: var(--card);
+      border: 1.5px solid #e2f5ef;
+      border-radius: 14px;
+      padding: 1.25rem;
+      margin: 0 0 1rem;
+      box-shadow: var(--shadow);
+      transition: border-color 0.15s;
+    }
+    .awareness-mcq-q.answered { border-color: #6ee7b7; }
+
+    .awareness-mcq-q legend {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.5;
+      padding: 0;
+      margin-bottom: 0.5rem;
+      float: unset;
+      width: 100%;
+    }
+
+    .awareness-mcq-q label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.6rem 0.85rem;
+      border-radius: 10px;
+      border: 1.5px solid #e2f5ef;
+      margin: 0.4rem 0;
+      cursor: pointer;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      transition: background 0.12s, border-color 0.12s;
+    }
+    .awareness-mcq-q label:hover { background: #f0fdf4; border-color: #a7f3d0; }
+    .awareness-mcq-q label:has(input:checked) {
+      background: #ecfdf5;
+      border-color: var(--accent);
+    }
+    .awareness-mcq-q input[type="radio"] {
+      width: 1.1rem;
+      height: 1.1rem;
+      margin: 0;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+      accent-color: var(--accent);
+    }
+    /* Remove the <br> from JS */
+    .awareness-mcq-q br { display: none; }
+
+    /* ─── Dept / Date ─── */
+    .meta-block {
+      background: var(--card);
+      border: 1.5px solid #e2f5ef;
+      border-radius: 14px;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+    }
+    .meta-block legend {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .meta-block label {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      font-weight: 500;
+    }
+    .meta-block select,
+    .meta-block input[type="date"] {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid #d1fae5;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #f0fdf4;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .meta-block select:focus,
+    .meta-block input[type="date"]:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(13,148,136,0.12);
+    }
+
+    /* ─── Submit ─── */
+    .submit-wrap { text-align: center; }
+    .submit-btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      min-width: 220px;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .submit-btn:hover { background: var(--green-dark); }
+    .submit-btn:active { transform: scale(0.98); }
+    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .submit-hint {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+    }
+
+    /* ─── Back link ─── */
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+      font-size: 0.88rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 1.15rem; }
+      .wrap { padding: 1.25rem 0.75rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero set by JS -->
+  <header class="hero">
+    <div class="hero-badge" id="heroBadge">Pre-test</div>
+    <h1 class="hero-title" id="heroTitle">แบบสอบถามก่อนกิจกรรม</h1>
+    <p class="hero-session" id="heroSession">รอบกิจกรรม: —</p>
+  </header>
+
+  <!-- Progress bar -->
+  <div class="progress-wrap" id="progressWrap" style="display:none">
+    <div class="progress-text" id="progressText">ตอบแล้ว 0 / 0 ข้อ</div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <a href="./awareness-index.html" class="back-link" id="backLink">← กลับหน้าหลัก</a>
+
+    <!-- Error -->
+    <div class="error-banner" id="errorBanner" role="alert"></div>
+
+    <!-- Loading -->
+    <div class="loading-block" id="loadingBlock">
+      <div class="spinner"></div>
+      <div>กำลังโหลดคำถาม…</div>
+    </div>
+
+    <form id="awarenessForm" style="display:none">
+      <input type="hidden" name="session_id" id="inputSessionId" />
+      <input type="hidden" name="phase" id="inputPhase" />
+
+      <!-- MCQ (injected by awareness-form.js) -->
+      <div class="questions-block" id="mcqContainer"></div>
+
+      <!-- Meta -->
+      <div class="meta-block">
+        <legend>ข้อมูลเพิ่มเติม</legend>
+        <label for="inputDepartment">หน่วยงาน / แผนก</label>
+        <select id="inputDepartment" name="department" required>
+          <option value="">— เลือกหน่วยงาน —</option>
+          <option value="กองบริหารงานสำนักวิจัยฯ">กองบริหารงานสำนักวิจัยฯ</option>
+          <option value="กองบริหารงานวิจัย">กองบริหารงานวิจัย</option>
+          <option value="กองบริหารงานบริการวิชาการ">กองบริหารงานบริการวิชาการ</option>
+        </select>
+
+        <label for="inputDate">วันที่ทำแบบสอบถาม</label>
+        <input type="date" id="inputDate" name="date" required />
+      </div>
+
+      <div class="submit-wrap">
+        <button type="submit" class="submit-btn" id="submitBtn">ส่งคำตอบ</button>
+        <p class="submit-hint" id="submitHint">กรุณาตอบให้ครบก่อนกด "ส่งคำตอบ"</p>
+      </div>
+    </form>
+  </main>
+
+  <script src="./awareness-form.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var params = new URLSearchParams(window.location.search);
+    var sessionId = params.get('session') || '';
+    var phase = (params.get('phase') || 'pre').toLowerCase();
+    if (phase !== 'post') phase = 'pre';
+
+    // Phase styling
+    if (phase === 'post') document.body.classList.add('phase-post');
+
+    var el = function (id) { return document.getElementById(id); };
+    var heroBadge = el('heroBadge');
+    var heroTitle = el('heroTitle');
+    var heroSession = el('heroSession');
+    var errorBanner = el('errorBanner');
+    var loadingBlock = el('loadingBlock');
+    var form = el('awarenessForm');
+    var mcqContainer = el('mcqContainer');
+    var progressWrap = el('progressWrap');
+    var progressText = el('progressText');
+    var progressFill = el('progressFill');
+    var submitBtn = el('submitBtn');
+    var backLink = el('backLink');
+
+    // Phase labels
+    if (phase === 'post') {
+      heroBadge.textContent = 'Post-test';
+      heroTitle.textContent = 'แบบสอบถามหลังกิจกรรม';
+    }
+    heroSession.textContent = 'รอบกิจกรรม: ' + (sessionId || '—');
+
+    // Back link with session
+    if (sessionId) {
+      backLink.href = './awareness-index.html?session=' + encodeURIComponent(sessionId);
+    }
+
+    // Set today's date as default
+    var dateInput = el('inputDate');
+    if (dateInput) {
+      var today = new Date();
+      var yyyy = today.getFullYear();
+      var mm = String(today.getMonth() + 1).padStart(2, '0');
+      var dd = String(today.getDate()).padStart(2, '0');
+      dateInput.value = yyyy + '-' + mm + '-' + dd;
+    }
+
+    function showError(msg) {
+      errorBanner.textContent = msg;
+      errorBanner.classList.add('visible');
+      loadingBlock.style.display = 'none';
+    }
+
+    if (!sessionId) {
+      showError('กรุณาระบุ session ใน URL เช่น ?session=AW-XXXX&phase=pre หรือกลับหน้าหลักเพื่อเลือกรอบกิจกรรม');
+      return;
+    }
+
+    el('inputSessionId').value = sessionId;
+    el('inputPhase').value = phase;
+
+    // Progress tracking
+    var totalQ = 0;
+    function updateProgress() {
+      if (!totalQ) return;
+      var answered = form.querySelectorAll('input[name^="mcq_"]:checked').length;
+      progressText.textContent = 'ตอบแล้ว ' + answered + ' / ' + totalQ + ' ข้อ';
+      progressFill.style.width = Math.round((answered / totalQ) * 100) + '%';
+      // Mark answered fieldsets
+      var fieldsets = mcqContainer.querySelectorAll('.awareness-mcq-q');
+      fieldsets.forEach(function (fs) {
+        var checked = fs.querySelector('input:checked');
+        if (checked) fs.classList.add('answered');
+        else fs.classList.remove('answered');
+      });
+      if (answered === totalQ) {
+        submitBtn.textContent = 'ส่งคำตอบ ✓';
+        el('submitHint').textContent = 'ตอบครบแล้ว พร้อมส่ง!';
+        el('submitHint').style.color = '#059669';
+      } else {
+        submitBtn.textContent = 'ส่งคำตอบ';
+        el('submitHint').textContent = 'ยังเหลืออีก ' + (totalQ - answered) + ' ข้อ';
+        el('submitHint').style.color = '';
+      }
+    }
+
+    // Load form
+    AwarenessForm.initForm(mcqContainer, sessionId, phase, function (err) {
+      loadingBlock.style.display = 'none';
+      if (err) {
+        showError('ไม่สามารถโหลดคำถามได้: ' + (err.message || err));
+        return;
+      }
+      form.style.display = 'block';
+      progressWrap.style.display = 'block';
+      totalQ = mcqContainer.querySelectorAll('.awareness-mcq-q').length;
+      updateProgress();
+      mcqContainer.addEventListener('change', updateProgress);
+    });
+
+    // Submit
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Validate MCQ
+      var unanswered = mcqContainer.querySelectorAll('.awareness-mcq-q').length
+        - form.querySelectorAll('input[name^="mcq_"]:checked').length;
+      if (unanswered > 0) {
+        alert('กรุณาตอบให้ครบทุกข้อ (ยังขาดอยู่ ' + unanswered + ' ข้อ)');
+        // Scroll to first unanswered
+        var fieldsets = mcqContainer.querySelectorAll('.awareness-mcq-q');
+        for (var i = 0; i < fieldsets.length; i++) {
+          if (!fieldsets[i].querySelector('input:checked')) {
+            fieldsets[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            fieldsets[i].style.borderColor = '#fca5a5';
+            setTimeout(function (fs) { fs.style.borderColor = ''; }.bind(null, fieldsets[i]), 2500);
+            break;
+          }
+        }
+        return;
+      }
+
+      var payload = AwarenessForm.buildPayload(form, sessionId, phase);
+      payload.response_id = payload.response_id || 'resp_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+      var thankYouUrl = './awareness-thankyou.html?phase=' + encodeURIComponent(phase);
+      if (sessionId) thankYouUrl += '&session=' + encodeURIComponent(sessionId);
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'กำลังส่ง…';
+
+      fetch('./awareness-webhook-config.json', { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.json() : {}; })
+        .catch(function () { return {}; })
+        .then(function (config) {
+          var webhookUrl = (config.webhook_url || '').trim();
+          if (!webhookUrl) {
+            console.log('Payload (no webhook_url):', JSON.stringify(payload, null, 2));
+            window.location.href = thankYouUrl;
+            return;
+          }
+          return fetch(webhookUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          }).then(function (res) {
+            if (!res.ok) throw new Error('ส่งไม่สำเร็จ: HTTP ' + res.status);
+            return res.json().catch(function () { return {}; });
+          }).then(function () {
+            window.location.href = thankYouUrl;
+          });
+        })
+        .catch(function (err) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'ส่งคำตอบ';
+          alert('ส่งคำตอบไม่สำเร็จ: ' + (err.message || err) + '\n\nกรุณาลองใหม่อีกครั้ง');
+        });
+    });
+  })();
+  </script>
+</body>
+</html>

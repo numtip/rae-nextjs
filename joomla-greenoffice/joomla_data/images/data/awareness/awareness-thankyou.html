@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ได้รับคำตอบแล้ว — Awareness Green Office</title>
+  <style>
+    :root {
+      --bg: #f0f7f4;
+      --card: #fff;
+      --ink: #1a2e1a;
+      --muted: #4a6b4a;
+      --accent: #0d9488;
+      --green: #059669;
+      --green-dark: #0f766e;
+      --shadow: 0 2px 12px rgba(5,150,105,0.10);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Sarabun', ui-sans-serif, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+      color: #fff;
+      padding: 2.5rem 1.25rem 2rem;
+      text-align: center;
+    }
+    .checkmark {
+      width: 5rem;
+      height: 5rem;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 1rem;
+      border: 3px solid rgba(255,255,255,0.5);
+    }
+    .hero-title { margin: 0; font-size: 1.5rem; font-weight: 700; }
+    .hero-sub { margin: 0.5rem 0 0; font-size: 1rem; opacity: 0.9; line-height: 1.5; }
+
+    .wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 1.75rem 1rem 3rem;
+      flex: 1;
+    }
+
+    /* Next steps */
+    .next-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 0 0 1rem;
+    }
+
+    .step-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      box-shadow: var(--shadow);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--ink);
+      border-left: 4px solid transparent;
+      transition: box-shadow 0.15s;
+    }
+    .step-card:hover { box-shadow: 0 4px 18px rgba(5,150,105,0.15); }
+    .step-card.post-card { border-left-color: #7c3aed; }
+    .step-card.result-card { border-left-color: var(--green); }
+    .step-card.home-card { border-left-color: #94a3b8; }
+    .step-card.disabled {
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .step-icon {
+      font-size: 1.75rem;
+      flex-shrink: 0;
+    }
+    .step-body { flex: 1; }
+    .step-name { font-size: 1rem; font-weight: 600; margin-bottom: 0.1rem; }
+    .step-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+    .step-arrow { color: #94a3b8; font-size: 1.2rem; flex-shrink: 0; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #d1fae5;
+      margin: 1.25rem 0;
+    }
+
+    .close-hint {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      opacity: 0.7;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 1.25rem; }
+      .wrap { padding: 1.25rem 0.75rem 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="checkmark" aria-hidden="true">✓</div>
+    <h1 class="hero-title">ได้รับคำตอบของท่านแล้ว</h1>
+    <p class="hero-sub" id="heroSub">
+      ระบบบันทึกแบบสอบถามของท่านเรียบร้อยแล้ว<br />
+      ขอบคุณที่สละเวลาเข้าร่วมการประเมิน
+    </p>
+  </header>
+
+  <main class="wrap">
+    <p class="next-title">ขั้นตอนถัดไป</p>
+
+    <!-- After Pre: go do Post -->
+    <a id="linkPost" href="#" class="step-card post-card" style="display:none">
+      <div class="step-icon">📝</div>
+      <div class="step-body">
+        <div class="step-name">ทำแบบประเมินหลังกิจกรรม (Post-test)</div>
+        <div class="step-desc">หลังจบกิจกรรม / อบรม กลับมาทำ Post-test ที่นี่</div>
+      </div>
+      <div class="step-arrow">›</div>
+    </a>
+
+    <!-- View result -->
+    <a id="linkResult" href="./awareness-dashboard.html" class="step-card result-card">
+      <div class="step-icon">📊</div>
+      <div class="step-body">
+        <div class="step-name">ดูผลคะแนนและสรุป</div>
+        <div class="step-desc">ดู KPI, กราฟเปรียบเทียบ Pre/Post และรายงานสรุปรอบนี้</div>
+      </div>
+      <div class="step-arrow">›</div>
+    </a>
+
+    <hr class="divider" />
+
+    <!-- Home -->
+    <a id="linkHome" href="./awareness-index.html" class="step-card home-card">
+      <div class="step-icon">🏠</div>
+      <div class="step-body">
+        <div class="step-name">กลับหน้าหลัก</div>
+        <div class="step-desc">เลือกรอบกิจกรรมอื่น หรือทำแบบประเมินรอบใหม่</div>
+      </div>
+      <div class="step-arrow">›</div>
+    </a>
+
+    <p class="close-hint">หรือปิดหน้าต่างนี้ได้เลยหากเสร็จเรียบร้อยแล้ว</p>
+  </main>
+
+  <script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var phase = (params.get('phase') || '').toLowerCase();
+    var session = params.get('session') || '';
+
+    var heroSub = document.getElementById('heroSub');
+    var linkPost = document.getElementById('linkPost');
+    var linkResult = document.getElementById('linkResult');
+    var linkHome = document.getElementById('linkHome');
+
+    if (phase === 'pre') {
+      heroSub.innerHTML = 'บันทึก <strong>แบบสอบถามก่อนกิจกรรม (Pre-test)</strong> เรียบร้อยแล้ว<br />ขอบคุณที่สละเวลาเข้าร่วมการประเมิน';
+      // Show post-test next step
+      if (session) {
+        linkPost.href = './awareness-form.html?session=' + encodeURIComponent(session) + '&phase=post';
+        linkPost.style.display = 'flex';
+      }
+    } else if (phase === 'post') {
+      heroSub.innerHTML = 'บันทึก <strong>แบบสอบถามหลังกิจกรรม (Post-test)</strong> เรียบร้อยแล้ว<br />ขอบคุณที่สละเวลาเข้าร่วมการประเมิน';
+    }
+
+    if (session) {
+      linkResult.href = './awareness-dashboard.html?session=' + encodeURIComponent(session);
+      linkHome.href = './awareness-index.html?session=' + encodeURIComponent(session);
+    }
+  })();
+  </script>
+</body>
+</html>
