@@ -1,0 +1,17 @@
+{
+  "session_id": "AW-20260303-RAE-LIVE1",
+  "pre_mcq": [
+    "q_rae_greenoffice/green-of",
+    "q_res_5",
+    "q_res_1",
+    "q_res_2",
+    "q_res_4"
+  ],
+  "post_mcq": [
+    "q_rae_greenoffice/green-of",
+    "q_res_5",
+    "q_res_1",
+    "q_res_2",
+    "q_res_4"
+  ]
+}
