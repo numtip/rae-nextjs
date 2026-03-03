@@ -121,6 +121,7 @@ services:
     networks:
       - backend
       - frontend
+      - joomla-net
     deploy:
       resources:
         limits:
@@ -232,6 +233,9 @@ networks:
     driver: bridge
   rae-internal:
     external: true
+  joomla-net:
+    external: true
+    name: joomla-greenoffice_joomla-network
 
 volumes:
   mariadb_data:

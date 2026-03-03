@@ -31,6 +31,8 @@ class AnalyzeHandler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps({"ok": False, "error": "session required"}).encode())
             return
+        import os
+        env = {**os.environ, "DB_HOST": os.environ.get("DB_HOST", "172.23.0.2")}
         try:
             subprocess.run(
                 [str(RUN_ANALYZE), session],
@@ -38,6 +40,7 @@ class AnalyzeHandler(BaseHTTPRequestHandler):
                 check=True,
                 capture_output=True,
                 timeout=120,
+                env=env,
             )
             out = {"ok": True, "session": session}
         except subprocess.CalledProcessError as e:

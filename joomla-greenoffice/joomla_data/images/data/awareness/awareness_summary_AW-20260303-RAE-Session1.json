@@ -1,0 +1,19 @@
+{
+  "session_id": "AW-20260303-RAE-Session1",
+  "kpis": {
+    "session_id": "AW-20260303-RAE-Session1",
+    "n_pre": 1,
+    "n_post": 1,
+    "n_followup": 0,
+    "knowledge_pre_mean": 0.0,
+    "knowledge_post_mean": 0.0,
+    "knowledge_lift": 0.0,
+    "attitude_mean": 4.1,
+    "intention_ge4_rate": 100.0,
+    "behavior_ge4_rate": null,
+    "participation_rate": 100.0,
+    "effectiveness_score": 65.5,
+    "effectiveness_grade": "ดี"
+  },
+  "generated_at": "2026-03-03T12:16:15.732474Z"
+}

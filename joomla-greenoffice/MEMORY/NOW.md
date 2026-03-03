@@ -1,6 +1,6 @@
 # NOW — Joomla 6 Green Office
 > Single source of truth. Keep ≤ 1 page. Facts only.
-> _Updated: 2026-02-21_
+> _Updated: 2026-03-03_
 
 ## Stack
 | | |
@@ -13,20 +13,23 @@
 | Joomla version | 6.0.3 |
 
 ## Last Completed
-**2026-02-21** — Dynamic dashboard + auto-sync plugin operational.
-- 40 broken `j6_assets` (lft=0) fixed → no more `moveByReference` save error.
-- Custom field "go-status" (field_id=1) shows in article editor Tab "Green Office สถานะ".
-- `mod_go_dashboard` (ext 10175) reads `j6_fields_values` live at render.
-- `plg_content_go_statussync` (ext 10177) auto-replaces ⏳/✅/🔄 in article HTML on Save.
+**2026-03-03** — Awareness system production E2E verified.
+- n8n workflows (Ingest + Analysis) imported & active
+- MySQL credential in n8n linked to rgreenoff-db via joomla-net
+- Webhook `POST /n8n/webhook/awareness-form` รับ Pre/Post → DB ✅
+- analyze_awareness.py แก้บัค Decimal type errors ✅
+- pm2: `awareness-webhook` + `awareness-cron` (every 5 min) ✅
+- E2E: Session1 (65.5/100) + QA1 (43.84/100) ผ่านทั้งหมด
 
 ## Next Actions
-1. **E2E verify**: change go-status field → Save → confirm emoji + Dashboard % update.
-2. **Fill evidence data**: รายการหลักฐาน + ไฟล์/ลิงก์ in 24 articles via Admin.
-3. **DB backup** after verification (see `RUNBOOK/ROLLBACK.md`).
-4. See `MEMORY/PLAN.md` for backlog.
+1. Test water widget display on frontend.
+2. Install water cron if desired: `./install_cron.sh`
+3. E2E verify go-status field sync.
+4. Fill evidence table rows (รายการหลักฐาน) for all 24 articles.
+5. DB backup (`mysqldump joomla_greenoffice`).
 
 ## Blockers
-_None._
+- n8n → host port 9765 ยัง timeout (firewall) — workaround: pm2 cron analyze ทุก 5 นาที ✅
 
 ## Key IDs (do not delete these articles/categories)
 | Item | ID |
@@ -38,3 +41,13 @@ _None._
 | plg_go_clearcache | ext 10176 |
 | plg_go_statussync | ext 10177 |
 | Green Office articles | 41–64 |
+
+## Water Dashboard (Category 3.1)
+**2026-03-02** — Water Usage Dashboard fully integrated
+- DB table `j6_go_water_monthly` with 24 rows (2567-2568)
+- CSV: `/greenoffice/images/data/water/water_2567-2568_v1.csv`
+- Dashboard: `/greenoffice/images/data/water/dashboard.html`
+- Article 43 link: `<a href="/greenoffice/images/data/water/dashboard.html">Water Dashboard</a>`
+- Module widget: Water metrics displayed in mod_go_dashboard
+- Cron scripts: `water_cron_job.sh`, `install_cron.sh` ready
+- Documentation: `ops/water/CRON_GUIDE.md`
