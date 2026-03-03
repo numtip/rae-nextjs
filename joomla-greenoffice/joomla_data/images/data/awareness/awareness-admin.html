@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awareness Admin - จัดการรอบกิจกรรม</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .actions-bar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #229954;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .card-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .sessions-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .session-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .session-item:hover {
+            background: #f0f2f5;
+            transform: translateX(5px);
+        }
+        
+        .session-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .session-id {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            font-family: monospace;
+            background: #e8eaf6;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+        
+        .session-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .session-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .stat-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .session-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
+        }
+        
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .modal-header {
+            padding: 24px 24px 0;
+        }
+        
+        .modal-header h2 {
+            color: #333;
+            font-size: 22px;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-hint {
+            font-size: 13px;
+            color: #666;
+            margin-top: 6px;
+        }
+        
+        .modal-footer {
+            padding: 0 24px 24px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .alert {
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert.show {
+            display: block;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        
+        .urls-list {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .url-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .url-item:last-child {
+            border-bottom: none;
+        }
+        
+        .url-label {
+            min-width: 80px;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .url-value {
+            flex: 1;
+            font-family: monospace;
+            font-size: 13px;
+            color: #333;
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        
+        .btn-copy {
+            padding: 6px 12px;
+            font-size: 12px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .btn-copy:hover {
+            background: #5a6fd6;
+        }
+        
+        .confirm-text {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 Awareness Admin</h1>
+            <p>จัดการรอบกิจกรรม Awareness - สร้าง แก้ไข ลบ และดูสถิติ</p>
+        </header>
+        
+        <div id="alertBox" class="alert"></div>
+        
+        <div class="actions-bar">
+            <button class="btn btn-primary" onclick="showCreateModal()">
+                <span>+</span> สร้างรอบกิจกรรมใหม่
+            </button>
+            <button class="btn btn-secondary" onclick="loadSessions()">
+                <span>🔄</span> รีเฟรช
+            </button>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title">
+                <span>📋</span> รายการรอบกิจกรรม
+            </h2>
+            <div id="sessionsContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>กำลังโหลดข้อมูล...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Modal -->
+    <div id="createModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>➕ สร้างรอบกิจกรรมใหม่</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="sessionId">รหัสรอบกิจกรรม</label>
+                    <input type="text" id="sessionId" placeholder="เช่น AW-20250304-RAE-Workshop1">
+                    <p class="form-hint">
+                        รูปแบบ: AW-YYYYMMDD-RAE-&lt;ชื่อ&gt;<br>
+                        ถ้าเว้นว่างไว้ ระบบจะสร้างอัตโนมัติ
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('createModal')">ยกเลิก</button>
+                <button class="btn btn-primary" onclick="createSession()">สร้าง</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rename Modal -->
+    <div id="renameModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>✏️ แก้ไขชื่อรอบกิจกรรม</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="oldSessionId">รหัสเดิม</label>
+                    <input type="text" id="oldSessionId" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="newSessionId">รหัสใหม่</label>
+                    <input type="text" id="newSessionId" placeholder="เช่น AW-20250304-RAE-NewName">
+                    <p class="form-hint">รูปแบบ: AW-YYYYMMDD-RAE-&lt;ชื่อใหม่&gt;</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('renameModal')">ยกเลิก</button>
+                <button class="btn btn-primary" onclick="renameSession()">บันทึก</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Delete Modal -->
+    <div id="deleteModal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>⚠️ ยืนยันการลบ</h2>
+            </div>
+            <div class="modal-body">
+                <p>คุณต้องการลบรอบกิจกรรม <span id="deleteSessionId" class="confirm-text"></span> ใช่หรือไม่?</p>
+                <p style="margin-top: 15px; color: #666; font-size: 14px;">
+                    ⚠️ การดำเนินการนี้จะ:<br>
+                    • ลบรอบกิจกรรมออกจากรายการ<br>
+                    • ลบไฟล์คำถามและสรุปผล<br>
+                    • ลบข้อมูลการตอบแบบสอบถามทั้งหมด<br>
+                    <strong>ไม่สามารถกู้คืนได้</strong>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('deleteModal')">ยกเลิก</button>
+                <button class="btn btn-danger" onclick="deleteSession()">ลบ</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Detail Modal -->
+    <div id="detailModal" class="modal-overlay">
+        <div class="modal" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>📊 รายละเอียดรอบกิจกรรม</h2>
+            </div>
+            <div class="modal-body" id="detailContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('detailModal')">ปิด</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'awareness-admin-api.php';
+        let currentDeleteId = null;
+        let currentRenameId = null;
+        
+        // Load sessions on page load
+        document.addEventListener('DOMContentLoaded', loadSessions);
+        
+        async function loadSessions() {
+            const container = document.getElementById('sessionsContainer');
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>กำลังโหลดข้อมูล...</p>
+                </div>
+            `;
+            
+            try {
+                const response = await fetch(`${API_URL}?action=list`);
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error || 'Failed to load sessions');
+                }
+                
+                renderSessions(data.sessions);
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <p>❌ เกิดข้อผิดพลาด: ${error.message}</p>
+                        <button class="btn btn-secondary" onclick="loadSessions()" style="margin-top: 20px;">
+                            ลองใหม่
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderSessions(sessions) {
+            const container = document.getElementById('sessionsContainer');
+            
+            if (sessions.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="9" x2="15" y2="15"></line>
+                            <line x1="15" y1="9" x2="9" y2="15"></line>
+                        </svg>
+                        <p>ยังไม่มีรอบกิจกรรม</p>
+                        <p style="font-size: 14px; margin-top: 10px;">คลิก "สร้างรอบกิจกรรมใหม่" เพื่อเริ่มต้น</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const html = sessions.map(session => {
+                const stats = session.stats || { pre: 0, post: 0, followup: 0 };
+                const total = stats.pre + stats.post + stats.followup;
+                
+                return `
+                    <div class="session-item">
+                        <div class="session-header">
+                            <div class="session-id">${escapeHtml(session.id)}</div>
+                            <div class="session-badges">
+                                ${session.has_questions ? '<span class="badge badge-success">มีคำถาม</span>' : '<span class="badge badge-warning">ไม่มีคำถาม</span>'}
+                                ${session.has_summary ? '<span class="badge badge-info">มีสรุปผล</span>' : ''}
+                                ${total > 0 ? `<span class="badge badge-success">${total} การตอบกลับ</span>` : '<span class="badge badge-warning">ยังไม่มีการตอบกลับ</span>'}
+                            </div>
+                        </div>
+                        
+                        <div class="session-stats">
+                            <div class="stat-box">
+                                <div class="stat-value">${stats.pre}</div>
+                                <div class="stat-label">Pre-test</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">${stats.post}</div>
+                                <div class="stat-label">Post-test</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-value">${stats.followup}</div>
+                                <div class="stat-label">Follow-up</div>
+                            </div>
+                        </div>
+                        
+                        <div class="session-actions">
+                            <button class="btn btn-success btn-sm" onclick="showDetail('${escapeHtml(session.id)}')">
+                                👁️ ดูรายละเอียด
+                            </button>
+                            <button class="btn btn-primary btn-sm" onclick="showRenameModal('${escapeHtml(session.id)}')">
+                                ✏️ แก้ไขชื่อ
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="showDeleteModal('${escapeHtml(session.id)}')">
+                                🗑️ ลบ
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = `<div class="sessions-grid">${html}</div>`;
+        }
+        
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+        
+        function showCreateModal() {
+            document.getElementById('sessionId').value = '';
+            showModal('createModal');
+        }
+        
+        function showRenameModal(sessionId) {
+            currentRenameId = sessionId;
+            document.getElementById('oldSessionId').value = sessionId;
+            document.getElementById('newSessionId').value = '';
+            showModal('renameModal');
+        }
+        
+        function showDeleteModal(sessionId) {
+            currentDeleteId = sessionId;
+            document.getElementById('deleteSessionId').textContent = sessionId;
+            showModal('deleteModal');
+        }
+        
+        async function showDetail(sessionId) {
+            try {
+                const response = await fetch(`${API_URL}?action=get&id=${encodeURIComponent(sessionId)}`);
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error);
+                }
+                
+                const session = data.session;
+                const stats = session.stats || { pre: 0, post: 0, followup: 0 };
+                
+                let summaryHtml = '';
+                if (session.summary && session.summary.kpis) {
+                    const k = session.summary.kpis;
+                    summaryHtml = `
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <h3 style="margin-bottom: 10px;">📈 สรุปผล KPI</h3>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                                <div>Effectiveness: <strong>${k.effectiveness_score || 'N/A'}</strong></div>
+                                <div>Grade: <strong>${k.effectiveness_grade || 'N/A'}</strong></div>
+                                <div>Knowledge Lift: <strong>${k.knowledge_lift || 'N/A'}</strong></div>
+                                <div>Participation: <strong>${k.participation_rate || 'N/A'}%</strong></div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                document.getElementById('detailContent').innerHTML = `
+                    <div class="form-group">
+                        <label>รหัสรอบกิจกรรม</label>
+                        <input type="text" value="${escapeHtml(session.id)}" readonly>
+                    </div>
+                    
+                    <div class="session-stats" style="margin: 20px 0;">
+                        <div class="stat-box">
+                            <div class="stat-value">${stats.pre}</div>
+                            <div class="stat-label">Pre-test</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">${stats.post}</div>
+                            <div class="stat-label">Post-test</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value">${stats.followup}</div>
+                            <div class="stat-label">Follow-up</div>
+                        </div>
+                    </div>
+                    
+                    ${summaryHtml}
+                    
+                    <h3 style="margin: 20px 0 10px;">🔗 URLs สำหรับแจกจ่าย</h3>
+                    <div class="urls-list">
+                        <div class="url-item">
+                            <span class="url-label">หน้าหลัก</span>
+                            <code class="url-value">${session.urls.index}</code>
+                            <button class="btn-copy" onclick="copyToClipboard('${session.urls.index}')">คัดลอก</button>
+                        </div>
+                        <div class="url-item">
+                            <span class="url-label">Pre-test</span>
+                            <code class="url-value">${session.urls.form_pre}</code>
+                            <button class="btn-copy" onclick="copyToClipboard('${session.urls.form_pre}')">คัดลอก</button>
+                        </div>
+                        <div class="url-item">
+                            <span class="url-label">Post-test</span>
+                            <code class="url-value">${session.urls.form_post}</code>
+                            <button class="btn-copy" onclick="copyToClipboard('${session.urls.form_post}')">คัดลอก</button>
+                        </div>
+                        <div class="url-item">
+                            <span class="url-label">Dashboard</span>
+                            <code class="url-value">${session.urls.dashboard}</code>
+                            <button class="btn-copy" onclick="copyToClipboard('${session.urls.dashboard}')">คัดลอก</button>
+                        </div>
+                    </div>
+                `;
+                
+                showModal('detailModal');
+            } catch (error) {
+                showAlert('error', 'เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+        
+        // CRUD operations
+        async function createSession() {
+            const sessionId = document.getElementById('sessionId').value.trim();
+            
+            try {
+                const response = await fetch(`${API_URL}?action=create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: sessionId || undefined })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error);
+                }
+                
+                closeModal('createModal');
+                showAlert('success', `สร้างรอบกิจกรรม "${data.session.id}" สำเร็จแล้ว`);
+                loadSessions();
+            } catch (error) {
+                showAlert('error', 'เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+        
+        async function renameSession() {
+            const newId = document.getElementById('newSessionId').value.trim();
+            
+            if (!newId) {
+                showAlert('error', 'กรุณาระบุชื่อใหม่');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_URL}?action=update`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        old_id: currentRenameId,
+                        new_id: newId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error);
+                }
+                
+                closeModal('renameModal');
+                showAlert('success', `เปลี่ยนชื่อจาก "${currentRenameId}" เป็น "${newId}" สำเร็จแล้ว`);
+                loadSessions();
+            } catch (error) {
+                showAlert('error', 'เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+        
+        async function deleteSession() {
+            try {
+                const response = await fetch(`${API_URL}?action=delete`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: currentDeleteId })
+                });
+                
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error);
+                }
+                
+                closeModal('deleteModal');
+                showAlert('success', `ลบรอบกิจกรรม "${currentDeleteId}" สำเร็จแล้ว (ลบข้อมูล ${data.deleted_db_rows || 0} รายการ)`);
+                loadSessions();
+            } catch (error) {
+                showAlert('error', 'เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+        
+        // Utility functions
+        function showAlert(type, message) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.className = `alert alert-${type} show`;
+            alertBox.textContent = message;
+            
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 5000);
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showAlert('success', 'คัดลอก URL แล้ว');
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showAlert('success', 'คัดลอก URL แล้ว');
+            });
+        }
+        
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
