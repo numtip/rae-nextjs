@@ -1,5 +1,5 @@
 {
-  "webhook_url": "",
+  "webhook_url": "https://raeservice.mju.ac.th/n8n/webhook/awareness-form",
   "_comment": "ใส่ URL ของ n8n Webhook ที่รับฟอร์ม เมื่อตั้งค่าแล้วฟอร์มจะส่งคำตอบไปที่นี่อัตโนมัติ",
   "_production_example": "https://raeservice.mju.ac.th/n8n/webhook/awareness-form"
 }

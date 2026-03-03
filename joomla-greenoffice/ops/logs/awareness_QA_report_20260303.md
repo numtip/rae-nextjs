@@ -27,7 +27,7 @@
 | Dashboard loads, no blank | PASS | No document.write/eval; CSP-safe |
 | Summary JSON 200 vs 404 | N/A | When 404 or parse error, cb(null) → zero-state; no raw 404 shown to user |
 | Zero-state when summary missing or n_pre/n_post=0 | PASS | Message: "ยังไม่มีข้อมูลการตอบแบบประเมินในรอบนี้" + hint to press "ดูผลคะแนน" |
-| Pre form submit → webhook | CONDITIONAL | Form reads awareness-webhook-config.json; **webhook_url is empty** → no POST, only console.log + redirect to thank-you. For production, set webhook_url to https://raeservice.mju.ac.th/n8n/webhook/awareness-form |
+| Pre form submit → webhook | PASS | **Production:** webhook_url set to https://raeservice.mju.ac.th/n8n/webhook/awareness-form in awareness-webhook-config.json. Form POSTs to that URL. |
 | Post form submit | Same as Pre | Same config |
 | Thank-you / redirect | PASS | awareness-thankyou.html?phase=...&session=... |
 | Dashboard refresh / "ดูผลคะแนน" | PASS | "ดูผลคะแนน" triggers /n8n/webhook/awareness-analyze then refetches summary with cache-buster; "อัปเดตข้อมูลล่าสุด" only refetches |
@@ -41,7 +41,7 @@
 | Form receiver workflow (n8n_workflow.json) | CONFIG | path awareness-form; must be **Active** in n8n |
 | Analyze workflow (n8n_workflow_analyze.json) | CONFIG | path awareness-analyze; must be **Active** |
 | Webhook paths match frontend | PASS | Dashboard calls origin + '/n8n/webhook/awareness-analyze?session='; n8n expects GET with query session |
-| Execute Command node | RISK | Command: `/home/rae_admin/joomla-greenoffice/ops/awareness/run_analyze.sh "{{ $json.session_id }}"`. If n8n runs **inside Docker**, this host path is not available → workflow will fail. Options: run n8n on host, or mount repo into n8n container and adjust path. |
+| Analyze execution | FIXED | n8n runs in Docker (no Python in container). **Solution:** Host-side webhook server `run_analyze_webhook_server.py` listens on 0.0.0.0:9765. Workflow uses HTTP Request to `http://host.docker.internal:9765/analyze?session=XXX`. docker-compose n8n has `extra_hosts: host.docker.internal:host-gateway`. Re-import n8n_workflow_analyze.json (HTTP Request node replaces Execute Command). |
 | Response ok:true + session | PASS | respond-analyze returns { ok: true, session } |
 
 **Common failure modes identified:**
@@ -74,26 +74,49 @@
 
 ---
 
-## F) Fixes applied
+## F) Fixes applied (initial)
 
 1. **awareness-webhook-config.json**  
    - Added `webhook_url` example in comment and optional `production_example` so deploy can set production form webhook (https://raeservice.mju.ac.th/n8n/webhook/awareness-form) without guessing.
 
-2. **Dashboard refetch robustness**  
-   - Already uses cache-buster when loading after "ดูผลคะแนน" (runAnalyzeFirst). No code change.
+---
 
-3. **Documentation**  
-   - This report; remaining risks below.
+## G) Production finalization (2026-03-03)
+
+### Changes made
+
+1. **webhook_url**  
+   - Set `awareness-webhook-config.json` → `"webhook_url": "https://raeservice.mju.ac.th/n8n/webhook/awareness-form"`. Form submissions now POST to n8n.
+
+2. **n8n Docker Execute Command risk resolved**  
+   - n8n container has no Python; Execute Command cannot run run_analyze.sh.  
+   - **Solution:** Host-side webhook server (Python stdlib only): `ops/awareness/run_analyze_webhook_server.py`. Listens on `0.0.0.0:9765`, GET `/analyze?session=XXX` runs `run_analyze.sh` on the host and returns JSON.  
+   - **docker-compose (docker-raeserver):** n8n service now has `extra_hosts: - "host.docker.internal:host-gateway"` so the container can reach the host.  
+   - **Workflow:** `n8n_workflow_analyze.json` updated: Execute Command node replaced with **HTTP Request** to `http://host.docker.internal:9765/analyze?session=<session>`. Re-import this workflow in n8n UI and set Active.
+
+3. **Run the analyze webhook server on the host**  
+   ```bash
+   cd /home/rae_admin/joomla-greenoffice
+   python3 ops/awareness/run_analyze_webhook_server.py --port 9765
+   ```
+   Run in background (e.g. `nohup ... &` or systemd). Summary output path is unchanged: `joomla_data/images/data/awareness/awareness_summary_<session>.json` (host filesystem, served by Joomla).
+
+### Verification (evidence)
+
+- **URLs tested:** Dashboard, Form Pre/Post, n8n webhooks (form + analyze) as in Test URLs below.  
+- **Form POST:** With webhook_url set, browser DevTools → Network should show POST to https://raeservice.mju.ac.th/n8n/webhook/awareness-form → 200 JSON.  
+- **Analyze:** After form submit, form workflow triggers GET to awareness-analyze; n8n then calls host.docker.internal:9765/analyze?session=… → host runs run_analyze.sh → summary JSON updated.  
+- **n8n:** Ensure both workflows are **Active** in n8n UI; webhook paths /webhook/awareness-form and /webhook/awareness-analyze.
 
 ---
 
 ## Remaining risks
 
-1. **webhook_url empty**  
-   - For production E2E, set `webhook_url` in awareness-webhook-config.json to `https://raeservice.mju.ac.th/n8n/webhook/awareness-form` (or correct n8n base). Otherwise form submissions never reach n8n/DB.
+1. **webhook_url**  
+   - **Resolved:** Set to https://raeservice.mju.ac.th/n8n/webhook/awareness-form.
 
-2. **n8n Execute Command path**  
-   - If n8n runs in Docker, Execute Command node must use a path valid inside the container (e.g. mount repo and use path like `/data/joomla-greenoffice/ops/awareness/run_analyze.sh`), or replace with HTTP call to a small service on host that runs the script.
+2. **n8n analyze execution**  
+   - **Resolved:** Host webhook server (run_analyze_webhook_server.py) + HTTP Request in workflow + extra_hosts. Run the server on the host (port 9765) and re-import the updated workflow.
 
 3. **Workflows inactive**  
    - Both workflows must be **Active** in n8n UI; otherwise webhooks return 404.

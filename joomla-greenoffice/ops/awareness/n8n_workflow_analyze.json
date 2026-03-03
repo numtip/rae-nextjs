@@ -1,0 +1,69 @@
+{
+  "name": "Green Office Awareness – Run Analysis",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "awareness-analyze",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-analyze",
+      "name": "Webhook (run analysis)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "awareness-analyze"
+    },
+    {
+      "parameters": {
+        "jsCode": "const q = $input.first().json.query || {};\nconst b = $input.first().json.body || {};\nconst session = (q.session || b.session || '').toString().trim();\nif (!session) throw new Error('Query param session required');\nreturn [{ json: { session_id: session } }];"
+      },
+      "id": "extract-session",
+      "name": "Extract session",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "= \"http://host.docker.internal:9765/analyze?session=\" + encodeURIComponent($json.session_id)",
+        "options": {
+          "timeout": 120000
+        },
+        "ignoreHttpStatusErrors": true
+      },
+      "id": "exec-analyze",
+      "name": "HTTP Request (host analyze)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 300],
+      "notes": "Calls host-side run_analyze webhook (run_analyze_webhook_server.py on port 9765). n8n container needs extra_hosts: host.docker.internal."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"ok\": true, \"session\": $('Extract session').item.json.session_id } }}"
+      },
+      "id": "respond-analyze",
+      "name": "Respond 200",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [780, 300]
+    }
+  ],
+  "connections": {
+    "Webhook (run analysis)": { "main": [[ { "node": "Extract session", "type": "main", "index": 0 } ]] },
+    "Extract session": { "main": [[ { "node": "HTTP Request (host analyze)", "type": "main", "index": 0 } ]] },
+    "HTTP Request (host analyze)": { "main": [[ { "node": "Respond 200", "type": "main", "index": 0 } ]] }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

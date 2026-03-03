@@ -1,0 +1,244 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.6
+    container_name: mariadb
+    restart: unless-stopped
+    env_file:
+      - db.env
+    environment:
+      MYSQL_INITDB_SKIP_TZINFO: 'yes'
+    volumes:
+      - ./mariadb/data:/var/lib/mysql
+      - ./mariadb/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:3306:3306"
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          memory: 1.5G
+        reservations:
+          memory: 1G
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - /etc/ssl/mju:/etc/nginx/ssl:ro
+      - /home/rae_admin/landing-page:/usr/share/nginx/html/landing:ro
+      - /var/www/attendance-dashboard/dist:/usr/share/nginx/html/app:ro
+      - /home/rae_admin/research-portal-frontend/out:/usr/share/nginx/html/research-portal:ro
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+    depends_on:
+      - attendance-api
+      - raemju-api
+
+  attendance-api:
+    build: /home/rae_admin/real-attendance-system
+    container_name: attendance-api
+    restart: unless-stopped
+    env_file:
+      - /home/rae_admin/real-attendance-system/.env
+    environment:
+      - DB_HOST=mariadb
+      - NODE_ENV=production
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1'
+    healthcheck:
+      disable: true
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  raemju-api:
+    build: /home/rae_admin/raemju-project
+    container_name: raemju-api
+    restart: unless-stopped
+    env_file:
+      - /home/rae_admin/raemju-project/.env
+    environment:
+      - DB_HOST=mariadb
+      - NODE_ENV=production
+    ports:
+      - "127.0.0.1:3006:3006"
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1'
+    healthcheck:
+      disable: true
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5679:5678"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      - N8N_HOST=raeservice.mju.ac.th
+      - N8N_PROTOCOL=https
+      - N8N_PORT=5678
+      - N8N_PATH=/n8n/
+      - WEBHOOK_URL=https://raeservice.mju.ac.th/n8n/
+      - N8N_ENCRYPTION_KEY=GT8SGuV1FP8BVe2V+KdeGaHqmsrKvscZ
+      - N8N_EDITOR_BASE_URL=https://raeservice.mju.ac.th/n8n/
+      - N8N_PROXY_HOPS=1
+      - NODE_ENV=production
+    volumes:
+      - /home/rae_admin/.n8n:/home/node/.n8n
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          memory: 768M
+          cpus: '1'
+    healthcheck:
+      disable: true
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  canva-service:
+    build: /home/rae_admin/real-attendance-system/canva-service
+    container_name: canva-service
+    restart: unless-stopped
+    env_file:
+      - /home/rae_admin/real-attendance-system/canva-service/.env
+    environment:
+      - NODE_ENV=production
+      - PORT=3005
+      - DB_HOST=mariadb
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+      - PUPPETEER_CACHE_DIR=/home/pptruser/.cache/puppeteer
+      - PUPPETEER_EXECUTABLE_PATH=/home/pptruser/.cache/puppeteer/chrome/linux-136.0.7103.94/chrome-linux64/chrome
+    ports:
+      - "127.0.0.1:3005:3005"
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1'
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3005/api/health', (res) => { if (res.statusCode === 200) process.exit(0); else process.exit(1); })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=300M
+      - PMA_ABSOLUTE_URI=https://raeservice.mju.ac.th/phpmyadmin/
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui-new
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:8080"
+    volumes:
+      - open_webui_data:/app/backend/data
+    networks:
+      - frontend
+      - backend
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '1'
+
+  research-portal-backend:
+    build: /home/rae_admin/research-portal-backend
+    container_name: research-portal-backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3007:3007"
+    environment:
+      - PORT=3007
+      - NODE_ENV=production
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/service-account-key.json
+    volumes:
+      - /home/rae_admin/raemju-project/service-account-key.json:/app/service-account-key.json:ro
+    networks:
+      - backend
+      - rae-internal
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+  rae-internal:
+    external: true
+
+volumes:
+  mariadb_data:
+    driver: local
+  nginx_ssl:
+    driver: local
+  n8n_data:
+    driver: local
+  open_webui_data:
+    driver: local
