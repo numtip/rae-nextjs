@@ -131,21 +131,34 @@ def compute_knowledge_score(payload: dict) -> int | None:
             if str(sel).strip() == correct_id:
                 total += 1
         return total if total > 0 or len(mcq) > 0 else None
-    # Legacy: K1-K5 (expects letter answers A/B/C/D, not numeric Likert 1-5)
-    total = 0
-    for k, key in enumerate(["K1", "K2", "K3", "K4", "K5"], 1):
+    # Legacy: K1-K5
+    # Two sub-formats:
+    #   (a) Letter answers A/B/C/D → compare to K_KEYS, return count correct (0-5)
+    #   (b) Likert self-rating 1-5 → return average as proportional score (1.0-5.0 on same scale)
+    letter_total = 0
+    likert_vals: list[float] = []
+    for k in range(1, 6):
         val = payload.get(f"K{k}") or payload.get("K" + str(k))
         if val is None:
             return None
         ans = str(val).strip().upper()
-        # Numeric Likert values (e.g. "3", "4") are not letter-based MCQ answers → skip
         if ans.isdigit():
-            return None
-        if ans and len(ans) == 1:
-            total += 1 if ans == K_KEYS[f"K{k}"] else 0
+            n = float(ans)
+            if 1 <= n <= 5:
+                likert_vals.append(n)
+            else:
+                return None
+        elif ans and len(ans) == 1:
+            letter_total += 1 if ans == K_KEYS[f"K{k}"] else 0
         else:
             return None
-    return total
+    # If all 5 values were Likert, return their average (on 1-5 scale, same as MCQ 0-5)
+    if len(likert_vals) == 5:
+        return round(sum(likert_vals) / 5, 2)
+    # Mixed or all-letter
+    if likert_vals:
+        return None  # mixed format → skip
+    return letter_total
 
 
 def mean_likert(payload: dict, keys: list[str]) -> float | None:

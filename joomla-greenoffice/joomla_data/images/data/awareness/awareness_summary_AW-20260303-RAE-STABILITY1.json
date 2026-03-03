@@ -5,15 +5,15 @@
     "n_pre": 4,
     "n_post": 3,
     "n_followup": 0,
-    "knowledge_pre_mean": 0.0,
-    "knowledge_post_mean": 0.0,
-    "knowledge_lift": 0.0,
+    "knowledge_pre_mean": 3.5,
+    "knowledge_post_mean": 4.67,
+    "knowledge_lift": 1.17,
     "attitude_mean": 3.94,
     "intention_ge4_rate": 100.0,
     "behavior_ge4_rate": null,
     "participation_rate": 75.0,
-    "effectiveness_score": 64.7,
+    "effectiveness_score": 71.72,
     "effectiveness_grade": "ดี"
   },
-  "generated_at": "2026-03-03T12:30:01.903145Z"
+  "generated_at": "2026-03-03T13:02:18.217459Z"
 }
