@@ -97,42 +97,96 @@ function getSessionStats($sessionId) {
 
 function generateSessionQuestions($sessionId) {
     global $DATA_DIR;
-    
-    // ใช้ Python script เพื่อความ consistent กับระบบเดิม
-    $pythonScript = '/home/rae_admin/joomla-greenoffice/ops/awareness/select_session_questions.py';
+
     $bankFile = "$DATA_DIR/question_bank.json";
-    
-    // ตรวจสอบไฟล์
-    if (!file_exists($pythonScript)) {
-        error_log("Python script not found: $pythonScript");
-        return false;
-    }
+
     if (!file_exists($bankFile)) {
         error_log("Question bank file not found: $bankFile");
         return false;
     }
-    
-    // รัน Python script
-    $cmd = sprintf(
-        'python3 %s %s --bank %s --out-dir %s 2>&1',
-        escapeshellarg($pythonScript),
-        escapeshellarg($sessionId),
-        escapeshellarg($bankFile),
-        escapeshellarg($DATA_DIR)
-    );
-    
-    $output = [];
-    $returnCode = 0;
-    exec($cmd, $output, $returnCode);
-    
-    if ($returnCode !== 0) {
-        error_log("Python script failed: " . implode("\n", $output));
+
+    $bankContent = file_get_contents($bankFile);
+    $bank = json_decode($bankContent, true);
+    if (!$bank || !isset($bank['questions'])) {
+        error_log("Invalid question bank format");
         return false;
     }
-    
-    // ตรวจสอบว่าไฟล์ถูกสร้างแล้ว
+
+    $allQuestions = $bank['questions'];
+
+    // แยกคำถามตาม source_domain
+    $raeQuestions = [];
+    $resQuestions = [];
+
+    foreach ($allQuestions as $q) {
+        $domain = $q['source_domain'] ?? 'other';
+        if ($domain === 'raeservice') {
+            $raeQuestions[] = $q;
+        } elseif ($domain === 'researchex') {
+            $resQuestions[] = $q;
+        }
+    }
+
+    // สร้าง seed จาก session_id (ใช้ sha256 เหมือน Python)
+    $hash = hash('sha256', $sessionId);
+    $seed = hexdec(substr($hash, 0, 16));
+
+    // Fisher-Yates shuffle แบบ deterministic
+    $shuffle = function(&$array) use (&$seed) {
+        $count = count($array);
+        for ($i = $count - 1; $i > 0; $i--) {
+            $seed = ($seed * 1103515245 + 12345) & 0x7fffffff;
+            $j = $seed % ($i + 1);
+            $temp = $array[$i];
+            $array[$i] = $array[$j];
+            $array[$j] = $temp;
+        }
+    };
+
+    $selectedIds = [];
+
+    // 1. เลือก 1 คำถามจาก raeservice
+    if (count($raeQuestions) > 0) {
+        $shuffle($raeQuestions);
+        $selectedIds[] = $raeQuestions[0]['id'];
+    }
+
+    // 2. เลือก 2 คำถามจาก researchex
+    $shuffle($resQuestions);
+    $count = 0;
+    foreach ($resQuestions as $q) {
+        if ($count >= 2) break;
+        if (!in_array($q['id'], $selectedIds)) {
+            $selectedIds[] = $q['id'];
+            $count++;
+        }
+    }
+
+    // 3. เติมให้ครบ 5 คำถามจากที่เหลือ
+    $remaining = array_merge($resQuestions, $raeQuestions);
+    $shuffle($remaining);
+    foreach ($remaining as $q) {
+        if (count($selectedIds) >= 5) break;
+        if (!in_array($q['id'], $selectedIds)) {
+            $selectedIds[] = $q['id'];
+        }
+    }
+
+    if (count($selectedIds) < 5) {
+        error_log("Not enough questions (got " . count($selectedIds) . ", need 5)");
+        return false;
+    }
+
+    // บันทึกไฟล์ในรูปแบบเดียวกับ Python
     $outputFile = "$DATA_DIR/session_questions_{$sessionId}.json";
-    return file_exists($outputFile);
+    $outputData = [
+        'session_id' => $sessionId,
+        'pre_mcq' => array_slice($selectedIds, 0, 5),
+        'post_mcq' => array_slice($selectedIds, 0, 5)
+    ];
+
+    $result = file_put_contents($outputFile, json_encode($outputData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+    return $result !== false;
 }
 
 function deleteSessionFiles($sessionId) {
