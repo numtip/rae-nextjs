@@ -131,13 +131,16 @@ def compute_knowledge_score(payload: dict) -> int | None:
             if str(sel).strip() == correct_id:
                 total += 1
         return total if total > 0 or len(mcq) > 0 else None
-    # Legacy: K1-K5
+    # Legacy: K1-K5 (expects letter answers A/B/C/D, not numeric Likert 1-5)
     total = 0
     for k, key in enumerate(["K1", "K2", "K3", "K4", "K5"], 1):
         val = payload.get(f"K{k}") or payload.get("K" + str(k))
         if val is None:
             return None
         ans = str(val).strip().upper()
+        # Numeric Likert values (e.g. "3", "4") are not letter-based MCQ answers → skip
+        if ans.isdigit():
+            return None
         if ans and len(ans) == 1:
             total += 1 if ans == K_KEYS[f"K{k}"] else 0
         else:
