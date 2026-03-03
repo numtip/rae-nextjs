@@ -1,0 +1,13 @@
+{
+  "test_type": "smoke_test",
+  "timestamp": "2026-03-03T19:06:29+00:00",
+  "base_url": "https://raeservice.mju.ac.th",
+  "summary": {
+    "total": 5,
+    "passed": 2,
+    "failed": 3
+  },
+  "results": [
+,,,,
+  ]
+}

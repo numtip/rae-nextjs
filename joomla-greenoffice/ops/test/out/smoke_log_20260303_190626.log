@@ -1,0 +1,23 @@
+[19:06:26] ===================================
+[19:06:26] Smoke Test Started: Tue Mar  3 07:06:26 PM UTC 2026
+[19:06:26] Base URL: https://raeservice.mju.ac.th
+[19:06:26] ===================================
+[19:06:26] Testing: https://raeservice.mju.ac.th/greenoffice/
+[19:06:27] Testing: https://raeservice.mju.ac.th/greenoffice/executive-dashboard
+[19:06:28] Testing: https://raeservice.mju.ac.th/greenoffice/images/data/executive/executive-dashboard.html
+[19:06:28] Testing: https://raeservice.mju.ac.th/n8n/
+[19:06:28] Testing: https://raeservice.mju.ac.th/phpmyadmin/
+[19:06:29] 
+[19:06:29] Auto-discovering dashboard assets...
+[19:06:29] 
+[19:06:29] Generating JSON report...
+[19:06:29] ===================================
+[19:06:29] SMOKE TEST SUMMARY
+[19:06:29] ===================================
+[19:06:29] Total Tests:  5
+[19:06:29] -e Passed:       \033[0;32m2\033[0m
+[19:06:29] -e Failed:       \033[0;31m3\033[0m
+[19:06:29] 
+[19:06:29] Reports saved:
+[19:06:29]   JSON: /home/rae_admin/joomla-greenoffice/ops/test/out/smoke_report_20260303_190626.json
+[19:06:29]   LOG:  /home/rae_admin/joomla-greenoffice/ops/test/out/smoke_log_20260303_190626.log
