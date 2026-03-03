@@ -67,68 +67,72 @@ function getDbConnection() {
 
 function getSessionStats($sessionId) {
     $conn = getDbConnection();
-    if (!$conn) return null;
-    
-    $stmt = $conn->prepare("SELECT form_type, COUNT(*) as count FROM j6_awareness_responses_raw WHERE session_id = ? GROUP BY form_type");
-    $stmt->bind_param("s", $sessionId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    $stats = ['pre' => 0, 'post' => 0, 'followup' => 0];
-    while ($row = $result->fetch_assoc()) {
-        $stats[$row['form_type']] = (int)$row['count'];
+    if (!$conn) {
+        return ['pre' => 0, 'post' => 0, 'followup' => 0];
     }
     
-    $stmt->close();
-    $conn->close();
-    return $stats;
+    try {
+        $stmt = $conn->prepare("SELECT form_type, COUNT(*) as count FROM j6_awareness_responses_raw WHERE session_id = ? GROUP BY form_type");
+        if (!$stmt) {
+            $conn->close();
+            return ['pre' => 0, 'post' => 0, 'followup' => 0];
+        }
+        $stmt->bind_param("s", $sessionId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $stats = ['pre' => 0, 'post' => 0, 'followup' => 0];
+        while ($row = $result->fetch_assoc()) {
+            $stats[$row['form_type']] = (int)$row['count'];
+        }
+        
+        $stmt->close();
+        $conn->close();
+        return $stats;
+    } catch (Exception $e) {
+        if ($conn) $conn->close();
+        return ['pre' => 0, 'post' => 0, 'followup' => 0];
+    }
 }
 
 function generateSessionQuestions($sessionId) {
     global $DATA_DIR;
     
-    // โหลด question_bank
+    // ใช้ Python script เพื่อความ consistent กับระบบเดิม
+    $pythonScript = '/home/rae_admin/joomla-greenoffice/ops/awareness/select_session_questions.py';
     $bankFile = "$DATA_DIR/question_bank.json";
+    
+    // ตรวจสอบไฟล์
+    if (!file_exists($pythonScript)) {
+        error_log("Python script not found: $pythonScript");
+        return false;
+    }
     if (!file_exists($bankFile)) {
+        error_log("Question bank file not found: $bankFile");
         return false;
     }
     
-    $bank = json_decode(file_get_contents($bankFile), true);
-    if (!$bank || !isset($bank['questions'])) {
+    // รัน Python script
+    $cmd = sprintf(
+        'python3 %s %s --bank %s --out-dir %s 2>&1',
+        escapeshellarg($pythonScript),
+        escapeshellarg($sessionId),
+        escapeshellarg($bankFile),
+        escapeshellarg($DATA_DIR)
+    );
+    
+    $output = [];
+    $returnCode = 0;
+    exec($cmd, $output, $returnCode);
+    
+    if ($returnCode !== 0) {
+        error_log("Python script failed: " . implode("\n", $output));
         return false;
     }
     
-    // เลือก 5 คำถามแบบ deterministic (ใช้ hash ของ session_id)
-    $allQuestions = $bank['questions'];
-    $count = min(5, count($allQuestions));
-    
-    // สร้าง seed จาก session_id
-    $seed = crc32($sessionId);
-    srand($seed);
-    
-    // สุ่มเลือก 5 คำถาม
-    $keys = array_keys($allQuestions);
-    shuffle($keys);
-    $selectedKeys = array_slice($keys, 0, $count);
-    
-    $selectedQuestions = [];
-    foreach ($selectedKeys as $key) {
-        $q = $allQuestions[$key];
-        $selectedQuestions[$key] = [
-            'text' => $q['text'],
-            'category' => $q['category'] ?? 'general'
-        ];
-    }
-    
-    // บันทึกไฟล์
+    // ตรวจสอบว่าไฟล์ถูกสร้างแล้ว
     $outputFile = "$DATA_DIR/session_questions_{$sessionId}.json";
-    $result = file_put_contents($outputFile, json_encode([
-        'session_id' => $sessionId,
-        'questions' => $selectedQuestions,
-        'created_at' => date('Y-m-d\TH:i:s\Z')
-    ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
-    
-    return $result !== false;
+    return file_exists($outputFile);
 }
 
 function deleteSessionFiles($sessionId) {
