@@ -116,6 +116,12 @@ services:
       - N8N_EDITOR_BASE_URL=https://raeservice.mju.ac.th/n8n/
       - N8N_PROXY_HOPS=1
       - NODE_ENV=production
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=30
+      - EXECUTIONS_DATA_PRUNE_MAX_COUNT=1000
+      - N8N_LOG_LEVEL=warn
+      - N8N_LOG_FILE_COUNT_MAX=5
+      - N8N_LOG_FILE_SIZE_MAX=20
     volumes:
       - /home/rae_admin/.n8n:/home/node/.n8n
     networks:
