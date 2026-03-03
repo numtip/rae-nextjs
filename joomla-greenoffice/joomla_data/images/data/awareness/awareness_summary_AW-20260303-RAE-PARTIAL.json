@@ -1,0 +1,19 @@
+{
+  "session_id": "AW-20260303-RAE-PARTIAL",
+  "kpis": {
+    "session_id": "AW-20260303-RAE-PARTIAL",
+    "n_pre": 1,
+    "n_post": 0,
+    "n_followup": 0,
+    "knowledge_pre_mean": 0.0,
+    "knowledge_post_mean": null,
+    "knowledge_lift": null,
+    "attitude_mean": 2.6,
+    "intention_ge4_rate": 0.0,
+    "behavior_ge4_rate": null,
+    "participation_rate": null,
+    "effectiveness_score": 33.0,
+    "effectiveness_grade": "ควรปรับปรุง"
+  },
+  "generated_at": "2026-03-03T12:30:00.594758Z"
+}
