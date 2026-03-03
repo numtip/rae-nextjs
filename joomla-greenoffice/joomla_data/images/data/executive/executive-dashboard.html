@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Unified Executive + GHG Drilldown</title>
+  <style>
+    :root{--bg:#f2f4f7;--card:#ffffff;--ink:#1f2937;--muted:#6b7280;--accent:#0f766e;--amber:#f59e0b;--red:#ef4444;--green:#10b981;}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;color:var(--ink);background:linear-gradient(180deg,#eef2f7 0%,#f8f7f4 60%);} 
+    header{padding:22px 20px 8px 20px;}
+    h1{margin:0;font-size:22px;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:13px}
+    .wrap{padding:12px 20px 28px 20px;display:grid;gap:14px}
+    .card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;padding:14px;box-shadow:0 1px 1px rgba(0,0,0,.04)}
+    .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+    .kpi-title{font-size:12px;color:var(--muted)}
+    .kpi-value{font-size:20px;font-weight:700;margin-top:4px}
+    .traffic{display:inline-flex;align-items:center;gap:8px}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .charts{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+    canvas{width:100%;height:260px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .controls-left{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    select{padding:8px;border-radius:8px;border:1px solid #d1d5db;background:#fff}
+    .toggle{display:flex;gap:6px;flex-wrap:wrap}
+    .btn{border:1px solid #d1d5db;background:#fff;padding:6px 10px;border-radius:999px;cursor:pointer;font-size:12px}
+    .btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+    .help-btn{border:1px solid #d1d5db;background:#fff;padding:6px 10px;border-radius:999px;font-size:12px;cursor:pointer}
+    .error{display:none;margin:12px 20px;background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:10px;padding:10px;font-size:13px}
+    .narrative{font-size:13px;line-height:1.6;color:#374151}
+    .nav{position:sticky;top:0;background:#ffffffd9;backdrop-filter:blur(6px);border-bottom:1px solid #e5e7eb;padding:8px 20px;z-index:10}
+    .nav a{margin-right:14px;color:#0f766e;text-decoration:none;font-size:13px}
+    .section{scroll-margin-top:70px}
+    table{width:100%;border-collapse:collapse;font-size:12px}
+    th,td{border:1px solid #e5e7eb;padding:6px;text-align:left}
+    th{background:#f3f4f6}
+    .footer{color:var(--muted);font-size:12px}
+    .guide{color:#4b5563;font-size:13px;line-height:1.6}
+
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:50}
+    .modal.open{display:flex}
+    .modal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:opacity .2s ease}
+    .modal.open .modal-overlay{opacity:1}
+    .modal-card{position:relative;background:#fff;border-radius:16px;padding:18px;max-width:680px;width:92%;box-shadow:0 10px 30px rgba(0,0,0,.2);transform:translateY(10px);opacity:0;transition:all .2s ease}
+    .modal.open .modal-card{transform:translateY(0);opacity:1}
+    .modal-close{position:absolute;right:12px;top:12px;border:0;background:#f3f4f6;border-radius:999px;padding:6px 10px;cursor:pointer}
+    .modal h3{margin:0 0 10px 0}
+    .modal ul{margin:8px 0 0 18px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Unified Executive + GHG Drilldown Dashboard</h1>
+    <div class="sub">รวมภาพรวมผู้บริหาร + เจาะลึกก๊าซเรือนกระจก</div>
+  </header>
+
+  <div class="nav">
+    <a href="#section-a">Executive Snapshot</a>
+    <a href="#section-b">Integrated Analysis</a>
+    <a href="#section-c">GHG Drilldown</a>
+    <a href="#section-awareness">Awareness</a>
+    <a href="#section-d">Data Integrity</a>
+  </div>
+
+  <div id="errorBanner" class="error"></div>
+
+  <div class="wrap">
+    <section id="section-a" class="section">
+      <div class="card">
+        <div class="controls">
+          <div class="controls-left">
+            <div>
+              <div class="kpi-title">ปี</div>
+              <select id="yearFilter"></select>
+            </div>
+            <div>
+              <div class="kpi-title">มุมมองเวลา</div>
+              <div class="toggle" id="modeToggle">
+                <button class="btn active" data-mode="monthly">Monthly</button>
+                <button class="btn" data-mode="quarterly">Quarterly</button>
+                <button class="btn" data-mode="ytd">YTD</button>
+              </div>
+            </div>
+          </div>
+          <button id="helpOpen" class="help-btn" aria-label="วิธีใช้งาน">ℹ วิธีใช้งาน</button>
+        </div>
+      </div>
+
+      <div class="card narrative" id="narrative">กำลังโหลดข้อมูล...</div>
+
+      <div class="kpis">
+        <div class="card">
+          <div class="kpi-title">Total GHG (tCO2e)</div>
+          <div class="kpi-value" id="kpiGhg">-</div>
+          <div class="traffic"><span class="dot" id="dotGhg"></span><span id="statusGhg">-</span></div>
+        </div>
+        <div class="card">
+          <div class="kpi-title">GHG YoY %</div>
+          <div class="kpi-value" id="kpiGhgYoy">-</div>
+        </div>
+        <div class="card">
+          <div class="kpi-title">Total Electricity (kWh)</div>
+          <div class="kpi-value" id="kpiEnergy">-</div>
+          <div class="traffic"><span class="dot" id="dotEnergy"></span><span id="statusEnergy">-</span></div>
+        </div>
+        <div class="card">
+          <div class="kpi-title">Energy YoY %</div>
+          <div class="kpi-value" id="kpiEnergyYoy">-</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-b" class="section">
+      <div class="charts">
+        <div class="card"><canvas id="chartGhgTrend"></canvas></div>
+        <div class="card"><canvas id="chartEnergyTrend"></canvas></div>
+        <div class="card"><canvas id="chartScopeExec"></canvas></div>
+        <div class="card"><canvas id="chartRoadmapExec"></canvas></div>
+      </div>
+    </section>
+
+    <section id="section-c" class="section">
+      <div class="card">
+        <div class="controls">
+          <div class="controls-left">
+            <div>
+              <div class="kpi-title">ปี</div>
+              <select id="ghgYearFilter"></select>
+            </div>
+            <div>
+              <div class="kpi-title">Scope</div>
+              <select id="ghgScopeFilter"></select>
+            </div>
+            <div>
+              <div class="kpi-title">กิจกรรม</div>
+              <select id="ghgActivityFilter"></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts">
+        <div class="card"><canvas id="chartScopeDrill"></canvas></div>
+        <div class="card"><canvas id="chartTrendDrill"></canvas></div>
+        <div class="card"><canvas id="chartTopDrill"></canvas></div>
+        <div class="card"><canvas id="chartRoadmapDrill"></canvas></div>
+      </div>
+
+      <div class="card">
+        <div class="kpi-title">Top Activities (tCO2e)</div>
+        <table>
+          <thead>
+            <tr><th>Activity</th><th>Scope</th><th>Total tCO2e</th><th>Avg/Month</th></tr>
+          </thead>
+          <tbody id="ghgTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="section-awareness" class="section">
+      <div class="card">
+        <div class="kpi-title" style="margin-bottom:10px">แบบประเมินกิจกรรมปลูกจิตสำนึก (Awareness)</div>
+        <p>
+          <label for="awarenessSessionId">session_id</label>
+          <input type="text" id="awarenessSessionId" style="width:100%;max-width:320px;padding:8px;border-radius:8px;border:1px solid #d1d5db" placeholder="AW-YYYYMMDD-RAE-Session1" />
+        </p>
+        <div class="controls-left" style="flex-wrap:wrap;gap:8px;margin-bottom:8px">
+          <button type="button" id="awarenessBtnToday" class="btn">สร้าง session_id วันนี้</button>
+          <button type="button" id="awarenessBtnPre" class="btn">เปิด Pre</button>
+          <button type="button" id="awarenessBtnPost" class="btn">เปิด Post</button>
+          <button type="button" id="awarenessBtnCopyPre" class="btn">คัดลอกลิงก์ Pre</button>
+          <button type="button" id="awarenessBtnCopyPost" class="btn">คัดลอกลิงก์ Post</button>
+        </div>
+        <p class="footer" style="margin-top:8px">
+          ลิงก์ข้อมูล: <a href="/greenoffice/images/data/awareness/question_bank.json" target="_blank" rel="noopener">question_bank.json</a>
+          · <a href="#" id="awarenessLinkSessionJson" target="_blank" rel="noopener">session_questions_&lt;session&gt;.json</a>
+        </p>
+        <p class="kpi-title" style="margin-top:6px;font-size:11px">Pre/Post ใช้ชุดคำถามเดียวกัน (session_questions_&lt;session&gt;.json)</p>
+        <div class="kpi-title" style="margin-top:14px">เครื่องมือระบบ</div>
+        <p style="margin-top:6px">
+          <a href="/n8n/" target="_blank" rel="noopener" class="btn" style="display:inline-block;text-decoration:none">n8n</a>
+          <a href="/greenoffice/images/data/awareness/awareness-dashboard.html" target="_blank" rel="noopener" class="btn" style="display:inline-block;text-decoration:none;margin-left:6px">รายงานผล Awareness</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="section-d" class="section">
+      <div class="card footer" id="integrity">-</div>
+    </section>
+
+    <section id="section-e" class="section">
+      <div class="card guide">
+        <strong>วิธีอ่าน Dashboard แบบสั้น</strong><br />
+        1) ดูภาพรวมที่แถบตัวเลขด้านบน<br />
+        2) ดูแนวโน้มผ่านกราฟรายเดือน/รายไตรมาส/YTD<br />
+        3) ใช้ GHG Drilldown เพื่อเจาะสาเหตุและกิจกรรมหลัก<br />
+        4) อ่าน Narrative Summary เพื่อสรุปสถานการณ์เร็วขึ้น<br />
+        5) ตรวจสอบ Data Integrity ก่อนนำไปอ้างอิง
+      </div>
+    </section>
+  </div>
+
+  <div id="helpModal" class="modal" aria-hidden="true">
+    <div id="helpOverlay" class="modal-overlay" aria-hidden="true"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <button id="helpClose" class="modal-close" aria-label="ปิด">✕</button>
+      <h3 id="helpTitle">วิธีใช้งาน Executive Dashboard</h3>
+      <div class="narrative">
+        <p>สรุปวิธีใช้งานอย่างรวดเร็วเพื่ออ่านข้อมูลได้ถูกต้องและตรงเป้าหมาย</p>
+        <ul>
+          <li>เลือกปีและมุมมองเวลาเพื่อเปลี่ยนทุกกราฟและ KPI</li>
+          <li>ดูสถานะสีเพื่อประเมินเทียบเป้าหมายทันที</li>
+          <li>ตรวจแนวโน้มด้วยกราฟ GHG และ Energy</li>
+          <li>ใช้ GHG Drilldown เพื่อหาแหล่งปล่อยหลัก</li>
+          <li>อ่าน Narrative เพื่อสรุปภาพรวมแบบย่อ</li>
+          <li>ตรวจ Data Integrity เพื่อเช็คความครบถ้วนของข้อมูล</li>
+        </ul>
+        <p><a href="/greenoffice/executive-dashboard" target="_blank" rel="noopener">อ่านคู่มือฉบับเต็ม</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="./chart.umd.min.js"></script>
+  <script src="./executive-dashboard.js"></script>
+  <script>
+  (function () {
+    var base = '/greenoffice/images/data/awareness/';
+    var formUrl = base + 'awareness-form.html';
+    var input = document.getElementById('awarenessSessionId');
+    var linkSessionJson = document.getElementById('awarenessLinkSessionJson');
+
+    function todaySessionId() {
+      var d = new Date();
+      var y = d.getFullYear();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      return 'AW-' + y + m + day + '-RAE-Session1';
+    }
+
+    function getSessionId() {
+      return (input && input.value && input.value.trim()) ? input.value.trim() : todaySessionId();
+    }
+
+    function preUrl() {
+      return formUrl + '?session=' + encodeURIComponent(getSessionId()) + '&phase=pre';
+    }
+    function postUrl() {
+      return formUrl + '?session=' + encodeURIComponent(getSessionId()) + '&phase=post';
+    }
+
+    function updateSessionJsonLink() {
+      if (linkSessionJson) {
+        var sid = getSessionId();
+        var safe = sid.replace(/[^\w\-]/g, '_').substring(0, 64);
+        linkSessionJson.href = base + 'session_questions_' + safe + '.json';
+        linkSessionJson.textContent = 'session_questions_' + safe + '.json';
+      }
+    }
+
+    if (input) {
+      input.value = todaySessionId();
+      input.addEventListener('input', updateSessionJsonLink);
+      input.addEventListener('change', updateSessionJsonLink);
+    }
+    updateSessionJsonLink();
+
+    document.getElementById('awarenessBtnToday').addEventListener('click', function () {
+      if (input) input.value = todaySessionId();
+      updateSessionJsonLink();
+    });
+    document.getElementById('awarenessBtnPre').addEventListener('click', function () {
+      window.open(preUrl(), '_blank', 'noopener,noreferrer');
+    });
+    document.getElementById('awarenessBtnPost').addEventListener('click', function () {
+      window.open(postUrl(), '_blank', 'noopener,noreferrer');
+    });
+    document.getElementById('awarenessBtnCopyPre').addEventListener('click', function () {
+      navigator.clipboard.writeText(preUrl()).then(function () { alert('คัดลอกลิงก์ Pre แล้ว'); }).catch(function () { alert('คัดลอกไม่สำเร็จ'); });
+    });
+    document.getElementById('awarenessBtnCopyPost').addEventListener('click', function () {
+      navigator.clipboard.writeText(postUrl()).then(function () { alert('คัดลอกลิงก์ Post แล้ว'); }).catch(function () { alert('คัดลอกไม่สำเร็จ'); });
+    });
+  })();
+  </script>
+</body>
+</html>
