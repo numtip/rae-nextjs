@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Executive Energy Dashboard 2568</title>
+<style>
+:root{
+  --go-green:#2E7D32;
+  --go-green-2:#1F6F50;
+  --go-gray:#374151;
+  --go-muted:#6B7280;
+  --go-bg:#F7FAF8;
+  --go-card:#FFFFFF;
+  --go-border:#E5E7EB;
+  --go-shadow:0 10px 24px rgba(0,0,0,.08);
+  --go-radius:18px;
+}
+.go-wrap{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Thai",sans-serif;background:var(--go-bg);color:var(--go-gray);padding:24px}
+.go-hero{background:linear-gradient(135deg,var(--go-green),#2bb673);color:#fff;border-radius:var(--go-radius);box-shadow:var(--go-shadow);padding:22px 22px 18px;position:relative;overflow:hidden}
+.go-hero:after{content:"";position:absolute;inset:-40% -20%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.25),transparent 55%);transform:rotate(-8deg)}
+.go-hero > *{position:relative}
+.go-hero h1{margin:0;font-size:22px;letter-spacing:.2px}
+.go-hero p{margin:6px 0 0;color:rgba(255,255,255,.9);font-size:13px}
+.go-grid{display:grid;gap:14px;margin-top:14px}
+@media(min-width:980px){.go-grid{grid-template-columns:1.1fr .9fr}}
+.go-card{background:var(--go-card);border:1px solid var(--go-border);border-radius:var(--go-radius);box-shadow:0 6px 16px rgba(17,24,39,.06);padding:14px}
+.go-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.go-btns{display:flex;gap:8px;flex-wrap:wrap}
+.go-btn{border:1px solid var(--go-border);background:#fff;border-radius:999px;padding:8px 12px;font-size:13px;cursor:pointer;transition:.15s}
+.go-btn:hover{transform:translateY(-1px)}
+.go-btn.is-active{background:rgba(46,125,50,.12);border-color:rgba(46,125,50,.35);color:var(--go-green);font-weight:600}
+.go-pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--go-border);background:#fff;border-radius:999px;padding:7px 10px;font-size:12px;color:var(--go-muted)}
+.go-dot{width:10px;height:10px;border-radius:999px}
+.go-dot.green{background:#16a34a}
+.go-dot.amber{background:#f59e0b}
+.go-dot.red{background:#ef4444}
+.go-kpis{display:grid;gap:10px;margin-top:12px}
+@media(min-width:620px){.go-kpis{grid-template-columns:repeat(4,1fr)}}
+.go-kpi{background:#fff;border:1px solid var(--go-border);border-radius:16px;padding:12px}
+.go-kpi .t{font-size:12px;color:var(--go-muted);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.go-kpi .v{font-size:18px;font-weight:800;margin-top:6px}
+.go-kpi .s{font-size:12px;color:var(--go-muted);margin-top:2px}
+.go-tag{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--go-border);background:#fff}
+.go-tag.green{border-color:rgba(22,163,74,.35);background:rgba(22,163,74,.10);color:#166534}
+.go-tag.amber{border-color:rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#92400e}
+.go-tag.red{border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.10);color:#991b1b}
+.go-charts{display:grid;gap:12px;margin-top:12px}
+@media(min-width:980px){.go-charts{grid-template-columns:1fr 1fr}}
+.go-chart{padding:12px}
+.go-chart h3{margin:0 0 8px;font-size:14px}
+canvas{width:100% !important;height:280px !important}
+.go-note{font-size:12px;color:var(--go-muted);line-height:1.55}
+.go-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
+.go-table th,.go-table td{padding:9px 10px;border-bottom:1px solid var(--go-border);text-align:left;vertical-align:top}
+.go-table th{font-size:12px;color:var(--go-muted);font-weight:700;background:linear-gradient(#fff,#fafafa)}
+.go-right{text-align:right}
+.go-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.go-a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border-radius:999px;padding:9px 12px;font-size:13px;border:1px solid var(--go-border);background:#fff;color:var(--go-gray)}
+.go-a.primary{background:var(--go-green);border-color:rgba(0,0,0,.05);color:#fff}
+.go-a:hover{transform:translateY(-1px)}
+.go-small{font-size:11px;color:var(--go-muted);margin-top:8px}
+.go-err{display:none;margin-top:10px;padding:10px;border-radius:14px;border:1px solid rgba(239,68,68,.25);background:rgba(239,68,68,.07);color:#7f1d1d;font-size:12px}
+</style>
+</head>
+<body>
+<div class="go-wrap">
+  <section class="go-hero">
+    <h1>รายงานการใช้พลังงานไฟฟ้า ปี 2568 (Executive Dashboard)</h1>
+    <p>Green Office 2568 • หมวด 3.2.2 ข้อมูลการใช้ไฟฟ้าต่อหน่วย เทียบเป้าหมาย และวิเคราะห์ผล</p>
+  </section>
+
+  <div class="go-grid">
+    <section class="go-card">
+      <div class="go-controls">
+        <div class="go-btns" id="viewBtns">
+          <button class="go-btn is-active" data-view="monthly">รายเดือน</button>
+          <button class="go-btn" data-view="quarterly">รายไตรมาส</button>
+          <button class="go-btn" data-view="ytd">YTD</button>
+        </div>
+        <div class="go-btns" id="yearBtns">
+          <button class="go-btn is-active" data-year="2568">ปี 2568</button>
+          <button class="go-btn" data-year="2567">ปี 2567</button>
+          <button class="go-btn" data-year="compare">Compare</button>
+        </div>
+        <div class="go-pill" title="Traffic Light เทียบเป้าหมาย">
+          <span class="go-dot green" id="statusDot"></span>
+          <span id="statusText">กำลังโหลดข้อมูล…</span>
+        </div>
+      </div>
+
+      <div class="go-kpis" id="kpis"></div>
+
+      <div class="go-charts">
+        <div class="go-card go-chart">
+          <h3>แนวโน้มการใช้พลังงาน (kWh)</h3>
+          <canvas id="chartTrend"></canvas>
+        </div>
+        <div class="go-card go-chart">
+          <h3>Actual vs Target (kWh)</h3>
+          <canvas id="chartTarget"></canvas>
+        </div>
+        <div class="go-card go-chart" style="grid-column:1/-1">
+          <h3>ประสิทธิภาพ (kWh/คน)</h3>
+          <canvas id="chartEff"></canvas>
+        </div>
+      </div>
+
+      <div class="go-card" style="margin-top:12px">
+        <h3 style="margin:0 0 6px;font-size:14px">สรุปผู้บริหาร</h3>
+        <div class="go-note" id="insights">
+          • ภาพรวม: —<br/>
+          • เดือน/ช่วงที่ใช้สูงสุด: —<br/>
+          • เดือน/ช่วงที่ใช้ต่ำสุด: —<br/>
+          • ข้อสังเกต/สาเหตุ: (แก้ไขข้อความนี้ได้)<br/>
+          • มาตรการ/แผนไตรมาสถัดไป: (แก้ไขข้อความนี้ได้)
+        </div>
+        <div class="go-actions">
+          <a class="go-a primary" id="dlCsv" href="#" download="energy_view.csv">ดาวน์โหลด CSV (มุมมองปัจจุบัน)</a>
+          <a class="go-a" id="dlExcel" href=\"12-elect.xlsx\">ดาวน์โหลด Excel (ดิบ)</a>
+          <a class="go-a" id="openReadme" href="/greenoffice/images/data/energy/README_energy_dashboard.md" target="_blank" rel="noopener">Methodology</a>
+        </div>
+        <div class="go-small">ถ้าแสดง “Loading…” ค้าง: ตรวจสอบ path CSV และดู Console (F12) • มี Demo Mode สำรองอัตโนมัติ</div>
+        <div class="go-err" id="errBox"></div>
+      </div>
+    </section>
+
+    <aside class="go-card">
+      <h3 style="margin:0 0 8px;font-size:14px">ตารางรายละเอียด</h3>
+      <div class="go-note" id="tableMeta">—</div>
+      <div style="overflow:auto">
+        <table class="go-table" id="dataTable">
+          <thead>
+            <tr>
+              <th>ช่วงเวลา</th>
+              <th class="go-right">kWh</th>
+              <th class="go-right">ค่าไฟ (บาท)</th>
+              <th class="go-right">kWh/คน</th>
+              <th class="go-right">Target</th>
+              <th>สถานะ</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<script>
+/** =========================
+ *  CONFIG (edit here)
+ *  ========================= */
+const CSV_URL = "/greenoffice/images/data/energy/energy_electricity_2567-2568_v1.csv?v=1";
+
+// Targets: default = reduce 5% YoY (2568 vs 2567) for matching period.
+// You can override with fixed annual target if you have it.
+const TARGETS = {
+  baseline_year: 2567,
+  target_year: 2568,
+  yoy_reduction_pct: -5, // negative means reduce vs baseline
+  annual_kwh_2568: null, // e.g., 380000 (optional)
+  thresholds_pct: { amber: 10, red: 10 }, // amber <10% above target, red >=10% above target
+};
+
+/** =========================
+ *  Utils
+ *  ========================= */
+const MONTHS_TH = ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."];
+const fmt0 = (n)=> (isFinite(n)? n.toLocaleString("th-TH",{maximumFractionDigits:0}):"—");
+const fmt1 = (n)=> (isFinite(n)? n.toLocaleString("th-TH",{maximumFractionDigits:1}):"—");
+const fmt2 = (n)=> (isFinite(n)? n.toLocaleString("th-TH",{maximumFractionDigits:2}):"—");
+const sum = (arr)=> arr.reduce((a,b)=>a+(+b||0),0);
+
+function setActive(containerId, key, val){
+  document.querySelectorAll(`#${containerId} .go-btn`).forEach(b=>{
+    b.classList.toggle("is-active", b.dataset[key] === val);
+  });
+}
+
+function trafficLight(actual, target){
+  if(!isFinite(target) || target<=0 || !isFinite(actual)) return {cls:"green", label:"ไม่มีเป้าหมาย (Demo)"};
+  const overPct = ((actual-target)/target)*100;
+  if(overPct < 0) return {cls:"green", label:"ผ่านเป้าหมาย"};
+  if(overPct < TARGETS.thresholds_pct.amber) return {cls:"amber", label:"ใกล้เป้าหมาย"};
+  return {cls:"red", label:"ไม่ผ่านเป้าหมาย"};
+}
+
+/** =========================
+ *  Data transform
+ *  ========================= */
+function normalizeRows(rows){
+  return rows
+    .filter(r=>r.year && r.month)
+    .map(r=>({
+      year: +r.year,
+      month: +r.month,
+      period: +r.month,
+      periodLabel: MONTHS_TH[(+r.month)-1] || r.month_th || String(r.month),
+      people: +r.people || 0,
+      kwh: +r.kwh || 0,
+      cost: +r.cost_thb || 0,
+    }));
+}
+
+function groupQuarterly(rows, year){
+  const yr = rows.filter(r=>r.year===year);
+  const qMap = {1:[1,2,3],2:[4,5,6],3:[7,8,9],4:[10,11,12]};
+  const out = [];
+  for(const q of [1,2,3,4]){
+    const months = qMap[q];
+    const rs = yr.filter(r=>months.includes(r.month));
+    if(!rs.length) continue;
+    const kwh = sum(rs.map(x=>x.kwh));
+    const cost = sum(rs.map(x=>x.cost));
+    const people = rs.reduce((a,x)=>a+(x.people||0),0)/rs.length; // avg headcount
+    out.push({
+      year, quarter:q,
+      period:q,
+      periodLabel:`Q${q}`,
+      people,
+      kwh, cost,
+      eff: people? kwh/people: NaN
+    });
+  }
+  return out;
+}
+
+function viewMonthly(rows, year){
+  return rows.filter(r=>r.year===year).map(r=>({
+    ...r,
+    eff: r.people? r.kwh/r.people: NaN
+  }));
+}
+
+function viewYTD(rows, year, cutoffMonth=null){
+  const yr = rows.filter(r=>r.year===year);
+  const maxM = cutoffMonth ?? Math.max(...yr.map(r=>r.month));
+  const rs = yr.filter(r=>r.month<=maxM);
+  const kwh = sum(rs.map(x=>x.kwh));
+  const cost = sum(rs.map(x=>x.cost));
+  const people = rs.reduce((a,x)=>a+(x.people||0),0)/Math.max(1,rs.length);
+  return [{
+    year,
+    period: 1,
+    periodLabel: `YTD (ถึง ${MONTHS_TH[maxM-1]||maxM})`,
+    people,
+    kwh, cost,
+    eff: people? kwh/people: NaN
+  }];
+}
+
+function computeTargetsForSeries(series, selectedYear, baselineSeries=null){
+  // Returns target per row.period aligned with series periods, based on baselineSeries * (1 + yoy_reduction_pct)
+  if(!baselineSeries || !baselineSeries.length) return series.map(()=>NaN);
+
+  const factor = 1 + (TARGETS.yoy_reduction_pct/100);
+  const baseByPeriod = new Map(baselineSeries.map(r=>[r.period, r.kwh]));
+  return series.map(r=>{
+    const b = baseByPeriod.get(r.period);
+    return isFinite(b)? b*factor : NaN;
+  });
+}
+
+/** =========================
+ *  Rendering
+ *  ========================= */
+let state = { view:"monthly", year:"2568" };
+let rawRows = [];
+let charts = { trend:null, target:null, eff:null };
+
+function destroyChart(c){ if(c){ try{c.destroy();}catch(e){} } }
+
+function renderAll(){
+  const years = [...new Set(rawRows.map(r=>r.year))].sort();
+  const yearA = state.year==="compare" ? TARGETS.target_year : +state.year;
+  const yearB = TARGETS.baseline_year;
+
+  let seriesA=[], seriesB=[];
+  if(state.view==="monthly"){
+    seriesA = viewMonthly(rawRows, yearA);
+    seriesB = viewMonthly(rawRows, yearB);
+  }else if(state.view==="quarterly"){
+    seriesA = groupQuarterly(rawRows, yearA);
+    seriesB = groupQuarterly(rawRows, yearB);
+  }else{
+    // ytd compare aligns cutoff month
+    const maxA = Math.max(...rawRows.filter(r=>r.year===yearA).map(r=>r.month));
+    const maxB = Math.max(...rawRows.filter(r=>r.year===yearB).map(r=>r.month));
+    const cutoff = state.year==="compare" ? Math.min(maxA,maxB) : maxA;
+    seriesA = viewYTD(rawRows, yearA, cutoff);
+    seriesB = viewYTD(rawRows, yearB, cutoff);
+  }
+
+  // Determine what to show on charts
+  const showCompare = state.year==="compare";
+  const labels = seriesA.map(r=>r.periodLabel);
+
+  // Targets: prefer period-based target from baseline (2567) for 2568
+  let targets = seriesA.map(()=>NaN);
+  if(yearA===TARGETS.target_year){
+    targets = computeTargetsForSeries(seriesA, yearA, seriesB);
+  }
+  // For YTD with fixed annual target, we can map annual to ytd too if desired (keep simple)
+  if(state.view==="ytd" && isFinite(TARGETS.annual_kwh_2568) && yearA===2568){
+    targets = [TARGETS.annual_kwh_2568];
+  }
+
+  const totalKwh = sum(seriesA.map(r=>r.kwh));
+  const totalCost = sum(seriesA.map(r=>r.cost));
+  const avgEff = seriesA.length? (sum(seriesA.map(r=>r.eff))/seriesA.length):NaN;
+
+  // YoY: compare same view totals if possible
+  const totalBase = sum(seriesB.map(r=>r.kwh));
+  const yoyPct = (isFinite(totalBase) && totalBase>0) ? ((totalKwh-totalBase)/totalBase)*100 : NaN;
+
+  // Peak/Low
+  const peak = seriesA.reduce((m,r)=> (r.kwh>(m?.kwh??-1)? r : m), null);
+  const low  = seriesA.reduce((m,r)=> (r.kwh<(m?.kwh??1e99)? r : m), null);
+
+  const totalTarget = sum(targets.filter(x=>isFinite(x)));
+  const status = trafficLight(totalKwh, totalTarget>0? totalTarget: NaN);
+
+  // Update traffic pill
+  const dot = document.getElementById("statusDot");
+  dot.className = "go-dot " + status.cls;
+  document.getElementById("statusText").textContent = status.label;
+
+  // KPI cards
+  const kpis = document.getElementById("kpis");
+  kpis.innerHTML = "";
+  const kpiItems = [
+    {t:`ใช้ไฟฟ้ารวม (${state.viewLabel||""})`, v:`${fmt1(totalKwh)} kWh`, s:`Target: ${isFinite(totalTarget)&&totalTarget>0? fmt1(totalTarget):"—"}`, tag:status.cls},
+    {t:"ค่าไฟรวม", v:`${fmt0(totalCost)} บาท`, s:"รวมตามมุมมองปัจจุบัน"},
+    {t:"ประสิทธิภาพ", v:`${fmt2(avgEff)} kWh/คน`, s:"เฉลี่ยตามช่วงเวลา"},
+    {t:"YoY เทียบปีฐาน", v:`${isFinite(yoyPct)? fmt2(yoyPct):"—"}%`, s:`เทียบ ${yearB}`, tag:isFinite(yoyPct)? (yoyPct<=0?"green":(yoyPct<10?"amber":"red")):""}
+  ];
+  for(const it of kpiItems){
+    const el = document.createElement("div");
+    el.className = "go-kpi";
+    el.innerHTML = `
+      <div class="t">
+        <span>${it.t}</span>
+        ${it.tag? `<span class="go-tag ${it.tag}">${it.tag.toUpperCase()}</span>`:""}
+      </div>
+      <div class="v">${it.v}</div>
+      <div class="s">${it.s||""}</div>
+    `;
+    kpis.appendChild(el);
+  }
+
+  // Insights
+  const ins = document.getElementById("insights");
+  ins.innerHTML = `
+    • ภาพรวม: ปี ${yearA} ใช้ไฟฟ้ารวม <b>${fmt1(totalKwh)} kWh</b> (YoY ${isFinite(yoyPct)? fmt2(yoyPct):"—"}%)<br/>
+    • ช่วงที่ใช้สูงสุด: <b>${peak? peak.periodLabel:"—"}</b> (${peak? fmt1(peak.kwh):"—"} kWh)<br/>
+    • ช่วงที่ใช้ต่ำสุด: <b>${low? low.periodLabel:"—"}</b> (${low? fmt1(low.kwh):"—"} kWh)<br/>
+    • ข้อสังเกต/สาเหตุ: (แก้ไขข้อความนี้ได้)<br/>
+    • มาตรการ/แผนไตรมาสถัดไป: (แก้ไขข้อความนี้ได้)
+  `;
+
+  // Table meta
+  document.getElementById("tableMeta").textContent =
+    `${showCompare? "Compare":"ปี "+yearA} • มุมมอง: ${state.view==="monthly"?"รายเดือน":state.view==="quarterly"?"รายไตรมาส":"YTD"} • แถวข้อมูล: ${seriesA.length}`;
+
+  // Table body
+  const tb = document.querySelector("#dataTable tbody");
+  tb.innerHTML = "";
+  seriesA.forEach((r,idx)=>{
+    const t = targets[idx];
+    const st = trafficLight(r.kwh, t);
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r.periodLabel}</td>
+      <td class="go-right">${fmt1(r.kwh)}</td>
+      <td class="go-right">${fmt0(r.cost)}</td>
+      <td class="go-right">${fmt2(r.eff)}</td>
+      <td class="go-right">${isFinite(t)? fmt1(t):"—"}</td>
+      <td><span class="go-tag ${st.cls}">${st.label}</span></td>
+    `;
+    tb.appendChild(tr);
+  });
+
+  // Download current view CSV (client-side)
+  document.getElementById("dlCsv").onclick = (e)=>{
+    e.preventDefault();
+    const rows = seriesA.map((r,idx)=>({
+      year: yearA,
+      view: state.view,
+      period: r.periodLabel,
+      kwh: r.kwh,
+      cost_thb: r.cost,
+      kwh_per_person: r.eff,
+      target_kwh: targets[idx],
+      status: trafficLight(r.kwh, targets[idx]).label
+    }));
+    const header = Object.keys(rows[0]||{});
+    const csv = [header.join(",")].concat(rows.map(o=>header.map(k=>{
+      const v=o[k];
+      const s=(v===null||v===undefined)?"":String(v);
+      return /[",\n]/.test(s)? `"${s.replaceAll('"','""')}"` : s;
+    }).join(","))).join("\n");
+    const blob = new Blob([csv],{type:"text/csv;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.getElementById("dlCsv");
+    a.href = url;
+    a.download = `energy_${state.view}_${yearA}.csv`;
+    a.click();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+  };
+
+  // Charts
+  destroyChart(charts.trend); destroyChart(charts.target); destroyChart(charts.eff);
+
+  // Trend chart
+  const trendDatasets = [{
+    label: `kWh ปี ${yearA}`,
+    data: seriesA.map(r=>r.kwh),
+    tension:.25
+  }];
+  if(showCompare){
+    trendDatasets.push({
+      label: `kWh ปี ${yearB}`,
+      data: seriesB.map(r=>r.kwh),
+      tension:.25
+    });
+  }
+  charts.trend = new Chart(document.getElementById("chartTrend"),{
+    type:"line",
+    data:{ labels, datasets: trendDatasets },
+    options:{ responsive:true, plugins:{legend:{position:"bottom"}}, scales:{y:{ticks:{callback:(v)=>fmt0(v)}}}}
+  });
+
+  // Target chart
+  const targetDs = [
+    { label:`Actual ปี ${yearA}`, data: seriesA.map(r=>r.kwh) , type:"bar" },
+  ];
+  if(targets.some(x=>isFinite(x))){
+    targetDs.push({ label:"Target", data: targets, type:"line", tension:.25 });
+  }
+  charts.target = new Chart(document.getElementById("chartTarget"),{
+    data:{ labels, datasets: targetDs },
+    options:{ responsive:true, plugins:{legend:{position:"bottom"}}, scales:{y:{ticks:{callback:(v)=>fmt0(v)}}}}
+  });
+
+  // Efficiency
+  charts.eff = new Chart(document.getElementById("chartEff"),{
+    type:"bar",
+    data:{ labels, datasets:[{ label:`kWh/คน ปี ${yearA}`, data: seriesA.map(r=>r.eff)}] },
+    options:{ responsive:true, plugins:{legend:{position:"bottom"}}, scales:{y:{ticks:{callback:(v)=>fmt2(v)}}}}
+  });
+}
+
+/** =========================
+ *  Load CSV (with Demo fallback)
+ *  ========================= */
+function demoRows(){
+  const demo = [
+    {year:2567,month:1,month_th:"มกราคม",people:45,kwh:12500,cost_thb:56250},
+    {year:2567,month:2,month_th:"กุมภาพันธ์",people:45,kwh:11200,cost_thb:50400},
+    {year:2568,month:1,month_th:"มกราคม",people:45,kwh:13200,cost_thb:59400},
+    {year:2568,month:2,month_th:"กุมภาพันธ์",people:45,kwh:11850,cost_thb:53325},
+  ];
+  return normalizeRows(demo);
+}
+
+function showErr(msg){
+  const box = document.getElementById("errBox");
+  box.style.display="block";
+  box.textContent = msg;
+}
+
+function load(){
+  Papa.parse(CSV_URL,{
+    download:true,
+    header:true,
+    dynamicTyping:true,
+    complete:(res)=>{
+      if(res.errors && res.errors.length){
+        console.warn(res.errors);
+      }
+      try{
+        rawRows = normalizeRows(res.data||[]);
+        if(!rawRows.length) throw new Error("Empty CSV");
+        renderAll();
+      }catch(err){
+        console.error(err);
+        showErr("โหลด CSV ไม่สำเร็จ → เข้า Demo Mode. ตรวจสอบ path CSV และสิทธิ์เข้าถึงไฟล์");
+        rawRows = demoRows();
+        renderAll();
+      }
+    },
+    error:(err)=>{
+      console.error(err);
+      showErr("ดาวน์โหลด CSV ไม่ได้ → เข้า Demo Mode. ตรวจสอบว่า URL เข้าถึงได้: "+CSV_URL);
+      rawRows = demoRows();
+      renderAll();
+    }
+  });
+}
+
+/** =========================
+ *  Events
+ *  ========================= */
+document.getElementById("viewBtns").addEventListener("click",(e)=>{
+  const b = e.target.closest(".go-btn"); if(!b) return;
+  state.view = b.dataset.view;
+  setActive("viewBtns","view",state.view);
+  renderAll();
+});
+document.getElementById("yearBtns").addEventListener("click",(e)=>{
+  const b = e.target.closest(".go-btn"); if(!b) return;
+  state.year = b.dataset.year;
+  setActive("yearBtns","year",state.year);
+  renderAll();
+});
+
+load();
+</script>
+</body>
+</html>

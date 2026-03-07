@@ -1,0 +1,12 @@
+2026-03-07 08:03:09,591 - INFO - Starting energy DB to CSV export
+2026-03-07 08:03:09,591 - INFO - Starting export to /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/energy_electricity_2567-2568_v1.csv
+2026-03-07 08:03:09,595 - INFO - Backed up existing file to: /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/_bak/energy_electricity_2567-2568_v1_20260307_080309.csv
+2026-03-07 08:03:09,600 - INFO - Exported 24 rows to /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/energy_electricity_2567-2568_v1.csv
+2026-03-07 08:03:09,601 - INFO - CSV file verified: 25 lines (header + 24 rows)
+2026-03-07 08:03:09,601 - INFO - Export completed successfully: /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/energy_electricity_2567-2568_v1.csv with 24 rows
+2026-03-07 08:23:19,019 - INFO - Starting energy DB to CSV export
+2026-03-07 08:23:19,019 - INFO - Starting export to /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/energy_electricity_2567-2568_v1.csv
+2026-03-07 08:23:19,022 - INFO - Backed up existing file to: /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/_bak/energy_electricity_2567-2568_v1_20260307_082319.csv
+2026-03-07 08:23:19,027 - INFO - Exported 24 rows to /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/energy_electricity_2567-2568_v1.csv
+2026-03-07 08:23:19,028 - INFO - CSV file verified: 25 lines (header + 24 rows)
+2026-03-07 08:23:19,028 - INFO - Export completed successfully: /home/rae_admin/joomla-greenoffice/joomla_data/images/data/energy/energy_electricity_2567-2568_v1.csv with 24 rows

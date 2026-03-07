@@ -1,0 +1,42 @@
+{
+  "excel_path": null,
+  "csv_path": "/home/rae_admin/joomla-greenoffice/joomla_data/images/data/executive/ghg_2567-2568_v1.csv",
+  "valid_rows": 434,
+  "issues_count": 217,
+  "issues_sample": [
+    "Line 3: Parse error - could not convert string to float: 'การเก็บข้อมูล\"'",
+    "Line 113: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 115: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 117: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 119: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 121: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 123: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 125: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 127: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 129: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 131: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 133: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 135: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 137: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 139: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 141: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 143: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 145: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 147: Parse error - could not convert string to float: '(ประเภท 3)\"'",
+    "Line 149: Parse error - could not convert string to float: '(ประเภท 3)\"'"
+  ],
+  "computed_totals": {
+    "2567": 11.01713228,
+    "2568": 10.847924292
+  },
+  "mismatches": [
+    "2567 total mismatch: 11.017132280000000233 vs 220.98693744",
+    "2568 total mismatch: 10.84792429200000020 vs 231.620303712",
+    "YoY % mismatch: -1.54 vs 4.81"
+  ],
+  "ground_truth": {
+    "2567_total_tco2e": 220.98693744,
+    "2568_total_tco2e": 231.620303712,
+    "yoy_pct": 4.81
+  }
+}

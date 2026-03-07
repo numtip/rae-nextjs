@@ -1,0 +1,4 @@
+2026-03-07 08:23:17,665 - INFO - Starting energy Excel import
+2026-03-07 08:23:17,919 - INFO - Table j6_go_energy_electricity_monthly verified/created
+2026-03-07 08:23:17,990 - INFO - Database operation completed. Inserted: 0, Updated: 24
+2026-03-07 08:23:17,991 - INFO - Import completed successfully

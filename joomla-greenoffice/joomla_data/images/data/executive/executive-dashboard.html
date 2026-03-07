@@ -3,15 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Unified Executive + GHG Drilldown</title>
+  <title>Executive Environmental Intelligence Dashboard</title>
   <style>
     :root{--bg:#f2f4f7;--card:#ffffff;--ink:#1f2937;--muted:#6b7280;--accent:#0f766e;--amber:#f59e0b;--red:#ef4444;--green:#10b981;}
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;color:var(--ink);background:linear-gradient(180deg,#eef2f7 0%,#f8f7f4 60%);} 
-    header{padding:22px 20px 8px 20px;}
-    h1{margin:0;font-size:22px;letter-spacing:.2px}
-    .sub{color:var(--muted);font-size:13px}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;color:var(--ink);background:linear-gradient(180deg,#eef2f7 0%,#f8f7f4 60%);}
+    /* Executive Hero Section */
+    .exec-hero{max-width:1100px;margin:0 auto;padding:40px 24px 32px 24px;text-align:center;background:linear-gradient(180deg,#fff 0%,#f8fafb 100%);border-bottom:1px solid #e5e7eb;}
+    .exec-hero h1{margin:0 0 16px 0;font-size:34px;font-weight:700;letter-spacing:-.5px;color:#1f2937;line-height:1.3;}
+    .exec-subtitle{margin:0 0 20px 0;font-size:17px;line-height:1.7;color:#4b5563;max-width:900px;margin-left:auto;margin-right:auto;}
+    .exec-summary{margin:0 0 16px 0;font-size:15px;font-weight:600;color:#1f6f50;letter-spacing:.3px;}
+    .exec-meta{font-size:12px;color:#6b7280;margin-top:20px;padding-top:16px;border-top:1px solid #e5e7eb;}
+    .exec-meta span{display:inline-block;margin:0 8px;}
+    @media(max-width:768px){.exec-hero{padding:28px 16px 24px 16px;}.exec-hero h1{font-size:26px;}.exec-subtitle{font-size:15px;}.exec-summary{font-size:14px;}}
     .wrap{padding:12px 20px 28px 20px;display:grid;gap:14px}
     .card{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;padding:14px;box-shadow:0 1px 1px rgba(0,0,0,.04)}
     .kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
@@ -51,16 +56,24 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Unified Executive + GHG Drilldown Dashboard</h1>
-    <div class="sub">รวมภาพรวมผู้บริหาร + เจาะลึกก๊าซเรือนกระจก</div>
-  </header>
+
+  <section class="exec-hero">
+    <h1>Unified Executive Environmental Intelligence Dashboard</h1>
+    <p class="exec-subtitle">
+      แดชบอร์ดอัจฉริยะสำหรับผู้บริหาร ที่บูรณาการข้อมูลด้านพลังงาน ทรัพยากร และการปล่อยก๊าซเรือนกระจกขององค์กร เพื่อการติดตาม วิเคราะห์ และสนับสนุนการตัดสินใจเชิงนโยบายด้านสิ่งแวดล้อมอย่างมีประสิทธิภาพและยั่งยืน
+    </p>
+    <p class="exec-summary">
+      Integrated Environmental Performance Monitoring for Green Office Management
+    </p>
+    <div class="exec-meta">
+      Data Source: Environmental Resource &amp; GHG Monitoring System<span>|</span>Update: Automated Data Pipeline<span>|</span>Coverage: Energy • Resources • GHG Emissions
+    </div>
+  </section>
 
   <div class="nav">
     <a href="#section-a">Executive Snapshot</a>
     <a href="#section-b">Integrated Analysis</a>
     <a href="#section-c">GHG Drilldown</a>
-    <a href="#section-awareness">Awareness</a>
     <a href="#section-d">Data Integrity</a>
   </div>
 
@@ -159,33 +172,6 @@
       </div>
     </section>
 
-    <section id="section-awareness" class="section">
-      <div class="card">
-        <div class="kpi-title" style="margin-bottom:10px">แบบประเมินกิจกรรมปลูกจิตสำนึก (Awareness)</div>
-        <p>
-          <label for="awarenessSessionId">session_id</label>
-          <input type="text" id="awarenessSessionId" style="width:100%;max-width:320px;padding:8px;border-radius:8px;border:1px solid #d1d5db" placeholder="AW-YYYYMMDD-RAE-Session1" />
-        </p>
-        <div class="controls-left" style="flex-wrap:wrap;gap:8px;margin-bottom:8px">
-          <button type="button" id="awarenessBtnToday" class="btn">สร้าง session_id วันนี้</button>
-          <button type="button" id="awarenessBtnPre" class="btn">เปิด Pre</button>
-          <button type="button" id="awarenessBtnPost" class="btn">เปิด Post</button>
-          <button type="button" id="awarenessBtnCopyPre" class="btn">คัดลอกลิงก์ Pre</button>
-          <button type="button" id="awarenessBtnCopyPost" class="btn">คัดลอกลิงก์ Post</button>
-        </div>
-        <p class="footer" style="margin-top:8px">
-          ลิงก์ข้อมูล: <a href="/greenoffice/images/data/awareness/question_bank.json" target="_blank" rel="noopener">question_bank.json</a>
-          · <a href="#" id="awarenessLinkSessionJson" target="_blank" rel="noopener">session_questions_&lt;session&gt;.json</a>
-        </p>
-        <p class="kpi-title" style="margin-top:6px;font-size:11px">Pre/Post ใช้ชุดคำถามเดียวกัน (session_questions_&lt;session&gt;.json)</p>
-        <div class="kpi-title" style="margin-top:14px">เครื่องมือระบบ</div>
-        <p style="margin-top:6px">
-          <a href="/n8n/" target="_blank" rel="noopener" class="btn" style="display:inline-block;text-decoration:none">n8n</a>
-          <a href="/greenoffice/images/data/awareness/awareness-dashboard.html" target="_blank" rel="noopener" class="btn" style="display:inline-block;text-decoration:none;margin-left:6px">รายงานผล Awareness</a>
-        </p>
-      </div>
-    </section>
-
     <section id="section-d" class="section">
       <div class="card footer" id="integrity">-</div>
     </section>
@@ -224,65 +210,5 @@
 
   <script src="./chart.umd.min.js"></script>
   <script src="./executive-dashboard.js"></script>
-  <script>
-  (function () {
-    var base = '/greenoffice/images/data/awareness/';
-    var formUrl = base + 'awareness-form.html';
-    var input = document.getElementById('awarenessSessionId');
-    var linkSessionJson = document.getElementById('awarenessLinkSessionJson');
-
-    function todaySessionId() {
-      var d = new Date();
-      var y = d.getFullYear();
-      var m = String(d.getMonth() + 1).padStart(2, '0');
-      var day = String(d.getDate()).padStart(2, '0');
-      return 'AW-' + y + m + day + '-RAE-Session1';
-    }
-
-    function getSessionId() {
-      return (input && input.value && input.value.trim()) ? input.value.trim() : todaySessionId();
-    }
-
-    function preUrl() {
-      return formUrl + '?session=' + encodeURIComponent(getSessionId()) + '&phase=pre';
-    }
-    function postUrl() {
-      return formUrl + '?session=' + encodeURIComponent(getSessionId()) + '&phase=post';
-    }
-
-    function updateSessionJsonLink() {
-      if (linkSessionJson) {
-        var sid = getSessionId();
-        var safe = sid.replace(/[^\w\-]/g, '_').substring(0, 64);
-        linkSessionJson.href = base + 'session_questions_' + safe + '.json';
-        linkSessionJson.textContent = 'session_questions_' + safe + '.json';
-      }
-    }
-
-    if (input) {
-      input.value = todaySessionId();
-      input.addEventListener('input', updateSessionJsonLink);
-      input.addEventListener('change', updateSessionJsonLink);
-    }
-    updateSessionJsonLink();
-
-    document.getElementById('awarenessBtnToday').addEventListener('click', function () {
-      if (input) input.value = todaySessionId();
-      updateSessionJsonLink();
-    });
-    document.getElementById('awarenessBtnPre').addEventListener('click', function () {
-      window.open(preUrl(), '_blank', 'noopener,noreferrer');
-    });
-    document.getElementById('awarenessBtnPost').addEventListener('click', function () {
-      window.open(postUrl(), '_blank', 'noopener,noreferrer');
-    });
-    document.getElementById('awarenessBtnCopyPre').addEventListener('click', function () {
-      navigator.clipboard.writeText(preUrl()).then(function () { alert('คัดลอกลิงก์ Pre แล้ว'); }).catch(function () { alert('คัดลอกไม่สำเร็จ'); });
-    });
-    document.getElementById('awarenessBtnCopyPost').addEventListener('click', function () {
-      navigator.clipboard.writeText(postUrl()).then(function () { alert('คัดลอกลิงก์ Post แล้ว'); }).catch(function () { alert('คัดลอกไม่สำเร็จ'); });
-    });
-  })();
-  </script>
 </body>
 </html>

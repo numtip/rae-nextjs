@@ -1,19 +1,21 @@
-# การตรวจสอบส่วน Awareness ใน Executive Dashboard
+# การตรวจสอบส่วน Awareness (ปุ่มสร้างลิงก์ Pre/Post)
+
+## หมายเหตุ
+ส่วน "แบบประเมินกิจกรรมปลูกจิตสำนึก (Awareness)" อยู่บน **หน้า Awareness Dashboard** เท่านั้น (ไม่ใช่หน้า Executive/GHG)
 
 ## ไฟล์ที่แก้ไข
-- `executive-dashboard.html`: เพิ่ม nav link "Awareness", section แบบประเมินกิจกรรมปลูกจิตสำนึก (Awareness) และเครื่องมือระบบ
+- `awareness/awareness-dashboard.html`: เพิ่มการ์ดแบบประเมินกิจกรรมปลูกจิตสำนึก (session_id, ปุ่มเปิด Pre/Post, คัดลอกลิงก์, ลิงก์ JSON, เครื่องมือระบบ n8n)
+- `executive/executive-dashboard.html`: **ลบ** ส่วน Awareness ออก (หน้า Executive เป็นเฉพาะ GHG ไม่โยงไป Awareness)
 
-## URL ที่ใช้ (relative to live_site /greenoffice)
-- เปิด Pre: `/greenoffice/images/data/awareness/awareness-form.html?session=<session_id>&phase=pre`
-- เปิด Post: `/greenoffice/images/data/awareness/awareness-form.html?session=<session_id>&phase=post`
-- question_bank.json: `/greenoffice/images/data/awareness/question_bank.json`
-- session_questions: `/greenoffice/images/data/awareness/session_questions_<session_id>.json` (session_id ถูก sanitize เป็น safe สำหรับชื่อไฟล์)
-- รายงานผล: `/greenoffice/images/data/awareness/awareness-dashboard.html`
-- n8n: `/n8n/`
+## URL ที่ใช้
+- **หน้า Awareness Dashboard (ที่ต้องเปิด):** `https://raeservice.mju.ac.th/greenoffice/images/data/awareness/awareness-dashboard.html`
+- เปิด Pre: `.../awareness/awareness-form.html?session=<session_id>&phase=pre`
+- เปิด Post: `.../awareness/awareness-form.html?session=<session_id>&phase=post`
+- question_bank.json, session_questions_<session>.json, n8n ตามลิงก์ในหน้า
 
 ## วิธีตรวจสอบในเบราว์เซอร์
-1. เปิด Executive Dashboard: `https://raeservice.mju.ac.th/greenoffice/images/data/executive/executive-dashboard.html` (หรือ URL ที่ deploy จริง)
-2. คลิกเมนู "Awareness" ให้ scroll ไปที่การ์ด "แบบประเมินกิจกรรมปลูกจิตสำนึก (Awareness)"
+1. เปิด **Awareness Dashboard**: `https://raeservice.mju.ac.th/greenoffice/images/data/awareness/awareness-dashboard.html`
+2. ด้านบนจะเห็นการ์ด "แบบประเมินกิจกรรมปลูกจิตสำนึก (Awareness)"
 3. ตรวจสอบ: ช่อง session_id เต็มด้วยค่าเริ่มต้น AW-YYYYMMDD-RAE-Session1 (ตามวันที่ของเครื่อง)
 4. คลิก "สร้าง session_id วันนี้" → ค่าช่องอัปเดตเป็นวันปัจจุบัน
 5. คลิก "เปิด Pre" → เปิดแท็บใหม่ไปที่ awareness-form.html?session=...&phase=pre
