@@ -62,7 +62,7 @@ Verified:
 ## Next Actions
 1. Fill evidence table rows for all 24 Green Office articles (41-64)
 2. Investigate water usage spike (+47.4%) - root cause analysis needed
-3. Add historical Waste data (2567) when Excel available
+3. Update waste_analysis.json with 2567 data (file: `/home/rae_admin/waste_analysis_2567_update.json`)
 4. Enhance Water Dashboard with Environmental Insight section
 
 ## Blockers
