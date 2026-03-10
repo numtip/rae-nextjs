@@ -8,3 +8,4 @@
 | `mod_go_dashboard` breaks if article IDs 41–64 are deleted/recreated | Med | Do NOT delete Green Office articles. If IDs change, update `$catDefs` array in module PHP. |
 | Cache stale — `plg_go_clearcache` disabled or cache path changes | Low | Check `administrator/cache/com_content/` after save; should be empty. Disable global caching if needed. |
 | DB password in plaintext in `AGENTS.md` + scripts | Low | Acceptable for internal dev server; rotate before exposing externally. |
+| Waste dashboard files (joomla_data/) outside Git tracking — manual backup required | Medium | Deploy via docker exec; keep host copy in LOGS/ directory for reference; document all changes |

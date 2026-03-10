@@ -8,3 +8,4 @@
 2026-03-02 | Article 43 ไฟล์/ลิงก์: ใช้ข้อความ "Water Dashboard" แทน emoji | MySQL introtext collation (utf8mb3) ไม่รองรับ 4-byte UTF-8 (emoji)
 2026-03-03 | Awareness analyze trigger: ใช้ pm2 cron ทุก 5 นาทีแทน n8n→host webhook real-time | firewall block TCP จาก Docker networks ไปยัง host port 9765 โดยไม่มี sudo access
 2026-03-03 | n8n เชื่อมเข้า joomla-greenoffice_joomla-network (joomla-net) | เพื่อให้ n8n MySQL node เข้าถึง rgreenoff-db:3306 ได้โดยตรง
+2026-03-10 | Use `docker exec` for file operations with www-data ownership instead of host-level permission changes | www-data:www-data ownership prevents host writes; docker exec bypasses while maintaining proper permissions
