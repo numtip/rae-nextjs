@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-03-07 12:00:00 UTC",
+  "source_file": "1.5_GreenhouseGas.xlsx",
+  "row_count": 167,
+  "years": [2567, 2568],
+  "year_totals": {
+    "2567": {
+      "total_tco2e": 220.99,
+      "scope1": 11.02,
+      "scope2": 192.53,
+      "scope3": 17.44,
+      "month_count": 12
+    },
+    "2568": {
+      "total_tco2e": 231.62,
+      "scope1": 10.85,
+      "scope2": 201.48,
+      "scope3": 19.29,
+      "month_count": 12
+    }
+  },
+  "yoy": {
+    "years": "2567 → 2568",
+    "total_change_pct": 4.81,
+    "scope1_change_pct": -1.54,
+    "scope2_change_pct": 4.65,
+    "scope3_change_pct": 10.61
+  },
+  "scope_breakdown": {
+    "2567": {
+      "scope1_pct": 4.99,
+      "scope2_pct": 87.13,
+      "scope3_pct": 7.89
+    },
+    "2568": {
+      "scope1_pct": 4.68,
+      "scope2_pct": 86.99,
+      "scope3_pct": 8.33
+    }
+  },
+  "top_activities": {
+    "2567": [
+      {"activity": "การใช้พลังงานไฟฟ้า", "scope": "Scope 2", "tco2e": 192.53, "pct": 87.13},
+      {"activity": "ขยะของเสีย (ฝังกลบ)", "scope": "Scope 3", "tco2e": 9.55, "pct": 4.32},
+      {"activity": "การใช้กระดาษ A4 และ A3 (สีขาว)", "scope": "Scope 3", "tco2e": 4.05, "pct": 1.83},
+      {"activity": "การปล่อยสารมีเทนจากระบบ septic tank", "scope": "Scope 1", "tco2e": 7.86, "pct": 3.56},
+      {"activity": "น้ำมัน Diesel", "scope": "Scope 1", "tco2e": 2.50, "pct": 1.13}
+    ],
+    "2568": [
+      {"activity": "การใช้พลังงานไฟฟ้า", "scope": "Scope 2", "tco2e": 201.48, "pct": 86.99},
+      {"activity": "ขยะของเสีย (ฝังกลบ)", "scope": "Scope 3", "tco2e": 9.55, "pct": 4.12},
+      {"activity": "การใช้กระดาษ A4 และ A3 (สีขาว)", "scope": "Scope 3", "tco2e": 4.05, "pct": 1.75},
+      {"activity": "การปล่อยสารมีเทนจากระบบ septic tank", "scope": "Scope 1", "tco2e": 7.86, "pct": 3.39},
+      {"activity": "น้ำมัน Diesel", "scope": "Scope 1", "tco2e": 2.50, "pct": 1.08}
+    ]
+  },
+  "summary": "ปี 2567: 220.99 tCO2e (Scope 1: 11.02, Scope 2: 192.53, Scope 3: 17.44) | ปี 2568: 231.62 tCO2e (Scope 1: 10.85, Scope 2: 201.48, Scope 3: 19.29) | YoY: +4.81%",
+  "key_findings": [
+    "การใช้พลังงานไฟฟ้าเป็นแหล่งปล่อยหลัก (>86%)",
+    "YoY เพิ่มขึ้น +4.81% เนื่องจากการใช้ไฟฟ้าเพิ่มขึ้น",
+    "Scope 1 ลดลง -1.54% (การใช้น้ำมันลดลง)",
+    "Scope 3 เพิ่มขึ้น +10.61% (กระดาษ, ขยะ, น้ำประปา)"
+  ],
+  "recommendations": [
+    "ลดการใช้ไฟฟ้าเพื่อลดการปล่อยก๊าซเรือนกระจก",
+    "พิจารณาติดตั้งแผงโซลาร์เซลล์",
+    "เพิ่มการรีไซเคิลเพื่อลดขยะฝังกลบ",
+    "ส่งเสริมการใช้กระดาษดิจิทัล"
+  ],
+  "csv_filename": "ghg_2567-2568_v1.csv",
+  "dataset_version": "20260307-1200"
+}

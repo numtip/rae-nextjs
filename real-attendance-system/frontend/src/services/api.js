@@ -189,7 +189,37 @@ export const leaveAPI = {
    * @param {string} uid - Employee UID
    * @param {Object} params - Query parameters
    */
-  getHistory: (uid, params) => api.get(`/leave/history/${uid}`, { params })
+  getHistory: (uid, params) => api.get(`/leave/history/${uid}`, { params }),
+
+  /**
+   * Query leave records
+   * @param {Object} params - Query parameters (from, to, employeeId, status)
+   */
+  query: (params) => api.get('/leave', { params }),
+
+  /**
+   * Get unmatched leave records (admin only)
+   * @param {Object} params - Query parameters (limit, offset)
+   */
+  getUnmatched: (params) => api.get('/admin/leave/unmatched', { params }),
+
+  /**
+   * Remap leave to employee (admin only)
+   * @param {Object} data - { leaveRequestId, employeeId }
+   */
+  remap: (data) => api.post('/admin/leave/remap', data),
+
+  /**
+   * Trigger manual leave sync (admin only)
+   * @param {Object} data - { dateBegin, dateEnd }
+   */
+  sync: (data) => api.post('/admin/leave/sync', data),
+
+  /**
+   * Get sync batches history (admin only)
+   * @param {Object} params - Query parameters (limit, offset)
+   */
+  getSyncBatches: (params) => api.get('/admin/leave/sync/batches', { params })
 }
 
 export default api

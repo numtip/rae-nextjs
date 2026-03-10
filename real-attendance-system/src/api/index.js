@@ -129,6 +129,10 @@ router.use('/reports/leaves', reportLeavesRoutes);
 const reportDashboardRoutes = require('./routes/report-dashboard');
 router.use('/reports', reportDashboardRoutes);
 
+// Dashboard Daily Summary route (KPI cards from staging_facescan_daily)
+const dashboardDailySummaryRoutes = require('./routes/dashboard-daily-summary');
+router.use('/dashboard', dashboardDailySummaryRoutes);
+
 // Employee Detail Report routes (individual attendance, leaves, balances)
 const reportEmployeeDetailRoutes = require('./routes/report-employee-detail');
 router.use('/employees', reportEmployeeDetailRoutes);
@@ -140,12 +144,36 @@ router.use('/reports/export', reportExportRoutes);
 // FaceScan routes (จัดการข้อมูล FaceScan staging)
 router.use('/facescan', require('./routes/facescan'));
 
+// FaceScan Daily CSV Import routes
+router.use('/facescan-daily', require('./routes/facescan-daily'));
+router.use('/hip', require('./routes/hip-integration'));
+
 // Canva routes (proxy to canva-service microservice)
 router.use('/canva', canvaProxyRoutes);
 
 // Meta routes (data freshness, server time)
 const metaRoutes = require('./routes/meta');
 router.use('/meta', metaRoutes);
+
+// Admin CSV routes (CSV upload, validation, import, commit)
+const adminCSVRoutes = require('./routes/admin-csv');
+router.use('/admin/csv', adminCSVRoutes);
+
+// File management routes (upload, metadata, download)
+const fileRoutes = require('./routes/files');
+router.use('/files', fileRoutes);
+
+// CSV import routes (preview, import, job status)
+const csvImportRoutes = require('./routes/csv-import');
+router.use('/csv', csvImportRoutes);
+
+// Reports routes (monthly and daily reports with CSV export)
+const reportsRoutes = require('./routes/reports');
+router.use('/reports', reportsRoutes);
+
+// Sync routes (sync staging data to main tables)
+const syncRoutes = require('./routes/sync');
+router.use('/sync', syncRoutes);
 
 module.exports = router;
 

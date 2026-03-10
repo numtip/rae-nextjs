@@ -1,0 +1,230 @@
+{
+  "title": "สรุปภาพรวม Green Office",
+  "subtitle": "แดชบอร์ดบริหาร ปีงบประมาณ 2567-2568",
+  "generated": "2026-03-07",
+  "period": {
+    "fiscalYear": "2567-2568",
+    "baselineYear": 2567,
+    "currentYear": 2568
+  },
+  "kpis": [
+    {
+      "id": "water",
+      "title": "การใช้น้ำ",
+      "category": "3.1",
+      "metric": {
+        "label": "การเปลี่ยนแปลง YoY",
+        "value": "+47.4%",
+        "trend": "up"
+      },
+      "status": {
+        "level": "critical",
+        "icon": "🔴",
+        "text": "วิกฤต"
+      },
+      "summary": "ปี 2568 ใช้น้ำ 8,337.50 ลบ.ม. เพิ่มขึ้น 47.4% จากปี 2567 (5,656.40 ลบ.ม.) ต้องดำเนินการเร่งด่วน",
+      "detail": {
+        "totalVolume": "8,337.50 ลบ.ม.",
+        "baseline": "5,656.40 ลบ.ม. (2567)",
+        "change": "+2,681.10 ลบ.ม."
+      },
+      "dashboardUrl": "/images/data/water/dashboard.html",
+      "priority": 1
+    },
+    {
+      "id": "energy",
+      "title": "การใช้ไฟฟ้า",
+      "category": "3.2",
+      "metric": {
+        "label": "การเปลี่ยนแปลง YoY",
+        "value": "+4.65%",
+        "trend": "up"
+      },
+      "status": {
+        "level": "warning",
+        "icon": "🟡",
+        "text": "ต้องปรับปรุง"
+      },
+      "summary": "ไฟฟ้าเพิ่มขึ้น 403,037 kWh (+4.65%) ควรลดการใช้พลังงาน",
+      "detail": {
+        "totalKwh": "403,037 kWh",
+        "totalCost": "2,184,459 บาท",
+        "kwhPerPerson": "4,242 kWh/คน/ปี"
+      },
+      "dashboardUrl": "/images/data/energy/dashboard.html",
+      "priority": 2
+    },
+    {
+      "id": "fuel",
+      "title": "การใช้น้ำมัน",
+      "category": "3.3",
+      "metric": {
+        "label": "การเปลี่ยนแปลง YoY",
+        "value": "-22.7%",
+        "trend": "down"
+      },
+      "status": {
+        "level": "good",
+        "icon": "🟢",
+        "text": "ผ่านเกณฑ์"
+      },
+      "summary": "น้ำมันลดลงจาก 900.20 เป็น 695.82 ลิตร (ลด 22.7%)",
+      "detail": {
+        "totalLiter": "695.82 ลิตร",
+        "totalCost": "22,928 บาท",
+        "savings": "-22.7%"
+      },
+      "dashboardUrl": "/images/data/fuel/dashboard.html",
+      "priority": 3
+    },
+    {
+      "id": "paper",
+      "title": "การใช้กระดาษ",
+      "category": "3.4",
+      "metric": {
+        "label": "การเปลี่ยนแปลง YoY",
+        "value": "+16.8%",
+        "trend": "up"
+      },
+      "status": {
+        "level": "warning",
+        "icon": "🟡",
+        "text": "ต้องปรับปรุง"
+      },
+      "summary": "กระดาษเพิ่มขึ้น 16.8% แต่ยังผ่านเกณฑ์ 3.74 รีม/คน (≤ 4)",
+      "detail": {
+        "totalReams": "355 รีม",
+        "perPerson": "3.74 รีม/คน/ปี",
+        "treeEquiv": "≈ 6 ต้นไม้"
+      },
+      "dashboardUrl": "/images/data/paper/dashboard.html",
+      "priority": 4
+    },
+    {
+      "id": "waste",
+      "title": "การจัดการขยะ",
+      "category": "4",
+      "metric": {
+        "label": "Diversion Rate",
+        "value": "21.7%",
+        "trend": "stable"
+      },
+      "status": {
+        "level": "good",
+        "icon": "🟢",
+        "text": "ผ่านเกณฑ์"
+      },
+      "summary": "Diversion Rate 21.7% และ Hazardous Ratio 0.39% ผ่านเกณฑ์ทุกตัว",
+      "detail": {
+        "diversionRate": "21.7%",
+        "hazardousRatio": "0.39%",
+        "totalKg": "5,625.7 กก."
+      },
+      "dashboardUrl": "/images/data/waste/dashboard.html",
+      "priority": 5
+    },
+    {
+      "id": "ghg",
+      "title": "ก๊าซเรือนกระจก",
+      "category": "1.5",
+      "metric": {
+        "label": "การเปลี่ยนแปลง YoY",
+        "value": "+4.81%",
+        "trend": "up"
+      },
+      "status": {
+        "level": "warning",
+        "icon": "🟡",
+        "text": "ต้องปรับปรุง"
+      },
+      "summary": "GHG เพิ่มขึ้น 4.81% ถึง 231.62 tCO₂e ไฟฟ้าเป็นแหล่งหลัก 87%",
+      "detail": {
+        "totalGhg": "231.62 tCO₂e",
+        "scope2": "87% (ไฟฟ้า)",
+        "scope1": "5%",
+        "scope3": "8%"
+      },
+      "dashboardUrl": "/images/data/executive/executive-dashboard.html?v=20260310",
+      "priority": 6
+    }
+  ],
+  "keyFindings": [
+    {
+      "id": "f1",
+      "icon": "💡",
+      "title": "ไฟฟ้าเป็นแหล่งปล่อย GHG หลัก",
+      "description": "Scope 2 (ไฟฟ้า) คิดเป็น 87% ของการปล่อยก๊าซเรือนกระจกทั้งหมด การลดการใช้ไฟฟ้าจะส่งผลโดยตรงต่อการลด GHG"
+    },
+    {
+      "id": "f2",
+      "icon": "🚰",
+      "title": "การใช้น้ำเพิ่มขึ้นอย่างมีนัยสำคัญ",
+      "description": "ปี 2568 ใช้น้ำเพิ่มขึ้น 47.4% (จาก 5,656 เป็น 8,337 ลบ.ม.) ต้องเร่งตรวจสอบจุดรั่วซึมและติดตั้งอุปกรณ์ประหยัดน้ำ"
+    },
+    {
+      "id": "f3",
+      "icon": "📄",
+      "title": "กระดาษเพิ่มขึ้นแต่ยังอยู่ในเกณฑ์",
+      "description": "แม้การใช้กระดาษเพิ่มขึ้น 16.8% แต่ยังอยู่ในเกณฑ์ 3.74 รีม/คน (≤ 4) ควรส่งเสริมการใช้ดิจิทัลมากขึ้น"
+    },
+    {
+      "id": "f4",
+      "icon": "♻️",
+      "title": "การจัดการขยะและน้ำมันเป็นเลิศ",
+      "description": "Diversion Rate 21.7% และการลดน้ำมัน 22.7% แสดงให้เห็นถึงการบริหารจัดการที่ดี"
+    }
+  ],
+  "priorityActions": [
+    {
+      "id": "a1",
+      "priority": 1,
+      "icon": "⚡",
+      "title": "ลดการใช้ไฟฟ้า",
+      "description": "ติดตั้ง LED ทั้งหมด, ปรับอุณหภูมิเครื่องปรับอากาศ, ดับไฟหลังเลิกงานอัตโนมัติ",
+      "resource": "energy",
+      "impact": "ลด GHG และค่าใช้จ่ายโดยตรง"
+    },
+    {
+      "id": "a2",
+      "priority": 2,
+      "icon": "💧",
+      "title": "เร่งลดการใช้น้ำ",
+      "description": "ติดตั้งฟอกเซ็นเซอร์, ตรวจสอบท่อรั่ว, ใช้น้ำฝนสำหรับรดน้ำต้นไม้",
+      "resource": "water",
+      "impact": "บรรลุเป้าหมาย 1%"
+    },
+    {
+      "id": "a3",
+      "priority": 3,
+      "icon": "📱",
+      "title": "ส่งเสริม Digital Workplace",
+      "description": "ลดการพิมพ์เอกสาร, ใช้ระบบ E-Document, ฝึกอบรมพนักงาน",
+      "resource": "paper",
+      "impact": "ลดกระดาษและต้นไม้ที่ต้องตัด"
+    },
+    {
+      "id": "a4",
+      "priority": 4,
+      "icon": "📊",
+      "title": "ตั้งเป้าหมาย GHG Reduction",
+      "description": "กำหนดเป้าหมายลด GHG ร้อยละ 5-10 ภายในปี 2569 พร้อมแผนปฏิบัติ",
+      "resource": "ghg",
+      "impact": "แสดงความรับผิดชอบต่อสิ่งแวดล้อม"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "warning": 3,
+    "critical": 1,
+    "totalKpis": 6,
+    "overallStatus": "warning",
+    "overallMessage": "3 ตัวชี้วัดผ่านเกณฑ์, 3 ตัวชี้วัดต้องปรับปรุง, 1 ตัวชี้วัดวิกฤต"
+  },
+  "metadata": {
+    "version": "1.1",
+    "author": "Green Office Dashboard System",
+    "updated_at": "2026-03-07T10:30:00+07:00",
+    "lastUpdated": "2026-03-07T08:00:00+07:00",
+    "dataSource": "dashboard_summary_20260307.md"
+  }
+}

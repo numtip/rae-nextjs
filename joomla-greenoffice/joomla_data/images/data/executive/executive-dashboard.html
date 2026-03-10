@@ -53,6 +53,61 @@
     .modal-close{position:absolute;right:12px;top:12px;border:0;background:#f3f4f6;border-radius:999px;padding:6px 10px;cursor:pointer}
     .modal h3{margin:0 0 10px 0}
     .modal ul{margin:8px 0 0 18px}
+    
+    /* Executive Score Card Styles */
+    .scorecard-section{margin-bottom:20px}
+    .scorecard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .scorecard-item{background:linear-gradient(135deg,#fff 0%,#f8fafb 100%);border:1px solid #e5e7eb;border-radius:12px;padding:16px;position:relative;overflow:hidden}
+    .scorecard-item::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent)}
+    .scorecard-label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+    .scorecard-value{font-size:24px;font-weight:700;color:#1f2937}
+    .scorecard-delta{font-size:13px;margin-top:6px}
+    .scorecard-delta.up{color:#ef4444}
+    .scorecard-delta.down{color:#10b981}
+    .scorecard-note{font-size:11px;color:#9ca3af;margin-top:8px}
+    
+    /* 3-Year Trend Chart Section */
+    .trend-section{margin-bottom:20px}
+    .trend-chart-container{height:260px;max-height:260px;position:relative}
+    .trend-legend{display:flex;justify-content:center;gap:20px;margin-top:12px;font-size:12px}
+    .trend-legend-item{display:flex;align-items:center;gap:6px}
+    .trend-legend-color{width:12px;height:12px;border-radius:2px}
+    
+    /* Target Progress Section */
+    .target-section{margin-bottom:20px}
+    .target-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+    .target-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px}
+    .target-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .target-title{font-size:14px;font-weight:600;color:#1f2937}
+    .target-badge{font-size:11px;padding:4px 8px;border-radius:999px}
+    .target-badge.success{background:#d1fae5;color:#065f46}
+    .target-badge.warning{background:#fef3c7;color:#92400e}
+    .target-badge.danger{background:#fee2e2;color:#991b1b}
+    .progress-bar-container{background:#e5e7eb;border-radius:999px;height:8px;margin:12px 0;overflow:hidden}
+    .progress-bar{height:100%;border-radius:999px;transition:width 0.5s ease}
+    .target-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;text-align:center}
+    .target-metric{padding:8px;background:#f9fafb;border-radius:8px}
+    .target-metric-label{font-size:10px;color:#6b7280}
+    .target-metric-value{font-size:14px;font-weight:600;color:#1f2937;margin-top:2px}
+    
+    /* Mobile spacing adjustments */
+    @media(max-width:768px){
+      .scorecard-grid{grid-template-columns:1fr 1fr}
+      .target-grid{grid-template-columns:1fr}
+      .nav a{font-size:12px;margin-right:10px}
+      .wrap{padding:12px 16px 24px 16px}
+      .card{padding:12px}
+    }
+    
+    /* Print styles for clean PDF capture */
+    @media print{
+      body{background:#fff !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+      .nav,.modal,.help-btn,.controls{display:none !important}
+      .card{box-shadow:none;border:1px solid #d5d5d5;break-inside:avoid;margin-bottom:12px}
+      .exec-hero{padding:20px 0 !important;background:#fff !important}
+      canvas{max-height:200px !important}
+      .progress-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    }
   </style>
 </head>
 <body>
@@ -71,6 +126,9 @@
   </section>
 
   <div class="nav">
+    <a href="#section-scorecard">Executive Score Card</a>
+    <a href="#section-trend">3-Year Trend</a>
+    <a href="#section-target">Target Progress</a>
     <a href="#section-a">Executive Snapshot</a>
     <a href="#section-b">Integrated Analysis</a>
     <a href="#section-c">GHG Drilldown</a>
@@ -80,8 +138,124 @@
   <div id="errorBanner" class="error"></div>
 
   <div class="wrap">
+    <!-- Executive Score Card Section -->
+    <section id="section-scorecard" class="section scorecard-section">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <div style="font-size:18px;font-weight:700;color:#1f2937;">Executive Score Card</div>
+            <div style="font-size:13px;color:#6b7280;margin-top:4px;">สรุปภาพรวมการปล่อยก๊าซเรือนกระจกของหน่วยงานในปีอ้างอิง พร้อมเปรียบเทียบกับปีที่ผ่านมา และแสดงแหล่งการปล่อยหลักขององค์กร</div>
+          </div>
+        </div>
+        <div class="scorecard-grid">
+          <div class="scorecard-item">
+            <div class="scorecard-label">Total GHG 2568</div>
+            <div class="scorecard-value" id="scoreTotalGhg">231.62 tCO2e</div>
+            <div class="scorecard-note">ปีอ้างอิงปัจจุบัน</div>
+          </div>
+          <div class="scorecard-item">
+            <div class="scorecard-label">เทียบกับ 2567</div>
+            <div class="scorecard-value" id="scoreVs2567">+10.63</div>
+            <div class="scorecard-delta up" id="scoreVs2567Delta">เพิ่มขึ้น +4.81%</div>
+          </div>
+          <div class="scorecard-item">
+            <div class="scorecard-label">เทียบกับ 2566</div>
+            <div class="scorecard-value" id="scoreVs2566">-10.95</div>
+            <div class="scorecard-delta down" id="scoreVs2566Delta">ลดลง -4.51%</div>
+          </div>
+          <div class="scorecard-item">
+            <div class="scorecard-label">Scope 2 Share 2568</div>
+            <div class="scorecard-value" id="scoreScope2Share">86.99%</div>
+            <div class="scorecard-note">การใช้ไฟฟ้าเป็นแหล่งปล่อยหลัก</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3-Year GHG Trend Chart Section -->
+    <section id="section-trend" class="section trend-section">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <div style="font-size:18px;font-weight:700;color:#1f2937;">แนวโน้ม GHG ระหว่างปี 2566-2568</div>
+            <div style="font-size:13px;color:#6b7280;margin-top:4px;">แสดงแนวโน้มการปล่อยก๊าซเรือนกระจกย้อนหลัง 3 ปี (2566–2568) โดยแบ่งตาม Scope เพื่อให้เห็นการเปลี่ยนแปลงของการปล่อยในแต่ละปี</div>
+          </div>
+        </div>
+        <div class="trend-chart-container">
+          <canvas id="chart3YearTrend"></canvas>
+        </div>
+        <div class="trend-legend">
+          <div class="trend-legend-item"><span class="trend-legend-color" style="background:#0f766e;"></span> Scope 1</div>
+          <div class="trend-legend-item"><span class="trend-legend-color" style="background:#f59e0b;"></span> Scope 2</div>
+          <div class="trend-legend-item"><span class="trend-legend-color" style="background:#6366f1;"></span> Scope 3</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reduction Target Progress Section -->
+    <section id="section-target" class="section target-section">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <div>
+            <div style="font-size:18px;font-weight:700;color:#1f2937;">ความคืบหน้าเป้าหมายการลด GHG</div>
+            <div style="font-size:13px;color:#6b7280;margin-top:4px;">ติดตามความก้าวหน้าของเป้าหมายการลดก๊าซเรือนกระจก โดยใช้ปี 2568 เป็นปีอ้างอิง</div>
+          </div>
+        </div>
+        <div class="target-grid">
+          <div class="target-card">
+            <div class="target-header">
+              <div class="target-title">เป้าหมายลด 10% จาก 2568</div>
+              <span class="target-badge warning" id="targetBadge">รอดำเนินการ</span>
+            </div>
+            <div style="font-size:13px;color:#4b5563;margin-bottom:8px;">
+              เป้าหมาย: <strong id="targetValue">208.46 tCO2e</strong> (ต่ำกว่า 2568 อย่างน้อย 10%)
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="targetProgressBar" style="width:0%;background:#f59e0b;"></div>
+            </div>
+            <div style="font-size:12px;color:#6b7280;">
+              2568 อยู่เหนือเป้าหมาย <span id="targetGap">23.16 tCO2e</span>
+            </div>
+          </div>
+          <div class="target-card">
+            <div class="target-header">
+              <div class="target-title">สถานะเปรียบเทียบรายปี</div>
+            </div>
+            <div class="target-metrics">
+              <div class="target-metric">
+                <div class="target-metric-label">2566</div>
+                <div class="target-metric-value" style="color:#ef4444;">242.57</div>
+                <div style="font-size:10px;color:#6b7280;">เหนือ 2568</div>
+              </div>
+              <div class="target-metric">
+                <div class="target-metric-label">2567</div>
+                <div class="target-metric-value" style="color:#10b981;">220.99</div>
+                <div style="font-size:10px;color:#6b7280;">ต่ำกว่า 2568</div>
+              </div>
+              <div class="target-metric">
+                <div class="target-metric-label">2568</div>
+                <div class="target-metric-value" style="color:#0f766e;">231.62</div>
+                <div style="font-size:10px;color:#6b7280;">Reference</div>
+              </div>
+            </div>
+            <div style="font-size:12px;color:#6b7280;margin-top:12px;line-height:1.5;">
+              <strong>ข้อสังเกต:</strong> ปี 2567 มีการปล่อยต่ำสุดในช่วง 3 ปี และอยู่ใกล้เป้าหมาย 10% มากที่สุด
+            </div>
+          </div>
+        </div>
+        <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;margin-top:12px;font-size:13px;line-height:1.6;">
+          <strong style="color:#065f46;">สรุปสถานการณ์:</strong>
+          <span id="targetSummary">ปี 2568 มีการปล่อย GHG เพิ่มขึ้นจากปี 2567 คิดเป็น +4.81% ส่วนใหญ่มาจากการใช้ไฟฟ้า อย่างไรก็ตาม ยังต่ำกว่าปี 2566 ถึง -4.51% หากตั้งเป้าลด 10% จาก 2568 (เป้า 208.46 tCO2e) จะต้องลดอีก 23.16 tCO2e</span>
+        </div>
+      </div>
+    </section>
+
     <section id="section-a" class="section">
       <div class="card">
+        <div style="margin-bottom:12px;">
+          <div style="font-size:16px;font-weight:700;color:#1f2937;">Executive Snapshot</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:4px;">สรุปตัวชี้วัดสำคัญด้านการใช้พลังงานและทรัพยากร เพื่อให้ผู้บริหารเห็นสถานการณ์ล่าสุดขององค์กรอย่างรวดเร็ว</div>
+        </div>
         <div class="controls">
           <div class="controls-left">
             <div>
@@ -126,6 +300,10 @@
     </section>
 
     <section id="section-b" class="section">
+      <div style="margin-bottom:12px;">
+        <div style="font-size:16px;font-weight:700;color:#1f2937;">Integrated Analysis</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:4px;">วิเคราะห์ข้อมูลพลังงาน ทรัพยากร และก๊าซเรือนกระจกในภาพรวม เพื่อสนับสนุนการวางแผนและตัดสินใจเชิงนโยบาย</div>
+      </div>
       <div class="charts">
         <div class="card"><canvas id="chartGhgTrend"></canvas></div>
         <div class="card"><canvas id="chartEnergyTrend"></canvas></div>
@@ -136,6 +314,10 @@
 
     <section id="section-c" class="section">
       <div class="card">
+        <div style="margin-bottom:12px;">
+          <div style="font-size:16px;font-weight:700;color:#1f2937;">GHG Drilldown</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:4px;">เจาะลึกข้อมูลการปล่อยก๊าซเรือนกระจกตามกิจกรรมต่าง ๆ เช่น การใช้ไฟฟ้า การใช้น้ำ การจัดการของเสีย และการใช้กระดาษ</div>
+        </div>
         <div class="controls">
           <div class="controls-left">
             <div>
@@ -173,17 +355,25 @@
     </section>
 
     <section id="section-d" class="section">
-      <div class="card footer" id="integrity">-</div>
+      <div class="card">
+        <div style="margin-bottom:12px;">
+          <div style="font-size:16px;font-weight:700;color:#1f2937;">Data Integrity</div>
+          <div style="font-size:12px;color:#6b7280;margin-top:4px;">แสดงแหล่งที่มาของข้อมูลและวิธีการคำนวณ เพื่อให้สามารถตรวจสอบความถูกต้องของข้อมูลได้</div>
+        </div>
+        <div class="footer" id="integrity">-</div>
+      </div>
     </section>
 
     <section id="section-e" class="section">
       <div class="card guide">
-        <strong>วิธีอ่าน Dashboard แบบสั้น</strong><br />
-        1) ดูภาพรวมที่แถบตัวเลขด้านบน<br />
-        2) ดูแนวโน้มผ่านกราฟรายเดือน/รายไตรมาส/YTD<br />
-        3) ใช้ GHG Drilldown เพื่อเจาะสาเหตุและกิจกรรมหลัก<br />
-        4) อ่าน Narrative Summary เพื่อสรุปสถานการณ์เร็วขึ้น<br />
-        5) ตรวจสอบ Data Integrity ก่อนนำไปอ้างอิง
+        <strong>วิธีอ่านและใช้งาน Executive Dashboard</strong><br /><br />
+        1. เลือกปีที่ต้องการดูข้อมูล (2566–2568)<br />
+        2. เลือกรูปแบบการแสดงผล (รายเดือน / รายไตรมาส / รวมทั้งปี)<br />
+        3. ดูภาพรวมการปล่อยก๊าซเรือนกระจกจาก Executive Score Card<br />
+        4. วิเคราะห์แนวโน้มจากกราฟ 3-Year GHG Trend<br />
+        5. ตรวจสอบความก้าวหน้าของเป้าหมายการลดก๊าซเรือนกระจก<br />
+        6. ดูรายละเอียดกิจกรรมที่ก่อให้เกิดการปล่อยในส่วน GHG Drilldown<br />
+        7. ตรวจสอบแหล่งข้อมูลและวิธีการคำนวณในส่วน Data Integrity
       </div>
     </section>
   </div>

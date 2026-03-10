@@ -249,8 +249,8 @@
     <div class="container">
         <header>
             <h1><i>💧</i> Green Office Dashboard - Water Usage</h1>
-            <div class="subtitle">หมวดที่ 3.1: การใช้น้ำ (Water Usage)</div>
-            <div class="subtitle">อาคารเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดา มหาวิทยาลัยแม่โจ้</div>
+            <div class="subtitle">หมวดที่ 3.1: การใช้น้ำ (Water Usage) - มหาวิทยาลัยแม่โจ้</div>
+            <div class="subtitle">ข้อมูลจากแหล่งข้อมูล Excel 2567-2568</div>
             <div class="last-updated">
                 อัปเดตล่าสุด: <span id="last-updated">กำลังโหลด...</span>
             </div>
@@ -345,8 +345,7 @@
         <footer>
             <p>Green Office Dashboard - Water Usage | ข้อมูลอ้างอิงจากฐานข้อมูลหลัก (Authoritative Source)</p>
             <p>อัปเดตอัตโนมัติจากไฟล์ CSV: <code>/greenoffice/images/data/water/water_2567-2568_v1.csv</code></p>
-            <p>Dataset: <span data-dataset-version></span> <span data-csv-sha256-8></span></p>
-            <p>© อาคารเฉลิมพระเกียรติสมเด็จพระเทพรัตนราชสุดา มหาวิทยาลัยแม่โจ้</p>
+            <p>© มหาวิทยาลัยแม่โจ้ - สำนักคอมพิวเตอร์</p>
         </footer>
     </div>
 
@@ -462,10 +461,10 @@
                 </tr>
             `;
             
-            fetch(CSV_URL, { cache: 'no-store' })
+            fetch(CSV_URL)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('HTTP ' + response.status + ' ' + response.statusText);
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     return response.text();
                 })
@@ -475,12 +474,11 @@
                 })
                 .catch(error => {
                     console.error('Error loading CSV:', error);
-                    var msg = error && error.message ? error.message : String(error);
                     document.getElementById('table-body').innerHTML = `
                         <tr>
-                            <td colspan="6" style="text-align: center; color: #c62828; padding: 40px;" role="alert">
+                            <td colspan="6" style="text-align: center; color: #d32f2f; padding: 40px;">
                                 ❌ ไม่สามารถโหลดข้อมูลได้<br>
-                                <small>${msg}</small>
+                                <small>${error.message}</small>
                             </td>
                         </tr>
                     `;

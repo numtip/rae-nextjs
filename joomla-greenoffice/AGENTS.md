@@ -185,3 +185,77 @@ docker exec rgreenoff-db mysql -ujoomla_user -pjoomla_pass_2026 joomla_greenoffi
 
 - `Docker_GreenOffice_Joomla6_Stack_Summary.md` — สรุป stack
 - `/home/rae_admin/logs/` — รายงานและสคริปต์แก้ไขต่างๆ
+# === Agent Switch Protocol (Ultra-Lean) ===
+
+## Rule 0 — File Memory Only
+Chat history is NOT reliable.
+Truth lives only in:
+
+- MEMORY/NOW.md
+- MEMORY/PLAN.md
+- MEMORY/DECISIONS.md
+- MEMORY/RISKS.md
+- LOGS/YYYY-MM-DD.md
+- RUNBOOK/QUICKCHECK.md
+
+If it is not written there, it does not exist.
+
+---
+
+## Resume Sequence (ANY Agent)
+
+1. Read AGENTS.md
+2. Read MEMORY/NOW.md
+3. Read MEMORY/PLAN.md
+4. Read latest LOGS file
+5. Run RUNBOOK/QUICKCHECK.md
+6. Log results
+7. Execute ONLY "Next Actions" from NOW.md (in order)
+
+No side quests.
+
+---
+
+## After EACH Action
+
+Mandatory:
+- Append to LOGS/<today>.md
+- Update MEMORY/NOW.md
+- Add verification result
+
+No verification = not done.
+
+Keep NOW.md ≤ 1 page.
+
+---
+
+## If Blocked
+
+- Write blocker in NOW.md
+- Propose max 2 safe options
+- Choose safest
+- Continue
+
+Never stall.
+
+---
+
+## End of Day
+
+- Finalize LOGS
+- Update NOW.md (max 5 Next Actions)
+- Record major decision (1 line) in DECISIONS.md
+- Commit: "EOD <date>: <summary>"
+
+---
+
+## Safety Guardrails
+
+- No large refactors
+- No directory restructuring
+- No production config changes unless required in NOW.md
+- All risky changes need rollback note
+
+Consistency > cleverness.
+
+# === End Protocol ===

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สรุปภาพรวม Green Office | Executive Dashboard</title>
+    <link rel="stylesheet" href="unified-executive-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-brand">
+                <div class="logo-icon">🌿</div>
+                <div class="header-text">
+                    <h1>ปริมาณการใช้พลังงานและทรัพยากร ปี 2568</h1>
+                    <p class="subtitle">รายงานภาพรวมตัวชี้วัดด้านการใช้พลังงาน ทรัพยากร และผลกระทบต่อสิ่งแวดล้อมของหน่วยงาน เพื่อการกำกับติดตามของผู้บริหารและประกอบการตรวจประเมินสำนักงานสีเขียว</p>
+                    <p class="subtitle-support">ครอบคลุมข้อมูลการใช้น้ำ ไฟฟ้า น้ำมันเชื้อเพลิง กระดาษ ของเสีย และก๊าซเรือนกระจก</p>
+                    <p class="subtitle-reference">ข้อมูลอ้างอิงตามเกณฑ์การประเมินสำนักงานสีเขียว หมวดที่ 3 การใช้พลังงานและทรัพยากร</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <button class="help-btn" id="helpBtn" type="button">
+                    <span class="help-btn-icon">ℹ</span>
+                    วิธีอ่าน Dashboard
+                </button>
+                <span class="period-badge">📊 ปีงบประมาณ 2567-2568</span>
+                <span class="update-time" id="updateTime"></span>
+            </div>
+        </header>
+
+        <!-- Green Score Card -->
+        <section class="green-score-section">
+            <div class="green-score-card" id="greenScoreCard">
+                <div class="score-header">
+                    <span class="score-icon">🌱</span>
+                    <span class="score-label">Green Score</span>
+                </div>
+                <div class="score-body">
+                    <div class="score-value" id="greenScoreValue">-</div>
+                    <div class="score-rating" id="greenScoreRating">-</div>
+                </div>
+                <div class="score-footer">
+                    <span class="last-updated" id="lastUpdatedDisplay">อัปเดตล่าสุด: -</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overall Status Banner -->
+        <section class="status-banner" id="statusBanner">
+            <div class="status-content">
+                <span class="status-icon" id="overallIcon"></span>
+                <span class="status-text" id="overallText"></span>
+            </div>
+        </section>
+
+        <!-- KPI Cards Grid -->
+        <section class="kpi-section">
+            <h2 class="section-title">
+                <span class="section-icon">📈</span>
+                ตัวชี้วัดหลัก
+            </h2>
+            <div class="kpi-grid" id="kpiGrid">
+                <!-- KPI cards will be injected by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Key Findings -->
+        <section class="findings-section">
+            <h2 class="section-title">
+                <span class="section-icon">💡</span>
+                ประเด็นสำคัญ
+            </h2>
+            <div class="findings-grid" id="findingsGrid">
+                <!-- Findings will be injected by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Priority Actions -->
+        <section class="actions-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                แนวทางปฏิบัติเร่งด่วน
+            </h2>
+            <div class="actions-list" id="actionsList">
+                <!-- Actions will be injected by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Summary Stats -->
+        <section class="summary-section">
+            <div class="summary-cards">
+                <div class="summary-card passed">
+                    <div class="summary-count" id="passedCount">-</div>
+                    <div class="summary-label">ผ่านเกณฑ์</div>
+                </div>
+                <div class="summary-card warning">
+                    <div class="summary-count" id="warningCount">-</div>
+                    <div class="summary-label">ต้องปรับปรุง</div>
+                </div>
+                <div class="summary-card critical">
+                    <div class="summary-count" id="criticalCount">-</div>
+                    <div class="summary-label">วิกฤต</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>Green Office Dashboard System | มหาวิทยาลัยแม่โจ้</p>
+            <p class="footer-note">ข้อมูลอัปเดตล่าสุด: <span id="lastUpdate"></span></p>
+        </footer>
+    </div>
+
+    <!-- Quick Guide Modal -->
+    <div class="modal-overlay" id="guideModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <span>📖</span>
+                    วิธีอ่าน Executive Dashboard
+                </h2>
+                <button class="modal-close" id="modalClose" type="button">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="guide-section">
+                    <div class="guide-item">
+                        <span class="guide-number">1</span>
+                        <div class="guide-text">
+                            <div class="guide-title">Green Score</div>
+                            <div class="guide-desc">แสดงภาพรวมผลการดำเนินงานด้านสิ่งแวดล้อมของสำนักงาน (คะแนนเต็ม 100)</div>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">2</span>
+                        <div class="guide-text">
+                            <div class="guide-title">การ์ดตัวชี้วัด</div>
+                            <div class="guide-desc">ประกอบด้วย 6 หมวดหลัก:</div>
+                            <ul class="guide-list">
+                                <li>น้ำ • ไฟฟ้า • น้ำมัน • กระดาษ • ขยะ • ก๊าซเรือนกระจก</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">3</span>
+                        <div class="guide-text">
+                            <div class="guide-title">Trend Indicator</div>
+                            <div class="guide-desc">
+                                <span class="guide-trend trend-up">↑ เพิ่มขึ้น</span>
+                                <span class="guide-trend trend-down">↓ ลดลง</span>
+                                <span class="guide-trend trend-stable">→ ทรงตัว</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">4</span>
+                        <div class="guide-text">
+                            <div class="guide-title">Impact Level</div>
+                            <div class="guide-desc">แสดงระดับผลกระทบต่อสิ่งแวดล้อม<br>ผลกระทบสูงควรได้รับการแก้ไขก่อน</div>
+                        </div>
+                    </div>
+                    <div class="guide-item">
+                        <span class="guide-number">5</span>
+                        <div class="guide-text">
+                            <div class="guide-title">ปุ่ม "ดูรายละเอียด"</div>
+                            <div class="guide-desc">สามารถกดเพื่อเข้าสู่ Dashboard เชิงลึกของแต่ละหมวด</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-footer-text">ระบบ Green Office Monitoring</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="unified-executive-dashboard.js"></script>
+</body>
+</html>

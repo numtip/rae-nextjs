@@ -1,0 +1,122 @@
+{
+  "generated_at": "2026-03-07 08:41:42 UTC",
+  "source_file": "12-elect.xlsx",
+  "source_table": "j6_go_energy_electricity_monthly",
+  "row_count": 24,
+  "years": [
+    2567,
+    2568
+  ],
+  "year_totals": {
+    "2567": {
+      "total_kwh": 385146.4,
+      "total_cost": 2087493.5,
+      "kwh_per_capita": 4054.1726,
+      "avg_people": 95.0,
+      "month_count": 12
+    },
+    "2568": {
+      "total_kwh": 403036.8,
+      "total_cost": 2184459.46,
+      "kwh_per_capita": 4242.4926,
+      "avg_people": 95.0,
+      "month_count": 12
+    }
+  },
+  "yoy": {
+    "years": "2567 → 2568",
+    "kwh_change_pct": 4.65,
+    "cost_change_pct": 4.65,
+    "kwh_per_capita_change_pct": 4.65
+  },
+  "summary": "ปี 2567: ไฟฟ้า 385,146.40 kWh, ค่าไฟ 2,087,493.50 บาท, เฉลี่ย 4054.17 kWh/คน | ปี 2568: ไฟฟ้า 403,036.80 kWh, ค่าไฟ 2,184,459.46 บาท, เฉลี่ย 4242.49 kWh/คน | YoY: kWh +4.65%, ค่าไฟ +4.65%",
+  "monthly_breakdown": [
+    {
+      "month_idx": 1,
+      "month_th": "ม.ค.",
+      "kwh": 17434.4,
+      "cost_baht": 94494.45,
+      "people": 95.0
+    },
+    {
+      "month_idx": 2,
+      "month_th": "ก.พ.",
+      "kwh": 24458.4,
+      "cost_baht": 132564.53,
+      "people": 95.0
+    },
+    {
+      "month_idx": 3,
+      "month_th": "มี.ค.",
+      "kwh": 37355.2,
+      "cost_baht": 202465.18,
+      "people": 95.0
+    },
+    {
+      "month_idx": 4,
+      "month_th": "เม.ย.",
+      "kwh": 36772.8,
+      "cost_baht": 199308.58,
+      "people": 95.0
+    },
+    {
+      "month_idx": 5,
+      "month_th": "พ.ค.",
+      "kwh": 40243.2,
+      "cost_baht": 218118.14,
+      "people": 95.0
+    },
+    {
+      "month_idx": 6,
+      "month_th": "มิ.ย.",
+      "kwh": 38310.4,
+      "cost_baht": 207642.37,
+      "people": 95.0
+    },
+    {
+      "month_idx": 7,
+      "month_th": "ก.ค.",
+      "kwh": 39260.8,
+      "cost_baht": 212793.54,
+      "people": 95.0
+    },
+    {
+      "month_idx": 8,
+      "month_th": "ส.ค.",
+      "kwh": 39360.0,
+      "cost_baht": 213331.2,
+      "people": 95.0
+    },
+    {
+      "month_idx": 9,
+      "month_th": "ก.ย.",
+      "kwh": 41646.4,
+      "cost_baht": 225723.49,
+      "people": 95.0
+    },
+    {
+      "month_idx": 10,
+      "month_th": "ต.ค.",
+      "kwh": 33204.8,
+      "cost_baht": 179970.02,
+      "people": 95.0
+    },
+    {
+      "month_idx": 11,
+      "month_th": "พ.ย.",
+      "kwh": 31715.2,
+      "cost_baht": 171896.38,
+      "people": 95.0
+    },
+    {
+      "month_idx": 12,
+      "month_th": "ธ.ค.",
+      "kwh": 23275.2,
+      "cost_baht": 126151.58,
+      "people": 95.0
+    }
+  ],
+  "csv_filename": "energy_electricity_2567-2568_v1.csv",
+  "csv_sha256": "421992f46b8b968aa2f34b64df350d18ba503734f5b98d452a953eaa60803b9c",
+  "dataset_version": "20260307-0841"
+}

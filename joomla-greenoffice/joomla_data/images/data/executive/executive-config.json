@@ -1,5 +1,40 @@
 {
-  "baseline_year": 2567,
+  "baseline_year": 2566,
+  "reference_year": 2568,
   "target_reduction_pct": -5,
-  "energy_target_reduction_pct": -5
+  "target_reduction_10pct_from_reference": true,
+  "energy_target_reduction_pct": -5,
+  "years_covered": [2566, 2567, 2568],
+  "yoy_changes": {
+    "2566-2567": -8.8985277795,
+    "2567-2568": 4.8117368603
+  },
+  "verified_totals": {
+    "2566": { "total": 242.572360044, "scope1": 11.308583364, "scope2": 213.512888880, "scope3": 17.750887800 },
+    "2567": { "total": 220.986991200, "scope1": 11.017186040, "scope2": 192.534685360, "scope3": 17.435119800 },
+    "2568": { "total": 231.620303712, "scope1": 10.847924292, "scope2": 201.478096320, "scope3": 19.294283100 }
+  },
+  "data_sources": {
+    "2566": "1.5_greenhousegass_update.xlsx",
+    "2567": "1.5_greenhousegass_update.xlsx",
+    "2568": "1.5_GreenhouseGas.xlsx"
+  },
+  "executive_scorecard": {
+    "reference_year": 2568,
+    "comparison_vs_2567": {
+      "diff_tco2e": 10.633312512,
+      "pct_change": 4.8117
+    },
+    "comparison_vs_2566": {
+      "diff_tco2e": -10.952056332,
+      "pct_change": -4.5148
+    },
+    "scope2_share_2568": 86.99,
+    "main_driver": "การใช้ไฟฟ้า"
+  },
+  "target_10pct": {
+    "reference_year": 2568,
+    "target_value": 208.458273341,
+    "current_gap": 23.162030371
+  }
 }
