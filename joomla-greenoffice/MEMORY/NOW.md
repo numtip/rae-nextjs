@@ -32,10 +32,11 @@ Modified:
 ├── joomla-greenoffice/AGENTS.md (Agent Protocol added)
 ├── joomla-greenoffice/MEMORY/NOW.md (updated)
 ├── joomla-greenoffice/MEMORY/PLAN.md (updated)
-├── joomla-greenoffice/joomla_data/images/data/waste/waste_analysis.json
-├── joomla-greenoffice/joomla_data/images/data/waste/dashboard.html
-├── real-attendance-system/frontend/src/views/DashboardView.vue (dual-mode)
-└── LOGS/2026-03-10.md (updated)
+├── joomla-greenoffice/LOGS/2026-03-10.md (updated)
+
+Deployed (not in Git - www-data owned):
+├── joomla_data/images/data/waste/waste_analysis.json
+└── joomla_data/images/data/waste/dashboard.html
 
 Verified:
 ├── /images/data/executive/ (all files)
@@ -44,6 +45,8 @@ Verified:
 ├── /images/data/waste/ (all files)
 └── plugins/content/go_statussync/ (operational)
 ```
+
+**Rollback Note:** Waste dashboard files (joomla_data/) require manual backup/copy as they're outside Git tracking and owned by www-data.
 
 **EOD Log:** `LOGS/2026-03-10.md`
 
