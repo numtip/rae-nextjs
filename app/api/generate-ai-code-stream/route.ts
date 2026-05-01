@@ -35,13 +35,13 @@ const anthropic = createAnthropic({
 });
 
 const googleGenerativeAI = createGoogleGenerativeAI({
-  apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.GEMINI_API_KEY,
+  apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.GOOGLE_API_KEY ?? process.env.GEMINI_API_KEY,
   baseURL: isUsingAIGateway ? aiGatewayBaseURL : undefined,
 });
 
 const openai = createOpenAI({
   apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.OPENAI_API_KEY,
-  baseURL: isUsingAIGateway ? aiGatewayBaseURL : process.env.OPENAI_BASE_URL,
+  baseURL: isUsingAIGateway ? aiGatewayBaseURL : (process.env.OPENAI_BASE_URL || process.env.NEXT_PUBLIC_OPENAI_BASE_URL),
 });
 
 // Helper function to analyze user preferences from conversation history

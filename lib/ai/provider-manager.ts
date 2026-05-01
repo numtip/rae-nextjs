@@ -32,14 +32,14 @@ function getEnvDefaults(provider: ProviderName): { apiKey?: string; baseURL?: st
 
   switch (provider) {
     case 'openai':
-      return { apiKey: process.env.OPENAI_API_KEY, baseURL: process.env.OPENAI_BASE_URL };
+      return { apiKey: process.env.OPENAI_API_KEY, baseURL: process.env.OPENAI_BASE_URL || process.env.NEXT_PUBLIC_OPENAI_BASE_URL };
     case 'anthropic':
       // Default Anthropic base URL mirrors existing routes
       return { apiKey: process.env.ANTHROPIC_API_KEY, baseURL: process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com/v1' };
     case 'groq':
       return { apiKey: process.env.GROQ_API_KEY, baseURL: process.env.GROQ_BASE_URL };
     case 'google':
-      return { apiKey: process.env.GEMINI_API_KEY, baseURL: process.env.GEMINI_BASE_URL };
+      return { apiKey: process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY, baseURL: process.env.GEMINI_BASE_URL };
     default:
       return {};
   }

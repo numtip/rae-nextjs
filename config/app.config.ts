@@ -58,7 +58,8 @@ export const appConfig = {
       'openai/gpt-5',
       'moonshotai/kimi-k2-instruct-0905',
       'anthropic/claude-sonnet-4-20250514',
-      'google/gemini-3-pro-preview'
+      'google/gemini-3-pro-preview',
+      'openai/deepseek/deepseek-v4-flash'
     ],
     
     // Model display names
@@ -66,7 +67,8 @@ export const appConfig = {
       'openai/gpt-5': 'GPT-5',
       'moonshotai/kimi-k2-instruct-0905': 'Kimi K2 (Groq)',
       'anthropic/claude-sonnet-4-20250514': 'Sonnet 4',
-      'google/gemini-3-pro-preview': 'Gemini 3 Pro (Preview)'
+      'google/gemini-3-pro-preview': 'Gemini 3 Pro (Preview)',
+      'openai/deepseek/deepseek-v4-flash': 'DeepSeek V4 (OpenRouter)'
     } as Record<string, string>,
     
     // Model API configuration

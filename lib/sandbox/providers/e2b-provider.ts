@@ -79,6 +79,7 @@ export class E2BProvider extends SandboxProvider {
     const result = await this.sandbox.runCode(`
       import subprocess
       import os
+      import sys
 
       os.chdir('/home/user/app')
       result = subprocess.run(${JSON.stringify(command.split(' '))}, 
@@ -86,16 +87,14 @@ export class E2BProvider extends SandboxProvider {
                             text=True, 
                             shell=False)
 
-      print("STDOUT:")
-      print(result.stdout)
-      if result.stderr:
-          print("\\nSTDERR:")
-          print(result.stderr)
-      print(f"\\nReturn code: {result.returncode}")
+      sys.stdout.write(result.stdout)
+      sys.stderr.write(result.stderr)
+      if result.returncode != 0:
+          sys.stderr.write(f"\\nReturn code: {result.returncode}")
     `);
     
-    const output = result.logs.stdout.join('\n');
-    const stderr = result.logs.stderr.join('\n');
+    const output = result.logs.stdout.join('');
+    const stderr = result.logs.stderr.join('');
     
     return {
       stdout: output,

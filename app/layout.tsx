@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Inter, Roboto_Mono, Kanit, Sarabun } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -25,6 +25,20 @@ const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
 });
 
+const kanit = Kanit({
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-kanit",
+  display: "swap",
+});
+
+const sarabun = Sarabun({
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-sarabun",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Open Lovable v3",
   description: "Re-imagine any website in seconds with AI-powered website builder.",
@@ -36,8 +50,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} font-sans`}>
+    <html lang="th">
+      <body className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${kanit.variable} ${sarabun.variable} font-sans`}>
         {children}
       </body>
     </html>
