@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title>RAE sustainability placeholder</title>
+  <desc>Temporary institutional fallback for sustainability research imagery.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#081826"/>
+      <stop offset="100%" stop-color="#10433b"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#00b4a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <path d="M600 170c-160 0-290 130-290 290 0 160 130 290 290 290s290-130 290-290-130-290-290-290Zm-10 420c-100-18-160-88-160-168 0-72 54-142 143-178 78-31 146-30 210-12-47 40-97 96-131 168-27 57-35 121-62 190Z" fill="url(#leaf)" opacity="0.92"/>
+  <text x="90" y="120" fill="#34d399" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">RESEARCH</text>
+  <text x="90" y="185" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700">Sustainability</text>
+  <text x="90" y="230" fill="#d7e3ef" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="600">Temporary placeholder image</text>
+  <text x="90" y="280" fill="#9fb3c8" font-family="Arial, Helvetica, sans-serif" font-size="20">Replace with approved sustainability photography.</text>
+  <rect x="90" y="690" width="180" height="6" rx="3" fill="#34d399"/>
+</svg>

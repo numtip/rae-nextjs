@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title>RAE award placeholder</title>
+  <desc>Temporary institutional fallback for award news imagery.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1e4976"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="600" cy="340" r="140" fill="#ffde00" opacity="0.92"/>
+  <path d="M600 210 639 300 735 304 661 365 689 460 600 408 511 460 539 365 465 304 561 300Z" fill="#fff8cc"/>
+  <text x="90" y="120" fill="#ffde00" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">NEWS</text>
+  <text x="90" y="185" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700">Award / Recognition</text>
+  <text x="90" y="230" fill="#d7e3ef" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="600">Temporary placeholder image</text>
+  <text x="90" y="280" fill="#9fb3c8" font-family="Arial, Helvetica, sans-serif" font-size="20">Replace with approved award or event photography.</text>
+  <rect x="90" y="690" width="180" height="6" rx="3" fill="#ffde00"/>
+</svg>
