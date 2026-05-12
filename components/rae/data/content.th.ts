@@ -5,9 +5,9 @@ export const contentTH = {
   site: {
     name: "RAE",
     fullName: "Research Academy of Excellence",
-    tagline: "ศูนย์ความเป็นเลิศด้านการวิจัยและนวัตกรรม",
+    tagline: "ศูนย์กลางงานวิจัยและนวัตกรรมเพื่อผลลัพธ์ที่วัดได้",
     mission:
-      "มุ่งมั่นสู่ความเป็นเลิศด้านการวิจัย สร้างนวัตกรรม และพัฒนาทรัพยากรมนุษย์ระดับสากล",
+      "ขับเคลื่อนงานวิจัย นวัตกรรม และความร่วมมือสู่ผลลัพธ์ที่เกิดประโยชน์ต่อสังคมและเศรษฐกิจ",
   },
 
   nav: {
@@ -17,27 +17,27 @@ export const contentTH = {
     news: "ข่าวสาร",
     impact: "ผลกระทบ",
     contact: "ติดต่อ",
-    applyNow: "สมัครเลย",
+    applyNow: "สมัคร",
     langToggle: "EN",
   },
 
   hero: {
-    title: "ศูนย์ความเป็นเลิศ",
-    subtitle: "ด้านการวิจัยและนวัตกรรม",
+    title: "ศูนย์ความเป็นเลิศด้านการวิจัยและนวัตกรรม",
+    subtitle: "ขับเคลื่อนองค์ความรู้สู่ผลลัพธ์จริง",
     description:
-      "เราผลักดันขอบเขตของความรู้ เร่งความก้าวหน้าทางวิทยาศาสตร์ และสร้างผลกระทบที่ยั่งยืนต่อสังคม",
+      "RAE เชื่อมโยงนักวิจัย ภาคอุตสาหกรรม และสังคม เพื่อสร้างงานวิจัยคุณภาพ นวัตกรรมใช้งานได้จริง และผลกระทบที่วัดผลได้",
     ctaPrimary: "สำรวจงานวิจัย",
-    ctaSecondary: "สมัครเรียน",
+    ctaSecondary: "ดูผลงานและข่าวสาร",
     scrollHint: "เลื่อนลง",
   },
 
   ticker: {
-    label: "ประกาศล่าสุด:",
+    label: "อัปเดตล่าสุด:",
     items: [
-      "เปิดรับสมัครทุนวิจัยปีการศึกษา 2567 — สมัครภายใน 30 มิ.ย. 67",
-      "ขอแสดงความยินดีกับทีม AI Lab ที่ได้รับรางวัลระดับนานาชาติ",
-      "สัมมนา 'นวัตกรรมเพื่อความยั่งยืน' วันที่ 15 ก.ค. 67 ออนไลน์ + ออนไซต์",
-      "เปิดใช้งานฐานข้อมูลงานวิจัยใหม่ — เข้าถึงงานวิจัยกว่า 50,000 ชิ้น",
+      "เปิดรับสมัครทุนวิจัยรอบใหม่ — ตรวจสอบคุณสมบัติและกำหนดเวลาสมัคร",
+      "ทีมวิจัย AI Lab ได้รับการยอมรับจากเวทีวิชาการนานาชาติ",
+      "สัมมนา 'นวัตกรรมเพื่อความยั่งยืน' เปิดลงทะเบียนแล้ว",
+      "เปิดใช้งานฐานข้อมูลงานวิจัยชุดใหม่สำหรับนักวิจัยและนักศึกษา",
     ],
   },
 
@@ -68,7 +68,7 @@ export const contentTH = {
         title: "วิทยาศาสตร์ชีวภาพและการแพทย์",
         desc: "การวิจัยด้านจีโนมิกส์ พันธุศาสตร์ และการพัฒนายาใหม่เพื่อสุขภาพที่ดีขึ้นของมนุษย์",
         link: "/research/life-sciences",
-        image: "/images/research/life-sci.jpg",
+        image: "/rae-assets/research/life-sci.svg",
       },
       {
         id: "ai-data",
@@ -77,7 +77,7 @@ export const contentTH = {
         title: "ปัญญาประดิษฐ์และวิทยาศาสตร์ข้อมูล",
         desc: "การประยุกต์ใช้ Machine Learning และ Deep Learning เพื่อแก้ปัญหาที่ซับซ้อนในระดับสังคม",
         link: "/research/ai-data",
-        image: "/images/research/ai-data.jpg",
+        image: "/rae-assets/research/ai-data.svg",
       },
       {
         id: "sustain",
@@ -86,7 +86,7 @@ export const contentTH = {
         title: "เทคโนโลยีและสิ่งแวดล้อมยั่งยืน",
         desc: "นวัตกรรมพลังงานสะอาด การจัดการทรัพยากร และโซลูชันสำหรับการเปลี่ยนแปลงสภาพภูมิอากาศ",
         link: "/research/sustainability",
-        image: "/images/research/sustain.jpg",
+        image: "/rae-assets/research/sustain.svg",
       },
       {
         id: "social",
@@ -95,14 +95,14 @@ export const contentTH = {
         title: "นวัตกรรมสังคมและนโยบาย",
         desc: "การวิจัยด้านนโยบายสาธารณะ เศรษฐกิจสร้างสรรค์ และการพัฒนาชุมชนอย่างยั่งยืน",
         link: "/research/social",
-        image: "/images/research/social.jpg",
+        image: "/rae-assets/research/social.svg",
       },
     ],
   },
 
   news: {
     title: "ข่าวสารและกิจกรรม",
-    subtitle: "Latest News & Events",
+    subtitle: "ความก้าวหน้าล่าสุด",
     viewAll: "ดูข่าวทั้งหมด",
     categories: {
       research: "วิจัย",
@@ -115,28 +115,28 @@ export const contentTH = {
         id: "n1",
         category: "award",
         date: "28 เม.ย. 2567",
-        title: "RAE คว้ารางวัล 'Most Innovative Research Institute' จาก NRCT",
-        excerpt: "สถาบันวิจัยแห่งความเป็นเลิศได้รับการยกย่องจากสำนักงานคณะกรรมการส่งเสริมวิทยาศาสตร์",
+        title: "RAE ได้รับรางวัลสถาบันวิจัยนวัตกรรมโดดเด่นจาก NRCT",
+        excerpt: "ผลงานวิจัยและความร่วมมือของสถาบันได้รับการยอมรับในระดับประเทศ",
         link: "/news/award-nrct-2567",
-        image: "/images/news/award1.jpg",
+        image: "/rae-assets/news/award1.svg",
       },
       {
         id: "n2",
         category: "event",
         date: "15 พ.ค. 2567",
-        title: "สัมมนาระดับนานาชาติ 'Future of Research' ครั้งที่ 5",
-        excerpt: "เชิญร่วมฟังบรรยายจากนักวิจัยระดับโลกกว่า 20 คน ในงานสัมมนาสำคัญแห่งปี",
+        title: "สัมมนานานาชาติ Future of Research ครั้งที่ 5 เปิดเวทีแล้ว",
+        excerpt: "พบการบรรยายและแลกเปลี่ยนประสบการณ์กับนักวิจัยชั้นนำจากหลายสาขา",
         link: "/events/intl-seminar-2567",
-        image: "/images/news/event1.jpg",
+        image: "/rae-assets/news/event1.svg",
       },
       {
         id: "n3",
         category: "research",
         date: "10 เม.ย. 2567",
-        title: "ทีมวิจัย AI Lab ตีพิมพ์งานวิจัยใน Nature Communications",
-        excerpt: "การค้นพบใหม่ด้าน Deep Learning สำหรับการวิเคราะห์ยีนมะเร็งได้รับการยอมรับระดับโลก",
+        title: "AI Lab เผยแพร่ผลงานวิจัยใน Nature Communications",
+        excerpt: "การค้นพบด้าน Deep Learning สำหรับการวิเคราะห์ยีนมะเร็งได้รับการตีพิมพ์ในวารสารชั้นนำ",
         link: "/news/nature-publication-2567",
-        image: "/images/news/research1.jpg",
+        image: "/rae-assets/news/research1.svg",
       },
     ],
   },
@@ -153,15 +153,15 @@ export const contentTH = {
   },
 
   audience: {
-    title: "ฉันคือ...",
-    subtitle: "I am a...",
+    title: "เลือกเส้นทางของคุณ",
+    subtitle: "Find your path",
     groups: [
       {
         id: "student",
         icon: "graduation-cap",
         title: "นักศึกษา",
         titleEn: "Student",
-        desc: "ค้นหาโปรแกรม ทุน และทรัพยากรสำหรับนักศึกษา",
+        desc: "ค้นหาโปรแกรม ทุน และทรัพยากรที่สนับสนุนการเรียนและการเติบโต",
         links: [
           { label: "สมัครเรียน", href: "/apply" },
           { label: "ทุนการศึกษา", href: "/scholarships" },
@@ -173,7 +173,7 @@ export const contentTH = {
         icon: "flask",
         title: "นักวิจัย",
         titleEn: "Researcher",
-        desc: "เข้าถึงทรัพยากรวิจัย ทุน และเครือข่ายความร่วมมือ",
+        desc: "เข้าถึงทุน ห้องปฏิบัติการ และเครือข่ายความร่วมมือด้านวิจัย",
         links: [
           { label: "สมัครทุนวิจัย", href: "/grants" },
           { label: "จองห้องปฏิบัติการ", href: "/lab-booking" },
@@ -185,7 +185,7 @@ export const contentTH = {
         icon: "briefcase",
         title: "พันธมิตรอุตสาหกรรม",
         titleEn: "Industry Partner",
-        desc: "ร่วมสร้างนวัตกรรมและถ่ายทอดเทคโนโลยีกับสถาบันของเรา",
+        desc: "ร่วมสร้างนวัตกรรม ทดสอบแนวคิด และต่อยอดสู่การใช้งานจริง",
         links: [
           { label: "โอกาสความร่วมมือ", href: "/partnership" },
           { label: "ถ่ายทอดเทคโนโลยี", href: "/tech-transfer" },
@@ -197,7 +197,7 @@ export const contentTH = {
         icon: "users",
         title: "ผู้ปกครองและผู้เยี่ยมชม",
         titleEn: "Parent & Visitor",
-        desc: "ทำความรู้จักกับสถาบันและดูข้อมูลสำหรับผู้ปกครอง",
+        desc: "ทำความรู้จัก RAE และค้นหาข้อมูลสำคัญสำหรับผู้เยี่ยมชม",
         links: [
           { label: "เกี่ยวกับสถาบัน", href: "/about" },
           { label: "Virtual Tour", href: "/virtual-tour" },
@@ -209,7 +209,7 @@ export const contentTH = {
 
   footer: {
     mission:
-      "มุ่งมั่นสู่ความเป็นเลิศด้านการวิจัยและนวัตกรรม เพื่อสร้างผลกระทบเชิงบวกต่อสังคมและโลก",
+      "ขับเคลื่อนงานวิจัยและนวัตกรรมที่เชื่อมโยงความร่วมมือ สร้างผลลัพธ์เชิงประจักษ์ และส่งต่อคุณค่าแก่สังคม",
     quickLinks: {
       title: "ลิงก์ด่วน",
       links: [
@@ -237,10 +237,10 @@ export const contentTH = {
       mapLink: "https://maps.google.com",
     },
     newsletter: {
-      title: "รับข่าวสาร",
-      placeholder: "กรอกอีเมลของคุณ",
+      title: "ติดตามความเคลื่อนไหว",
+      placeholder: "กรอกอีเมล",
       button: "สมัครรับข่าว",
     },
-    copyright: "© 2567 Research Academy of Excellence. สงวนลิขสิทธิ์ทุกประการ.",
+    copyright: "© 2567 Research Academy of Excellence. สงวนลิขสิทธิ์.",
   },
 };

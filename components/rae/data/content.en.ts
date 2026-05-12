@@ -5,9 +5,9 @@ export const contentEN = {
   site: {
     name: "RAE",
     fullName: "Research Academy of Excellence",
-    tagline: "Research Academy of Excellence",
+    tagline: "Research hub for measurable innovation",
     mission:
-      "Committed to research excellence, innovation, and developing world-class human capital.",
+      "Advancing research, innovation, and collaboration for measurable impact across society and industry.",
   },
 
   nav: {
@@ -17,27 +17,27 @@ export const contentEN = {
     news: "News",
     impact: "Impact",
     contact: "Contact",
-    applyNow: "Apply Now",
+    applyNow: "Apply",
     langToggle: "ภาษาไทย",
   },
 
   hero: {
-    title: "Research Academy",
-    subtitle: "of Excellence",
+    title: "Research Academy of Excellence",
+    subtitle: "Advancing knowledge into measurable outcomes",
     description:
-      "We push the boundaries of knowledge, accelerate scientific progress, and create lasting impact for society.",
+      "RAE connects researchers, industry partners, and society to deliver high-quality research, practical innovation, and measurable impact.",
     ctaPrimary: "Explore Research",
-    ctaSecondary: "Apply Now",
+    ctaSecondary: "View Work and News",
     scrollHint: "Scroll down",
   },
 
   ticker: {
     label: "Latest:",
     items: [
-      "Research Grant Applications Open for 2024 — Deadline June 30",
-      "Congratulations to AI Lab Team for winning International Award",
-      "Seminar 'Innovation for Sustainability' — July 15, Online + Onsite",
-      "New Research Database launched — Access 50,000+ research papers",
+      "New research grant applications are now open",
+      "AI Lab team receives recognition at an international forum",
+      "Seminar 'Innovation for Sustainability' is now open for registration",
+      "New research database launched for researchers and students",
     ],
   },
 
@@ -68,7 +68,7 @@ export const contentEN = {
         title: "Life Sciences & Biomedical Research",
         desc: "Genomics, genetics, and drug discovery research to improve human health outcomes globally.",
         link: "/research/life-sciences",
-        image: "/images/research/life-sci.jpg",
+        image: "/rae-assets/research/life-sci.svg",
       },
       {
         id: "ai-data",
@@ -77,7 +77,7 @@ export const contentEN = {
         title: "Artificial Intelligence & Data Science",
         desc: "Applying Machine Learning and Deep Learning to solve complex societal challenges.",
         link: "/research/ai-data",
-        image: "/images/research/ai-data.jpg",
+        image: "/rae-assets/research/ai-data.svg",
       },
       {
         id: "sustain",
@@ -86,7 +86,7 @@ export const contentEN = {
         title: "Sustainable Technology & Environment",
         desc: "Clean energy innovation, resource management, and climate change solutions.",
         link: "/research/sustainability",
-        image: "/images/research/sustain.jpg",
+        image: "/rae-assets/research/sustain.svg",
       },
       {
         id: "social",
@@ -95,14 +95,14 @@ export const contentEN = {
         title: "Social Innovation & Policy",
         desc: "Public policy research, creative economy, and sustainable community development.",
         link: "/research/social",
-        image: "/images/research/social.jpg",
+        image: "/rae-assets/research/social.svg",
       },
     ],
   },
 
   news: {
     title: "News & Events",
-    subtitle: "ข่าวสารและกิจกรรม",
+    subtitle: "Latest progress",
     viewAll: "View All News",
     categories: {
       research: "Research",
@@ -115,28 +115,28 @@ export const contentEN = {
         id: "n1",
         category: "award",
         date: "Apr 28, 2024",
-        title: "RAE Wins 'Most Innovative Research Institute' from NRCT",
-        excerpt: "The Research Academy of Excellence is recognized by the National Research Council of Thailand.",
+        title: "RAE Receives National Recognition for Research Innovation",
+        excerpt: "The academy’s research and collaboration efforts are recognized at the national level.",
         link: "/news/award-nrct-2024",
-        image: "/images/news/award1.jpg",
+        image: "/rae-assets/news/award1.svg",
       },
       {
         id: "n2",
         category: "event",
         date: "May 15, 2024",
-        title: "International Seminar 'Future of Research' — 5th Edition",
-        excerpt: "Join 20+ world-class researchers for the most important academic seminar of the year.",
+        title: "International Seminar 'Future of Research' Opens for Registration",
+        excerpt: "Hear from leading researchers and exchange ideas across disciplines.",
         link: "/events/intl-seminar-2024",
-        image: "/images/news/event1.jpg",
+        image: "/rae-assets/news/event1.svg",
       },
       {
         id: "n3",
         category: "research",
         date: "Apr 10, 2024",
-        title: "AI Lab Team Publishes Breakthrough in Nature Communications",
-        excerpt: "Novel Deep Learning discovery for cancer gene analysis receives worldwide recognition.",
+        title: "AI Lab Publishes Research in Nature Communications",
+        excerpt: "A Deep Learning discovery for cancer gene analysis is published in a leading journal.",
         link: "/news/nature-publication-2024",
-        image: "/images/news/research1.jpg",
+        image: "/rae-assets/news/research1.svg",
       },
     ],
   },
@@ -153,15 +153,15 @@ export const contentEN = {
   },
 
   audience: {
-    title: "I am a...",
-    subtitle: "ฉันคือ...",
+    title: "Find your path",
+    subtitle: "Choose your path",
     groups: [
       {
         id: "student",
         icon: "graduation-cap",
         title: "Student",
         titleEn: "Student",
-        desc: "Find programs, scholarships, and resources for students.",
+        desc: "Find programs, scholarships, and resources that support study and growth.",
         links: [
           { label: "Apply Now", href: "/apply" },
           { label: "Scholarships", href: "/scholarships" },
@@ -173,7 +173,7 @@ export const contentEN = {
         icon: "flask",
         title: "Researcher",
         titleEn: "Researcher",
-        desc: "Access research resources, funding, and collaboration networks.",
+        desc: "Access grants, labs, and research collaboration networks.",
         links: [
           { label: "Apply for Grants", href: "/grants" },
           { label: "Book a Lab", href: "/lab-booking" },
@@ -185,7 +185,7 @@ export const contentEN = {
         icon: "briefcase",
         title: "Industry Partner",
         titleEn: "Industry Partner",
-        desc: "Co-create innovation and transfer technology with our institute.",
+        desc: "Co-create innovation, test ideas, and translate research into practice.",
         links: [
           { label: "Partnership Opportunities", href: "/partnership" },
           { label: "Technology Transfer", href: "/tech-transfer" },
@@ -197,7 +197,7 @@ export const contentEN = {
         icon: "users",
         title: "Parent & Visitor",
         titleEn: "Parent & Visitor",
-        desc: "Get to know our institute and find information for parents.",
+        desc: "Learn about RAE and find key information for visitors.",
         links: [
           { label: "About RAE", href: "/about" },
           { label: "Virtual Tour", href: "/virtual-tour" },
@@ -209,7 +209,7 @@ export const contentEN = {
 
   footer: {
     mission:
-      "Committed to research excellence and innovation, creating positive impact for society and the world.",
+      "Advancing research and innovation through collaboration, evidence, and measurable impact for society.",
     quickLinks: {
       title: "Quick Links",
       links: [
@@ -237,8 +237,8 @@ export const contentEN = {
       mapLink: "https://maps.google.com",
     },
     newsletter: {
-      title: "Stay Updated",
-      placeholder: "Enter your email",
+      title: "Stay informed",
+      placeholder: "Enter email",
       button: "Subscribe",
     },
     copyright: "© 2024 Research Academy of Excellence. All rights reserved.",
